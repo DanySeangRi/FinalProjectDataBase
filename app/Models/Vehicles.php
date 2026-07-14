@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Vehicles extends Model
+{
+    protected $table = 'tbl_vehicles';
+    protected $primaryKey = 'vehicleID';
+}
