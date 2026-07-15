@@ -12,7 +12,7 @@ Route::get('/', function () {
 
 // Register
 Route::get('/register', function () {
-    return view('admin.auth.register');
+    return view('auth.register');
 })->name('register');
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -20,7 +20,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // Login
 Route::get('/login', function () {
-    return view('admin.auth.login');
+    return view('auth.login');
 })->name('login');
 
 Route::post('/login', [AuthController::class, 'login']);
