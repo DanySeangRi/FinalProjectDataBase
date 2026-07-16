@@ -36,46 +36,46 @@ class UserController extends Controller
 
 
     // Register
-public function register(Request $request)
-{
-    $validated = $request->validate([
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
 
-        'first_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
 
-        'last_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
 
-        'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email',
 
-        'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:20',
 
-        'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8|confirmed',
 
-    ]);
-
-
-    $user = User::create([
-
-        'first_name' => $validated['first_name'],
-
-        'last_name' => $validated['last_name'],
-
-        'email' => $validated['email'],
-
-        'phone_number' => $validated['phone'],
-
-        'password' => Hash::make($validated['password']),
-
-    ]);
+        ]);
 
 
-    Auth::login($user);
+        $user = User::create([
+
+            'first_name' => $validated['first_name'],
+
+            'last_name' => $validated['last_name'],
+
+            'email' => $validated['email'],
+
+            'phone_number' => $validated['phone'],
+
+            'password' => Hash::make($validated['password']),
+
+        ]);
 
 
-    $request->session()->regenerate();
+        Auth::login($user);
 
 
-    return redirect('/login');
-}
+        $request->session()->regenerate();
+
+
+        return redirect('/login');
+    }
 
 
 
@@ -95,4 +95,6 @@ public function register(Request $request)
         return redirect('/login');
 
     }
+
+
 }

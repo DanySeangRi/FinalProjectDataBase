@@ -31,7 +31,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard.index');
         }
 
         return back()->withErrors([
@@ -41,7 +41,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('admin.dashboard.index');
     }
 
     public function logout(Request $request)
