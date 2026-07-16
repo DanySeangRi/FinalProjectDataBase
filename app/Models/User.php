@@ -15,7 +15,8 @@ use Illuminate\Notifications\Notifiable;
     'last_name',
     'phone_number',
     'email',
-    'password'
+    'password',
+    'role'
 ])]
 
 #[Hidden([

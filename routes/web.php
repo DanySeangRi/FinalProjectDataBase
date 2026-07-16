@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\AdminController;
 
 // Home
 Route::get('/', function () {
@@ -15,7 +16,7 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [UserController::class, 'register']);
 
 
 // Login
@@ -23,7 +24,7 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [UserController::class, 'login']);
 
 
 // // Dashboard
@@ -33,5 +34,26 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 // Logout
-Route::post('/logout', [AuthController::class, 'logout'])
+Route::post('/logout', [UserController::class, 'logout'])
     ->name('logout');
+
+
+
+// Admin Authentication
+Route::get('/admin/login', [AdminController::class, 'showLogin'])
+    ->name('admin.auth.login');
+
+Route::post('/admin/login', [AdminController::class, 'login'])
+    ->name('admin.auth.login.submit');
+
+
+// Admin Protected Area
+Route::middleware('auth')->prefix('admin')->group(function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])
+        ->name('admin.dashboard');
+
+    Route::post('/logout', [AdminController::class, 'logout'])
+        ->name('admin.logout');
+
+});
