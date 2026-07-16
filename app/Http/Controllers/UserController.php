@@ -95,6 +95,72 @@ class UserController extends Controller
         return redirect('/login');
 
     }
+    public function create()
+    {
+        return view('admin.users.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+
+            'first_name' => 'required|string|max:255',
+
+            'last_name' => 'required|string|max:255',
+
+            'email' => 'required|email|unique:users,email',
+
+            'phone' => 'required|string|max:20',
+
+            'password' => 'required|min:8|confirmed',
+
+        ]);
+
+
+        User::create([
+
+            'first_name' => $validated['first_name'],
+
+            'last_name' => $validated['last_name'],
+
+            'email' => $validated['email'],
+
+            'phone_number' => $validated['phone'],
+
+            'password' => Hash::make($validated['password']),
+
+        ]);
+
+
+        return redirect()
+            ->route('admin.users')
+            ->with('success', 'User created successfully.');
+    }
+    // List + search users
+    public function index(Request $request)
+    {
+        $search = $request->query('search');
+
+        $users = User::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                        ->orWhere('last_name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return view('admin.users._rows', compact('users'))->render();
+        }
+
+        return view('admin.users.index', compact('users', 'search'));
+    }
+
+
 
 
 }

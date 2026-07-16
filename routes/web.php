@@ -43,6 +43,8 @@ Route::post('/admin/login', [AdminController::class, 'login'])
     ->name('admin.auth.login.submit');
 
 
+
+
 // =========================
 // Admin Protected Area
 // =========================
@@ -82,6 +84,11 @@ Route::prefix('admin')
             return view('admin.users.index', compact('users', 'search'));
 
         })->name('users');
+
+        // Create User Page
+        Route::get('/users', [UserController::class, 'index'])->name('users');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
 
         // Routes

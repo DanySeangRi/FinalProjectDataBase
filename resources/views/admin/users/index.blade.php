@@ -15,15 +15,29 @@
 
   <div class="flex items-start justify-between mb-8">
     <div>
-      <h1 class="text-2xl font-bold text-slate-900">Users</h1>
+      <h1 class="text-2xl font-bold text-slate-900">
+        Users
+      </h1>
+
       <p class="text-sm text-slate-400 mt-1">
         Welcome back, Admin. Here's what's happening today.
       </p>
     </div>
 
-    <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
-      {{ now()->format('F j, Y') }}
-    </span>
+
+    <div class="flex items-center gap-3">
+
+      <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
+        {{ now()->format('F j, Y') }}
+      </span>
+
+
+      <a href="{{ route('admin.users.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+        + Add User
+      </a>
+
+    </div>
+
   </div>
   <form method="GET" action="{{ route('admin.users') }}" id="searchForm">
     <div class="flex items-center gap-3 my-4">
@@ -44,6 +58,8 @@
 
     </div>
   </form>
+
+
   <div class="bg-white rounded-xl border border-slate-200">
 
     <table class="w-full text-sm">
