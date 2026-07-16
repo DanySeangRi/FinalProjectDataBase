@@ -65,30 +65,23 @@ Route::prefix('admin')
 
 
         // Users
-        Route::get('/users', function (\Illuminate\Http\Request $request) {
+        // Users
+    
+        // Users
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users');
 
-            $search = $request->query('search');
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
 
-            $users = \App\Models\User::query()
-                ->when($search, function ($query, $search) {
-                    $query->where(function ($q) use ($search) {
-                        $q->where('first_name', 'ilike', "%{$search}%")
-                            ->orWhere('last_name', 'ilike', "%{$search}%")
-                            ->orWhere('email', 'ilike', "%{$search}%");
-                    });
-                })
-                ->latest()
-                ->paginate(15)
-                ->withQueryString();
+        Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
 
-            return view('admin.users.index', compact('users', 'search'));
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('users.destroy');
 
-        })->name('users');
-
-        // Create User Page
-        Route::get('/users', [UserController::class, 'index'])->name('users');
-        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
 
 
         // Routes

@@ -4,118 +4,59 @@
 
 @section('content')
 
-  @php
-    // use App\Models\User;
-
-    // $users = User::all();
-
-    $svg = fn($path) => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $path . '</svg>';
-  @endphp
+@if(session('success'))
+<div class="mb-4 bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg p-3">
+    {{ session('success') }}
+</div>
+@endif
 
 
-  <div class="flex items-start justify-between mb-8">
+<div class="flex items-start justify-between mb-8">
+
     <div>
-      <h1 class="text-2xl font-bold text-slate-900">
-        Users
-      </h1>
+        <h1 class="text-2xl font-bold text-slate-900">
+            Users Management
+        </h1>
 
-      <p class="text-sm text-slate-400 mt-1">
-        Welcome back, Admin. Here's what's happening today.
-      </p>
+        <p class="text-sm text-slate-400 mt-1">
+            Welcome back, Admin. Here's what's happening today.
+        </p>
     </div>
 
 
     <div class="flex items-center gap-3">
 
-      <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
-        {{ now()->format('F j, Y') }}
-      </span>
+        <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
+            {{ now()->format('F j, Y') }}
+        </span>
 
 
-      <a href="{{ route('admin.users.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-        + Add User
-      </a>
-
-    </div>
-
-  </div>
-  <form method="GET" action="{{ route('admin.users') }}" id="searchForm">
-    <div class="flex items-center gap-3 my-4">
-
-      <div class="flex-1 flex items-center rounded-xl border border-gray-300 px-4 py-3">
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" class="text-gray-400">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-
-        <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search user..." id="searchInput"
-          class="ml-2 w-full bg-none outline-none">
-
-      </div>
-
+        <button 
+            type="button"
+            id="openCreateUserModal"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 w-25 text-[10px] py-2 rounded-lg">
+            + Add User
+        </button>
 
     </div>
-  </form>
 
-
-  <div class="bg-white rounded-xl border border-slate-200">
-
-    <table class="w-full text-sm">
-
-      <thead>
-        <tr class="border-b">
-          <th class="p-4 text-left">Name</th>
-          <th class="p-4 text-left">Email</th>
-          <th class="p-4 text-left">Created</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        @foreach($users as $user)
-
-          <tr class="border-b hover:bg-slate-50">
+</div>
 
 
 
-            <td class="p-4">
-              {{ $user->first_name }}
-              {{ $user->last_name }}
-            </td>
+@include('admin.users.components.search')
 
-            <td class="p-4 text-slate-500">
-              {{ $user->email }}
-            </td>
+@include('admin.users.components.user-table')
 
-            <td class="p-4 text-slate-400">
-              {{ $user->created_at->format('M d, Y') }}
-            </td>
+@include('admin.users.create-modal')
 
-          </tr>
+@include('admin.users.edit-modal')
 
-        @endforeach
+@include('admin.users.delete-modal')
 
-      </tbody>
-
-    </table>
-
-  </div>
-  <script>
-    const searchInput = document.getElementById('searchInput');
-    const searchForm = document.getElementById('searchForm');
-
-    let timer;
-
-    searchInput.addEventListener('input', function () {
-
-      clearTimeout(timer);
-
-      timer = setTimeout(() => {
-        searchForm.submit();
-      }, 500);
-
-    });
-  </script>
 @endsection
+
+
+@push('scripts')
+<script src="{{ asset('js/admin/users.js') }}"></script>
+@endpush

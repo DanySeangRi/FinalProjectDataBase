@@ -197,13 +197,13 @@
             <!-- Divider -->
             <div class="d-flex align-items-center my-4">
 
-                <hr class="flex-grow-1">
+                <hr class="grow">
 
                 <span class="mx-3 text-muted small">
                     OR
                 </span>
 
-                <hr class="flex-grow-1">
+                <hr class="grow">
 
             </div>
 

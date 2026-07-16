@@ -132,6 +132,10 @@ class UserController extends Controller
         ]);
 
 
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['message' => 'User created successfully.']);
+        }
+
         return redirect()
             ->route('admin.users')
             ->with('success', 'User created successfully.');
@@ -142,6 +146,7 @@ class UserController extends Controller
         $search = $request->query('search');
 
         $users = User::query()
+            ->where('role', 'user')
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('first_name', 'like', "%{$search}%")
@@ -159,7 +164,42 @@ class UserController extends Controller
 
         return view('admin.users.index', compact('users', 'search'));
     }
+    // Update user
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
 
+            'first_name' => 'required|string|max:255',
+
+            'last_name' => 'required|string|max:255',
+
+            'email' => 'required|email|unique:users,email,' . $user->id,
+
+            'phone_number' => 'nullable|string|max:20',
+
+        ]);
+
+
+        $user->update($validated);
+
+
+        return response()->json([
+            'message' => 'User updated successfully.'
+        ]);
+    }
+
+
+
+    // Delete user
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+
+        return response()->json([
+            'message' => 'User deleted successfully.'
+        ]);
+    }
 
 
 

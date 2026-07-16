@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background: #F8FAFC;
+            background: #DBEEFF;
         }
 
         .login-card {
@@ -59,7 +59,7 @@
 
 <body>
 
-<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+<div class="  min-vh-100 d-flex align-items-center justify-content-center">
 
     <div class="w-100" style="max-width:448px;">
 
@@ -73,7 +73,7 @@
         <!-- Header -->
         <div class="text-center mb-4">
             <h2 class="fw-bold title">
-                Welcome Back
+                Admin
             </h2>
 
             <p class="text-muted">
