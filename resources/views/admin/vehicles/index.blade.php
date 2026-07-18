@@ -8,7 +8,7 @@
 <div class="flex items-start justify-between mb-8">
 
     <div>
-        <h1 class="text-2xl font-bold text-slate-900">
+        <h1 class="text-2xl font-bold text-[#F59E0B]">
             Vehicles Management
         </h1>
 
@@ -21,7 +21,7 @@
     <button
         type="button"
         id="openCreateVehicleModal"
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+        class="bg-[#86C5FF] text-white px-4 py-2 rounded-lg">
 
         + Add Vehicle
 

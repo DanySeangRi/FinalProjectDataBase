@@ -10,7 +10,7 @@
 
         <div>
 
-            <h1 class="text-2xl font-bold text-slate-900">
+            <h1 class="text-2xl font-bold text-[#F59E0B]">
                 Routes Management
             </h1>
 
@@ -32,7 +32,7 @@
 
 
 
-            <button id="openCreateRouteModal" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+            <button id="openCreateRouteModal" class="bg-[#86C5FF] text-white px-4 py-2 rounded-lg">
 
                 + Add Route
 

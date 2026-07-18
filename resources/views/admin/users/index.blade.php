@@ -14,7 +14,7 @@
 <div class="flex items-start justify-between mb-8">
 
     <div>
-        <h1 class="text-2xl font-bold text-slate-900">
+        <h1 class="text-2xl font-bold text-[#F59E0B]">
             Users Management
         </h1>
 
@@ -34,7 +34,7 @@
         <button 
             type="button"
             id="openCreateUserModal"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 w-25 text-[10px] py-2 rounded-lg">
+            class="bg-[#86C5FF] text-white px-4 py-2 rounded-lg">
             + Add User
         </button>
 
