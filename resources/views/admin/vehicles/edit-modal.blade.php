@@ -39,7 +39,7 @@
 
 
       <!-- Form -->
-      <form id="editVehicleForm" method="POST" class="p-8 space-y-6">
+      <form id="editVehicleForm" method="POST" action="" class="p-8 space-y-6">
 
 
         @csrf
@@ -143,31 +143,33 @@
 
             <select id="edit_type" name="type" class="w-full rounded-xl border px-4 py-3">
 
-
-              <option value="Bus">
-                Bus
+              <option value="VIP Bus">
+                VIP Bus
               </option>
 
-
-              <option value="Van">
-                Van
+              <option value="Standard Bus">
+                Standard Bus
               </option>
 
+              <option value="Express Bus">
+                Express Bus
+              </option>
 
               <option value="Mini Bus">
                 Mini Bus
               </option>
 
+              <option value="Van">
+                Van
+              </option>
 
               <option value="Car">
                 Car
               </option>
 
-
               <option value="Truck">
                 Truck
               </option>
-
 
             </select>
 

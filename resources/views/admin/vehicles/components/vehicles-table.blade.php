@@ -93,21 +93,23 @@
                     <div class="flex gap-2">
 
 
-                        <button
-                            type="button"
-                            class="editVehicleBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+                      <button
+                          type="button"
+                          class="editVehicleBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
 
-                            data-id="{{ $vehicle->id }}"
-                            data-number="{{ $vehicle->vehicle_number }}"
-                            data-type="{{ $vehicle->type }}"
-                            data-capacity="{{ $vehicle->capacity }}"
-                            data-driver="{{ $vehicle->driver_name }}"
-                            data-status="{{ $vehicle->status }}"
-                        >
+                          data-id="{{ $vehicle->id }}"
+                          data-number="{{ $vehicle->vehicle_number }}"
+                          data-brand="{{ $vehicle->brand }}"
+                          data-plate="{{ $vehicle->plate_number }}"
+                          data-type="{{ $vehicle->type }}"
+                          data-year="{{ $vehicle->year }}"
+                          data-capacity="{{ $vehicle->capacity }}"
+                          data-status="{{ $vehicle->status }}"
+                      >
 
-                            Edit
+                          Edit
 
-                        </button>
+                    </button>
 
 
 

@@ -105,6 +105,10 @@ document.querySelectorAll(".editVehicleBtn").forEach((button) => {
 
         editId.value = button.dataset.id;
 
+        editForm.action = `/admin/vehicles/${button.dataset.id}`;
+
+        console.log("Vehicle ID:", editId.value);
+
         editVehicleNumber.value = button.dataset.number || "";
 
         editBrand.value = button.dataset.brand || "";
@@ -147,11 +151,9 @@ if (editForm) {
     editForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const id = editId.value;
-
         const formData = new FormData(editForm);
 
-        const response = await fetch(`/admin/vehicles/${id}`, {
+        const response = await fetch(editForm.action, {
             method: "POST",
 
             headers: {
