@@ -43,8 +43,37 @@
 
             <td class="p-4">
 
-              {{ $user->first_name }}
-              {{ $user->last_name }}
+              <div class="flex items-center gap-3">
+
+                <!-- Avatar -->
+                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 
+                        flex items-center justify-center font-semibold">
+
+                  {{ strtoupper(substr($user->first_name, 0, 1)) }}
+                  {{ strtoupper(substr($user->last_name, 0, 1)) }}
+
+                </div>
+
+
+                <!-- User Name -->
+                <div>
+
+                  <p class="font-medium text-slate-900">
+
+                    {{ $user->first_name }}
+                    {{ $user->last_name }}
+
+                  </p>
+
+                  <p class="text-xs text-slate-500">
+
+                    {{ $user->email }}
+
+                  </p>
+
+                </div>
+
+              </div>
 
             </td>
 
@@ -87,7 +116,7 @@
                     <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
                   </svg>
 
-                  Edit
+
 
                 </button>
 
@@ -107,7 +136,7 @@
                     <path d="M14 11v6" />
                   </svg>
 
-                  Delete
+
 
                 </button>
 

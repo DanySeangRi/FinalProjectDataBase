@@ -14,5 +14,9 @@ class Route extends Model
         'distance',
         'duration',
     ];
+    public function schedules()
+    {
+        return $this->hasMany(RouteSchedule::class);
+    }
 
 }

@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -28,11 +25,18 @@ return new class extends Migration {
             $table->date('travel_date');
 
             $table->time('departure_time');
+
             $table->time('arrival_time');
 
             $table->decimal('price', 10, 2);
 
             $table->integer('available_seats');
+
+            $table->enum('status', [
+                'active',
+                'completed',
+                'cancelled'
+            ])->default('active');
 
             $table->timestamps();
         });

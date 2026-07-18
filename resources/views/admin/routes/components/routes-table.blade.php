@@ -60,18 +60,21 @@
         <tr class="border-b  hover:bg-slate-50 text-[13px]">
 
           <td class="p-2 flex items-center mt-3 font-bold text-slate-800">
-          <div class="bg-green-100 text-green-700 mr-3 p-1 rounded-2xl ">
+            <div class="bg-green-100 text-green-700 mr-3 p-1 rounded-2xl ">
+
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-route-icon   lucide-route">
-              <circle cx="6" cy="19" r="3" />
-              <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" />
-              <circle cx="18" cy="5" r="3" />
-            </svg>
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-road-icon mx-1 lucide-road">
+                <path d="M12 17v4" />
+                <path d="M12 5V3" />
+                <path d="M12 9v3" />
+                <path
+                  d="M2.077 18.449A2 2 0 0 0 4 21h16a2 2 0 0 0 1.924-2.55l-4-14A2 2 0 0 0 16 3H8a2 2 0 0 0-1.924 1.45z" />
+              </svg>
 
 
-          </div>
-        
+            </div>
+
 
             <p> {{ $route->origin }} </p>
             <div class="flex justify-center items-center">
@@ -81,6 +84,7 @@
                 <path d="M18 8L22 12L18 16" />
                 <path d="M2 12H22" />
               </svg>
+
 
             </div>
 
@@ -152,17 +156,21 @@
 
 
               <button class="
-                    editRouteBtn
-                    px-3
-                    py-1.5
-                    rounded-lg
-                    bg-blue-50
-                    text-blue-600
-                    " data-id="{{ $route->id }}" data-origin="{{ $route->origin }}"
+                        editRouteBtn
+                        px-3
+                        py-1.5
+                        rounded-lg
+                        bg-blue-50
+                        text-blue-600
+                        " data-id="{{ $route->id }}" data-origin="{{ $route->origin }}"
                 data-destination="{{ $route->destination }}" data-distance="{{ $route->distance }}"
                 data-duration="{{ $route->duration }}">
 
-                Edit
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                </svg>
 
               </button>
 
@@ -170,15 +178,22 @@
 
 
               <button class="
-                    deleteRouteBtn
-                    px-3
-                    py-1.5
-                    rounded-lg
-                    bg-red-50
-                    text-red-600
-                    " data-id="{{ $route->id }}" data-name="{{ $route->origin }} → {{ $route->destination }}">
+                        deleteRouteBtn
+                        px-3
+                        py-1.5
+                        rounded-lg
+                        bg-red-50
+                        text-red-600
+                        " data-id="{{ $route->id }}" data-name="{{ $route->origin }} → {{ $route->destination }}">
 
-                Delete
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18" />
+                  <path d="M8 6V4h8v2" />
+                  <path d="M19 6l-1 14H6L5 6" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
+                </svg>
 
               </button>
 

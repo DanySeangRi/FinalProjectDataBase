@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\RouteController;
+use App\Http\Controllers\Admin\RouteScheduleController;
 // Home
 Route::get('/', function () {
     return view('welcome');
@@ -85,7 +86,7 @@ Route::prefix('admin')
             ->name('users.create');
 
 
-      
+
         // Routes CRUD
     
         Route::get('/routes', [RouteController::class, 'index'])
@@ -100,8 +101,24 @@ Route::prefix('admin')
         Route::delete('/routes/{route}', [RouteController::class, 'destroy'])
             ->name('routes.destroy');
 
+        // Route Schedules
+    
+        Route::get('/schedules', [RouteScheduleController::class, 'index'])
+            ->name('schedules');
 
-        
+
+        Route::post('/schedules', [RouteScheduleController::class, 'store'])
+            ->name('schedules.store');
+
+
+        Route::put('/schedules/{routeSchedule}', [RouteScheduleController::class, 'update'])
+            ->name('schedules.update');
+
+
+        Route::delete('/schedules/{routeSchedule}', [RouteScheduleController::class, 'destroy'])
+            ->name('schedules.destroy');
+
+
 
 
         // Vehicles

@@ -22,8 +22,12 @@
         </span>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-     
-    </div>
+    @include('admin.schedules.components.search')
+   @include('admin.schedules.components.schedules-table')
 
+@push('scripts')
+
+<script src="{{ asset('js/admin/scheduleRoutes.js') }}"></script>
+@endpush
 @endsection
+

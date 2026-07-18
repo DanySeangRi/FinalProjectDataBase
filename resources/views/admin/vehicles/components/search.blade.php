@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between gap-4">
 
         <!-- Search -->
-        <div class="relative w-full max-w-md">
+        <div class="relative w-full max-w-xl">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"
