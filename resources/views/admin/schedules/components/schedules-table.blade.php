@@ -69,18 +69,32 @@
           <!-- Route -->
 
           <td class="p-4">
+            <div class="flex gap-2">
+              <div class="bg-[#86C5FF] text-white p-2 rounded-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-calendar-check2-icon lucide-calendar-check-2">
+                  <path d="M8 2v4" />
+                  <path d="M16 2v4" />
+                  <path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8" />
+                  <path d="M3 10h18" />
+                  <path d="m16 20 2 2 4-4" />
+                </svg>
+              </div>
+              <div class="font-medium mt-2 text-slate-900">
 
+                {{ $schedule->route->origin ?? 'N/A' }}
 
+                →
 
-            <div class="font-medium text-slate-900">
+                {{ $schedule->route->destination ?? 'N/A' }}
 
-              {{ $schedule->route->origin ?? 'N/A' }}
-
-              →
-
-              {{ $schedule->route->destination ?? 'N/A' }}
-
+              </div>
             </div>
+
+
+
+
 
 
           </td>
@@ -131,17 +145,29 @@
           <!-- Time -->
 
           <td class="p-4 text-slate-500">
+            <div class="flex gap-1 ">
+              <div class="text-blue-600 ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-clock-icon lucide-clock">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+              </div>
 
 
-            <div>
+              <div>
 
-              {{ \Carbon\Carbon::parse($schedule->departure_time)->format('H:i') }}
+                {{ \Carbon\Carbon::parse($schedule->departure_time)->format('H:i') }}
 
-              -
+                -
 
-              {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('H:i') }}
+                {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('H:i') }}
+
+              </div>
 
             </div>
+
 
 
           </td>

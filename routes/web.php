@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\RouteScheduleController;
+use App\Http\Controllers\Admin\BookingController;
 // Home
 Route::get('/', function () {
     return view('welcome');
@@ -136,9 +137,11 @@ Route::prefix('admin')
 
 
         // Bookings
-        Route::get('/bookings', function () {
-            return view('admin.bookings.index');
-        })->name('bookings');
+        Route::get(
+            '/bookings',
+            [BookingController::class, 'index']
+        )
+            ->name('bookings');
 
 
         // Settings

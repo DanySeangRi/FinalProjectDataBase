@@ -174,8 +174,6 @@ class DatabaseSeeder extends Seeder
 
             'route_schedule_id' => $schedule1->id,
 
-            'booking_code' => 'ANG001',
-
             'seat_number' => 'A12',
 
             'total_price' => 15.00,
@@ -191,8 +189,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => $customer->id,
 
             'route_schedule_id' => $schedule2->id,
-
-            'booking_code' => 'ANG002',
 
             'seat_number' => 'B05',
 

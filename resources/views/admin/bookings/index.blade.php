@@ -5,11 +5,11 @@
 @section('content')
 
     @php
-        $svg = fn ($path) => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $path . '</svg>';
+        $svg = fn($path) => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $path . '</svg>';
 
 
         // In a real app, pass these in from the controller instead of hardcoding.
-      
+
     @endphp
 
     <div class="flex items-start justify-between mb-8">
@@ -22,8 +22,6 @@
         </span>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-     
-    </div>
+    @include('admin.bookings.components.bookings-table')
 
 @endsection

@@ -43,5 +43,9 @@ class User extends Authenticatable
             substr($this->last_name, 0, 1)
         );
     }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 
 }
