@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\RouteController;
 // Home
 Route::get('/', function () {
     return view('welcome');
@@ -84,16 +85,23 @@ Route::prefix('admin')
             ->name('users.create');
 
 
-        // Routes
-        Route::get('/routes', function () {
-            return view('admin.routes.index');
-        })->name('routes');
+      
+        // Routes CRUD
+    
+        Route::get('/routes', [RouteController::class, 'index'])
+            ->name('routes');
+
+        Route::post('/routes', [RouteController::class, 'store'])
+            ->name('routes.store');
+
+        Route::put('/routes/{route}', [RouteController::class, 'update'])
+            ->name('routes.update');
+
+        Route::delete('/routes/{route}', [RouteController::class, 'destroy'])
+            ->name('routes.destroy');
 
 
-        // Schedules
-        Route::get('/schedules', function () {
-            return view('admin.schedules.index');
-        })->name('schedules');
+        
 
 
         // Vehicles

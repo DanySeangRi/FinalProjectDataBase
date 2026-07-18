@@ -1,8 +1,7 @@
 <div id="editUserModal" class="fixed inset-0 z-50 hidden">
 
     <!-- Backdrop -->
-    <div id="editBackdrop"
-        class="absolute inset-0 bg-black/50 backdrop-blur-sm">
+    <div id="editBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm">
     </div>
 
 
@@ -28,9 +27,7 @@
                 </div>
 
 
-                <button
-                    type="button"
-                    id="closeEditModal"
+                <button type="button" id="closeEditModal"
                     class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 transition">
 
                     ✕
@@ -51,11 +48,7 @@
                 @method('PUT')
 
 
-                <input 
-                    type="hidden"
-                    id="edit_id"
-                    name="id"
-                >
+                <input type="hidden" id="edit_id" name="id">
 
 
 
@@ -69,12 +62,7 @@
                         </label>
 
 
-                        <input
-                            id="edit_first_name"
-                            name="first_name"
-                            type="text"
-                            placeholder="John"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
+                        <input id="edit_first_name" name="first_name" type="text" placeholder="John" class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
                             focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
 
                     </div>
@@ -88,12 +76,7 @@
                         </label>
 
 
-                        <input
-                            id="edit_last_name"
-                            name="last_name"
-                            type="text"
-                            placeholder="Doe"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
+                        <input id="edit_last_name" name="last_name" type="text" placeholder="Doe" class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
                             focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
 
                     </div>
@@ -111,12 +94,7 @@
                     </label>
 
 
-                    <input
-                        id="edit_email"
-                        name="email"
-                        type="email"
-                        placeholder="john@example.com"
-                        class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
+                    <input id="edit_email" name="email" type="email" placeholder="john@example.com" class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
                         focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
 
 
@@ -133,12 +111,7 @@
                     </label>
 
 
-                    <input
-                        id="edit_phone"
-                        name="phone_number"
-                        type="text"
-                        placeholder="+855 12 345 678"
-                        class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
+                    <input id="edit_phone" name="phone_number" type="text" placeholder="+855 12 345 678" class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none
                         focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition">
 
 
@@ -152,10 +125,7 @@
                 <div class="flex justify-end gap-3 pt-5 border-t border-slate-200">
 
 
-                    <button
-                        type="button"
-                        id="cancelEditModal"
-                        class="px-5 py-2.5 rounded-xl border border-slate-300 
+                    <button type="button" id="cancelEditModal" class="px-5 py-2.5 rounded-xl border border-slate-300 
                         text-slate-700 hover:bg-slate-100 transition">
 
                         Cancel
@@ -164,9 +134,7 @@
 
 
 
-                    <button
-                        type="submit"
-                        class="px-6 py-2.5 rounded-xl bg-blue-600 text-white 
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 text-white 
                         hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition">
 
                         Save Changes

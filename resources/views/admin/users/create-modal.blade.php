@@ -1,13 +1,21 @@
 <div id="createUserModal" class="fixed inset-0 z-50 hidden">
    <!-- Backdrop -->
-  <div id="modalBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div> <!-- Modal -->
+  <div id="modalBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+   <!-- Modal -->
   <div class="relative z-10 flex items-center justify-center min-h-screen p-6">
+
     <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+
       <!-- Header -->
         <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200">
+
           <div>
+
             <h2 class="text-xl font-semibold text-slate-900"> Create User </h2>
+
             <p class="text-sm text-slate-500 mt-1"> Add a new user to your system. </p>
+            
           </div> <button type="button" id="closeCreateUserModal"
             class="w-10 h-10 rounded-lg hover:bg-slate-100 text-slate-500 transition"> ✕ </button>
         </div> <!-- Errors -->
