@@ -13,15 +13,44 @@
     @endphp
 
     <div class="flex items-start justify-between mb-8">
-        <div>
-            <h1 class="text-2xl font-bold text-slate-900">Bookings</h1>
-            <p class="text-sm text-slate-400 mt-1">Welcome back, Admin. Here's what's happening today.</p>
-        </div>
-        <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
-            {{ now()->format('F j, Y') }}
-        </span>
-    </div>
 
+        <div>
+            <h1 class="text-2xl font-bold text-[#F59E0B]">
+                Booking Management
+            </h1>
+
+            <p class="text-sm text-slate-400 mt-1">
+                Welcome back, Admin. Here's what's happening today.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+
+            <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
+                {{ now()->format('F j, Y') }}
+            </span>
+
+            <button id="openCreateBookingModal" type="button"
+                class="bg-[#86C5FF] hover:bg-[#5fb0ff] text-white px-4 py-2 rounded-lg">
+
+                + Add Booking
+
+            </button>
+
+        </div>
+
+    </div>
+    @include('admin.bookings.components.search')
     @include('admin.bookings.components.bookings-table')
+    @include('admin.bookings.create-modal')
+    @include('admin.bookings.edit-modal')
+    @include('admin.bookings.delete-modal')
 
 @endsection
+
+
+@push('scripts')
+
+    <script src="{{ asset('js/admin/bookings.js') }}"></script>
+
+@endpush

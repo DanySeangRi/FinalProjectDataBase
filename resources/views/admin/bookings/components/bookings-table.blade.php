@@ -25,6 +25,11 @@
 
 
         <th class="p-4 text-left">
+          Vehicle Number
+        </th>
+
+
+        <th class="p-4 text-left">
           Seat
         </th>
 
@@ -151,6 +156,11 @@
 
 
           </td>
+          <td class="p-4 text-slate-500">
+
+            {{ $booking->routeSchedule->vehicle->vehicle_number }}
+
+          </td>
 
 
 
@@ -176,7 +186,7 @@
 
           <td class="p-4 text-slate-500">
 
-            ${{ number_format($booking->total_price, 2) }}
+            ${{ number_format($booking->routeSchedule->price, 2) }}
 
           </td>
 
@@ -245,11 +255,18 @@
 
 
               <button type="button"
-                class="editBookingBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100">
+                class="editBookingBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+                data-id="{{ $booking->id }}" data-user="{{ $booking->user_id }}"
+                data-schedule="{{ $booking->route_schedule_id }}" data-seat="{{ $booking->seat_number }}"
+                data-status="{{ $booking->status }}">
 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
 
-                Edit
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
 
+                </svg>
 
               </button>
 
@@ -258,11 +275,19 @@
 
 
               <button type="button"
-                class="deleteBookingBtn px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100">
+                class="deleteBookingBtn px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100"
+                data-id="{{ $booking->id }}" data-code="{{ $booking->booking_code }}">
 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
 
-                Delete
+                  <path d="M3 6h18" />
+                  <path d="M8 6V4h8v2" />
+                  <path d="M19 6l-1 14H6L5 6" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
 
+                </svg>
 
               </button>
 

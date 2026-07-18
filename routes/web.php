@@ -137,11 +137,17 @@ Route::prefix('admin')
 
 
         // Bookings
-        Route::get(
-            '/bookings',
-            [BookingController::class, 'index']
-        )
+        Route::get('/bookings', [BookingController::class, 'index'])
             ->name('bookings');
+
+        Route::post('/bookings', [BookingController::class, 'store'])
+            ->name('bookings.store');
+
+        Route::put('/bookings/{booking}', [BookingController::class, 'update'])
+            ->name('bookings.update');
+
+        Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])
+            ->name('bookings.destroy');
 
 
         // Settings

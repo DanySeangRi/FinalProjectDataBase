@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
         // Users
         $customer = User::create([
             'first_name' => 'Kimseang',
-            'last_name' => 'dany',
+            'last_name' => 'Dany',
             'email' => 'kimseang@gmail.com',
             'password' =>  bcrypt('12345678'),
-             'phone_number' => '1234567890',
+             'phone_number' => '0714543678',
             'role' => 'user',
         ]);
 
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
 
             'password' => bcrypt('12345678'),
 
-            'phone_number' => '1234567890',
+            'phone_number' => '08889574678',
 
             'role' => 'admin',
         ]);
