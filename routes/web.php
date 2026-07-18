@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\Admin\VehicleController;
 // Home
 Route::get('/', function () {
     return view('welcome');
@@ -97,9 +97,17 @@ Route::prefix('admin')
 
 
         // Vehicles
-        Route::get('/vehicles', function () {
-            return view('admin.vehicles.index');
-        })->name('vehicles');
+        Route::get('/vehicles', [VehicleController::class, 'index'])
+            ->name('vehicles');
+
+        Route::post('/vehicles', [VehicleController::class, 'store'])
+            ->name('vehicles.store');
+
+        Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])
+            ->name('vehicles.update');
+
+        Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy'])
+            ->name('vehicles.destroy');
 
 
         // Bookings
