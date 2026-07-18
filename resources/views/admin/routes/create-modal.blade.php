@@ -60,7 +60,7 @@
         <div>
 
           <label class="block text-sm font-medium text-slate-700 mb-2">
-            Origin
+            FROM
           </label>
 
 
@@ -79,7 +79,7 @@
         <div>
 
           <label class="block text-sm font-medium text-slate-700 mb-2">
-            Destination
+           TO
           </label>
 
 

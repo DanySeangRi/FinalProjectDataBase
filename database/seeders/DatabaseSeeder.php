@@ -99,6 +99,7 @@ class DatabaseSeeder extends Seeder
             'distance' => 320,
 
             'duration' => '6 hours',
+            'status' => 'active',
 
         ]);
 
@@ -113,6 +114,7 @@ class DatabaseSeeder extends Seeder
             'distance' => 290,
 
             'duration' => '5 hours',
+            'status' => 'active',
 
         ]);
 
