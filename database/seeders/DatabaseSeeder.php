@@ -55,33 +55,33 @@ class DatabaseSeeder extends Seeder
         // Vehicles
 
         $bus1 = Vehicle::create([
-
             'vehicle_number' => 'PP-001',
-
+            'brand' => 'Hyundai',
+            'plate_number' => '2A-1234',
             'type' => 'Bus',
-
-            'capacity' => 40,
-
-            'driver_name' => 'Dara Sok',
-
+            'year' => 2022,
+            'capacity' => 45,
             'status' => 'active',
-
         ]);
 
-
-
         $bus2 = Vehicle::create([
-
             'vehicle_number' => 'PP-002',
-
-            'type' => 'Mini Bus',
-
+            'brand' => 'Toyota',
+            'plate_number' => '2B-5678',
+            'type' => 'Express',
+            'year' => 2023,
             'capacity' => 25,
-
-            'driver_name' => 'Sokha Lim',
-
             'status' => 'active',
+        ]);
 
+        $bus3=Vehicle::create([
+            'vehicle_number' => 'PP-003',
+            'brand' => 'Mercedes',
+            'plate_number' => '2C-9999',
+            'type' => 'Luxury',
+            'year' => 2021,
+            'capacity' => 50,
+            'status' => 'inactive',
         ]);
 
 

@@ -32,15 +32,11 @@ const cancelCreateBtn = document.getElementById("cancelCreateVehicle");
 const createBackdrop = document.getElementById("modalBackdrop");
 
 function openCreateModal() {
-    if (createModal) {
-        createModal.classList.remove("hidden");
-    }
+    createModal?.classList.remove("hidden");
 }
 
 function closeCreateModal() {
-    if (createModal) {
-        createModal.classList.add("hidden");
-    }
+    createModal?.classList.add("hidden");
 }
 
 openCreateBtn?.addEventListener("click", openCreateModal);
@@ -61,26 +57,28 @@ if (createForm) {
     createForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const response = await fetch("/admin/vehicles", {
-            method: "POST",
+        try {
+            const response = await fetch("/admin/vehicles", {
+                method: "POST",
 
-            headers: {
-                "X-CSRF-TOKEN": document.querySelector(
-                    'meta[name="csrf-token"]',
-                ).content,
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]',
+                    ).content,
 
-                Accept: "application/json",
-            },
+                    Accept: "application/json",
+                },
 
-            body: new FormData(createForm),
-        });
+                body: new FormData(createForm),
+            });
 
-        if (response.ok) {
-            location.reload();
-        }
-
-        if (response.status === 422) {
-            console.log(await response.json());
+            if (response.ok) {
+                window.location.reload();
+            } else if (response.status === 422) {
+                console.log(await response.json());
+            }
+        } catch (error) {
+            console.error(error);
         }
     });
 }
@@ -90,19 +88,15 @@ if (createForm) {
 // =====================
 
 const editModal = document.getElementById("editVehicleModal");
-
 const editForm = document.getElementById("editVehicleForm");
 
 const editId = document.getElementById("edit_id");
-
 const editVehicleNumber = document.getElementById("edit_vehicle_number");
-
+const editBrand = document.getElementById("edit_brand");
+const editPlateNumber = document.getElementById("edit_plate_number");
 const editType = document.getElementById("edit_type");
-
+const editYear = document.getElementById("edit_year");
 const editCapacity = document.getElementById("edit_capacity");
-
-const editDriver = document.getElementById("edit_driver_name");
-
 const editStatus = document.getElementById("edit_status");
 
 document.querySelectorAll(".editVehicleBtn").forEach((button) => {
@@ -111,20 +105,23 @@ document.querySelectorAll(".editVehicleBtn").forEach((button) => {
 
         editId.value = button.dataset.id;
 
-        editVehicleNumber.value = button.dataset.number;
+        editVehicleNumber.value = button.dataset.number || "";
 
-        editType.value = button.dataset.type;
+        editBrand.value = button.dataset.brand || "";
 
-        editCapacity.value = button.dataset.capacity;
+        editPlateNumber.value = button.dataset.plate || "";
 
-        editDriver.value = button.dataset.driver ?? "";
+        editType.value = button.dataset.type || "";
 
-        editStatus.value = button.dataset.status;
+        editYear.value = button.dataset.year || "";
 
-        // Important
-        editForm.action = `/admin/vehicles/${button.dataset.id}`;
+        editCapacity.value = button.dataset.capacity || "";
+
+        editStatus.value = button.dataset.status || "active";
     });
 });
+
+// Close modal
 
 function closeEditModal() {
     editModal.classList.add("hidden");
@@ -150,7 +147,11 @@ if (editForm) {
     editForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const response = await fetch(editForm.action, {
+        const id = editId.value;
+
+        const formData = new FormData(editForm);
+
+        const response = await fetch(`/admin/vehicles/${id}`, {
             method: "POST",
 
             headers: {
@@ -161,11 +162,11 @@ if (editForm) {
                 Accept: "application/json",
             },
 
-            body: new FormData(editForm),
+            body: formData,
         });
 
         if (response.ok) {
-            location.reload();
+            window.location.reload();
         } else {
             console.log(await response.text());
         }
@@ -184,7 +185,7 @@ const deleteName = document.getElementById("deleteVehicleName");
 
 document.querySelectorAll(".deleteVehicleBtn").forEach((button) => {
     button.addEventListener("click", () => {
-        deleteModal.classList.remove("hidden");
+        deleteModal?.classList.remove("hidden");
 
         deleteName.innerText = button.dataset.name;
 
@@ -193,7 +194,7 @@ document.querySelectorAll(".deleteVehicleBtn").forEach((button) => {
 });
 
 function closeDeleteModal() {
-    deleteModal.classList.add("hidden");
+    deleteModal?.classList.add("hidden");
 }
 
 document
@@ -212,22 +213,26 @@ if (deleteForm) {
     deleteForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const response = await fetch(deleteForm.action, {
-            method: "POST",
+        try {
+            const response = await fetch(deleteForm.action, {
+                method: "POST",
 
-            headers: {
-                "X-CSRF-TOKEN": document.querySelector(
-                    'meta[name="csrf-token"]',
-                ).content,
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]',
+                    ).content,
 
-                Accept: "application/json",
-            },
+                    Accept: "application/json",
+                },
 
-            body: new FormData(deleteForm),
-        });
+                body: new FormData(deleteForm),
+            });
 
-        if (response.ok) {
-            location.reload();
+            if (response.ok) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error(error);
         }
     });
 }

@@ -10,7 +10,10 @@
                 </th>
 
                 <th class="p-4 text-left">
-                    Type
+                    Brand
+                </th>
+                 <th class="p-4 text-left">
+                   Type
                 </th>
 
                 <th class="p-4 text-left">
@@ -25,9 +28,7 @@
                     Status
                 </th>
 
-                <th class="p-4 text-left">
-                    Created
-                </th>
+             
 
                 <th class="p-4 text-left">
                     Actions
@@ -50,6 +51,10 @@
 
 
                 <td class="p-4 text-slate-500">
+                    {{ $vehicle->brand }}
+                </td>
+
+                 <td class="p-4 text-slate-500">
                     {{ $vehicle->type }}
                 </td>
 
@@ -79,13 +84,6 @@
                         </span>
 
                     @endif
-
-                </td>
-
-
-                <td class="p-4 text-slate-400">
-
-                    {{ $vehicle->created_at->format('M d, Y H:i') }}
 
                 </td>
 

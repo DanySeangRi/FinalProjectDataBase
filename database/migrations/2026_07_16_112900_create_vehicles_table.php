@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
 
             $table->string('vehicle_number')->unique();
+            $table->string('brand');
+            $table->string('plate_number')->nullable()->unique();
             $table->string('type');
+            $table->year('year');
             $table->integer('capacity');
-            $table->string('driver_name')->nullable();
             $table->enum('status', [
                 'active',
                 'inactive'
