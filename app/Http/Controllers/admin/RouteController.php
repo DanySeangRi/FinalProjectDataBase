@@ -42,36 +42,40 @@ class RouteController extends Controller
 
 
 
-    public function store(Request $request)
-    {
+  public function store(Request $request)
+{
+    $request->validate([
 
-        $request->validate([
+        'origin' => 'required',
+        'destination' => 'required',
+        'distance' => 'nullable|integer',
 
-            'origin'=>'required',
-            'destination'=>'required',
-            'distance'=>'nullable|integer',
-            'duration'=>'nullable|string'
+        'duration_hours' => 'nullable|integer|min:0',
+        'duration_minutes' => 'nullable|integer|min:0|max:59',
 
-        ]);
-
-
-
-        Route::create([
-
-            'origin'=>$request->origin,
-            'destination'=>$request->destination,
-            'distance'=>$request->distance,
-            'duration'=>$request->duration
-
-        ]);
+    ]);
 
 
+    Route::create([
 
-        return response()->json([
-            'message'=>'Route created'
-        ]);
+        'origin' => $request->origin,
 
-    }
+        'destination' => $request->destination,
+
+        'distance' => $request->distance,
+
+
+        'duration_minutes' =>
+            ($request->duration_hours * 60)
+            + $request->duration_minutes,
+
+    ]);
+
+
+    return response()->json([
+        'message' => 'Route created'
+    ]);
+}
 
 
 

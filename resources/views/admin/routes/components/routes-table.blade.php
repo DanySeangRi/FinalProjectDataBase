@@ -118,10 +118,19 @@
           </td>
 
 
-
           <td class="p-4 text-slate-500">
 
-            {{ $route->duration ?? '-' }}
+            @if($route->duration_minutes)
+
+              {{ intdiv($route->duration_minutes, 60) }} hours
+
+              @if($route->duration_minutes % 60)
+                {{ $route->duration_minutes % 60 }} min
+              @endif
+
+            @else
+              -
+            @endif
 
           </td>
 
@@ -155,16 +164,20 @@
 
 
 
-              <button class="
-                        editRouteBtn
-                        px-3
-                        py-1.5
-                        rounded-lg
-                        bg-blue-50
-                        text-blue-600
-                        " data-id="{{ $route->id }}" data-origin="{{ $route->origin }}"
-                data-destination="{{ $route->destination }}" data-distance="{{ $route->distance }}"
-                data-duration="{{ $route->duration }}">
+              <button 
+                      class="editRouteBtn
+                      px-3
+                      py-1.5
+                      rounded-lg
+                      bg-blue-50
+                      text-blue-600"
+
+                      data-id="{{ $route->id }}"
+                      data-origin="{{ $route->origin }}"
+                      data-destination="{{ $route->destination }}"
+                      data-distance="{{ $route->distance }}"
+                      data-duration="{{ $route->duration_minutes }}"
+>
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -178,13 +191,13 @@
 
 
               <button class="
-                        deleteRouteBtn
-                        px-3
-                        py-1.5
-                        rounded-lg
-                        bg-red-50
-                        text-red-600
-                        " data-id="{{ $route->id }}" data-name="{{ $route->origin }} → {{ $route->destination }}">
+                              deleteRouteBtn
+                              px-3
+                              py-1.5
+                              rounded-lg
+                              bg-red-50
+                              text-red-600
+                              " data-id="{{ $route->id }}" data-name="{{ $route->origin }} → {{ $route->destination }}">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'vehicle_number' => 'PP-001',
             'brand' => 'Hyundai',
             'plate_number' => '2A-1234',
-            'type' => 'Bus',
+            'type' => 'Standard Bus',
             'year' => 2022,
             'capacity' => 45,
             'status' => 'active',
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'vehicle_number' => 'PP-002',
             'brand' => 'Toyota',
             'plate_number' => '2B-5678',
-            'type' => 'Express',
+            'type' => 'Express Bus',
             'year' => 2023,
             'capacity' => 25,
             'status' => 'active',
@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
             'vehicle_number' => 'PP-003',
             'brand' => 'Mercedes',
             'plate_number' => '2C-9999',
-            'type' => 'Luxury',
+            'type' => 'VIP Sleeper',
             'year' => 2021,
             'capacity' => 50,
             'status' => 'inactive',
@@ -90,18 +90,19 @@ class DatabaseSeeder extends Seeder
 
         // Routes
 
-        $siemReap = Route::create([
+       $siemReap = Route::create([
 
-            'origin' => 'Phnom Penh',
+    'origin' => 'Phnom Penh',
 
-            'destination' => 'Siem Reap',
+    'destination' => 'Siem Reap',
 
-            'distance' => 320,
+    'distance' => 320,
 
-            'duration' => '6 hours',
-            'status' => 'active',
+    'duration_minutes' => 360,
 
-        ]);
+    'status' => 'active',
+
+]);
 
 
 
@@ -113,7 +114,7 @@ class DatabaseSeeder extends Seeder
 
             'distance' => 290,
 
-            'duration' => '5 hours',
+            'duration_minutes' => 300,
             'status' => 'active',
 
         ]);

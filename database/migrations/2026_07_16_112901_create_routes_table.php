@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('origin');
             $table->string('destination');
             $table->integer('distance')->nullable();
-            $table->string('duration')->nullable();
+            $table->integer('duration_minutes')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();  
         });

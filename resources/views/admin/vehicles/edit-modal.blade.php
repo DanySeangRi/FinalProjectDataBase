@@ -143,8 +143,8 @@
 
             <select id="edit_type" name="type" class="w-full rounded-xl border px-4 py-3">
 
-              <option value="VIP Bus">
-                VIP Bus
+              <option value="VIP Sleeper ">
+               VIP Sleeper
               </option>
 
               <option value="Standard Bus">
@@ -155,21 +155,7 @@
                 Express Bus
               </option>
 
-              <option value="Mini Bus">
-                Mini Bus
-              </option>
-
-              <option value="Van">
-                Van
-              </option>
-
-              <option value="Car">
-                Car
-              </option>
-
-              <option value="Truck">
-                Truck
-              </option>
+             
 
             </select>
 

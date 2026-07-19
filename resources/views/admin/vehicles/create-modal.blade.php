@@ -163,8 +163,8 @@
                 Select Type
               </option>
 
-              <option value="VIP Bus">
-                VIP Bus
+              <option value="VIP Sleeper">
+                VIP Sleeper Bus
               </option>
 
               <option value="Standard Bus">
@@ -174,23 +174,6 @@
               <option value="Express Bus">
                 Express Bus
               </option>
-
-              <option value="Mini Bus">
-                Mini Bus
-              </option>
-
-              <option value="Van">
-                Van
-              </option>
-
-              <option value="Car">
-                Car
-              </option>
-
-              <option value="Truck">
-                Truck
-              </option>
-
 
             </select>
 

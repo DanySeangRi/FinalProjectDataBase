@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Route extends Model
 {
 
-    protected $fillable = [
-        'origin',
-        'destination',
-        'distance',
-        'duration',
-    ];
+   protected $fillable = [
+    'origin',
+    'destination',
+    'distance',
+    'duration_minutes',
+    'status',
+];
     public function schedules()
     {
         return $this->hasMany(RouteSchedule::class);

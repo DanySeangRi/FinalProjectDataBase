@@ -78,8 +78,31 @@
             {{ $vehicle->brand }}
           </td>
 
-          <td class="p-4 text-slate-500">
-            {{ $vehicle->type }}
+          <td class="p-4">
+            @if ($vehicle->type == "VIP Sleeper")
+              <span
+                class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+                VIP Sleeper
+              </span>
+
+            @elseif ($vehicle->type == "Express Bus")
+              <span
+                class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+                Express Bus
+              </span>
+
+            @elseif ($vehicle->type == "Standard Bus")
+              <span
+                class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                Standard Bus
+              </span>
+
+            @else
+              <span
+                class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                {{ $vehicle->type }}
+              </span>
+            @endif
           </td>
 
 

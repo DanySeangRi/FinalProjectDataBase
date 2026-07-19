@@ -92,7 +92,9 @@ const editDestination = document.getElementById("edit_destination");
 
 const editDistance = document.getElementById("edit_distance");
 
-const editDuration = document.getElementById("edit_duration");
+const editDurationHours = document.getElementById("edit_duration_hours");
+
+const editDurationMinutes = document.getElementById("edit_duration_minutes");
 
 document.querySelectorAll(".editRouteBtn").forEach((button) => {
     button.addEventListener("click", () => {
@@ -106,7 +108,11 @@ document.querySelectorAll(".editRouteBtn").forEach((button) => {
 
         editDistance.value = button.dataset.distance;
 
-        editDuration.value = button.dataset.duration;
+        const duration = Number(button.dataset.duration || 0);
+
+        editDurationHours.value = Math.floor(duration / 60);
+
+        editDurationMinutes.value = duration % 60;
     });
 });
 
@@ -174,14 +180,16 @@ const deleteRouteBackdrop = document.getElementById("deleteRouteBackdrop");
 
 // Open Delete Modal
 
-document.querySelectorAll(".deleteRouteBtn").forEach((button) => {
-    button.addEventListener("click", () => {
-        deleteModal.classList.remove("hidden");
+document.addEventListener("click", (e) => {
+    const button = e.target.closest(".deleteRouteBtn");
 
-        deleteName.innerText = button.dataset.name;
+    if (!button) return;
 
-        deleteForm.action = `/admin/routes/${button.dataset.id}`;
-    });
+    deleteModal.classList.remove("hidden");
+
+    deleteName.innerText = button.dataset.name;
+
+    deleteForm.action = `/admin/routes/${button.dataset.id}`;
 });
 
 // Close Delete Modal

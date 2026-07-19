@@ -1,5 +1,5 @@
-<div id="deleteRouteModal" class="fixed inset-0 z-50 hidden">
 
+<div id="deleteRouteModal" class="fixed inset-0 z-50 hidden">
 
   <div id="deleteRouteBackdrop" class="absolute inset-0 bg-black/50"></div>
 
