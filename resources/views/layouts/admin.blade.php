@@ -33,11 +33,11 @@
     <div class="w-full h-screen flex overflow-hidden">
 
         {{-- Sidebar component --}}
-        <x-sidebar :active="$active ?? 'dashboard'" />
+        <x-admin.sidebar :active="$active ?? 'dashboard'" />
 
         {{-- Main content column --}}
         <div class="flex-1 flex flex-col min-h-0">
-            <x-topbar />
+            <x-admin.topbar />
 
             <main class="flex-1 overflow-y-auto px-8 py-8">
                 @yield('content')

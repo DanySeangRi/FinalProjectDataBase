@@ -8,11 +8,14 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\RouteScheduleController;
 use App\Http\Controllers\Admin\BookingController;
-// Home
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 
+// Home
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+Route::get('/search-trip', [HomeController::class, 'search'])
+    ->name('search.trip');
 
 // Register
 Route::get('/register', function () {
@@ -33,6 +36,28 @@ Route::post('/login', [UserController::class, 'login']);
 // User Logout
 Route::post('/logout', [UserController::class, 'logout'])
     ->name('logout');
+
+//page
+
+
+
+Route::get('/about', [PageController::class, 'about'])
+    ->name('about');
+
+
+
+
+
+Route::get('/contact', [PageController::class, 'contact'])
+    ->name('contact');
+
+
+Route::get('/book-trip', [PageController::class, 'bookTrip'])
+    ->name('bookTrip');
+
+
+Route::get('/faq', [PageController::class, 'faq'])
+    ->name('faq');
 
 
 // =========================

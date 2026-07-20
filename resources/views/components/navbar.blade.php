@@ -1,0 +1,173 @@
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="flex justify-between items-center h-16">
+
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+
+        <div class="w-12 h-12">
+          <img src="{{ asset('image/image.png') }}" class="logo mb-3">
+        </div>
+
+        <span class="text-xl font-bold">
+
+          <span class="text-amber-400">
+            Angor
+          </span>
+
+          <span class="text-gray-700">
+            Travels
+          </span>
+
+        </span>
+
+      </div>
+
+
+
+      <!-- Desktop Navigation -->
+
+      <nav class="hidden md:flex gap-8">
+
+        <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-500 transition">
+          Home
+        </a>
+
+
+        <a href="{{ route('about') }}" class="text-gray-700 hover:text-amber-500 transition">
+          About Us
+        </a>
+
+
+        <a href="{{ route('bookTrip') }}" class="text-gray-700 hover:text-amber-500 transition">
+          Book Trip
+        </a>
+
+
+        <a href="{{ route('contact') }}" class="text-gray-700 hover:text-amber-500 transition">
+          Contact Us
+        </a>
+
+
+        <a href="{{ route('faq') }}" class="text-gray-700 hover:text-amber-500 transition">
+          FAQ
+        </a>
+
+      </nav>
+
+
+
+      <!-- Buttons -->
+
+      <!-- Buttons -->
+
+      <div class="hidden md:flex gap-3 items-center">
+
+
+        @auth
+
+          <span class="text-gray-700 font-medium">
+            Welcome, {{ auth()->user()->first_name }}
+          </span>
+
+
+          <form action="{{ route('logout') }}" method="POST">
+
+            @csrf
+
+            <button type="submit" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">
+              Logout
+            </button>
+
+          </form>
+
+
+        @else
+
+          <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">
+            Sign In
+          </a>
+
+
+        @endauth
+
+
+
+        <button class="px-6 py-2 bg-amber-400 text-white rounded-full hover:bg-amber-500">
+          Join Now
+        </button>
+
+
+      </div>
+
+
+
+      <!-- Mobile Menu Button -->
+
+      <button id="menuBtn" class="md:hidden">
+
+        <i data-lucide="menu"></i>
+
+      </button>
+
+
+    </div>
+
+
+
+    <!-- Mobile Menu -->
+
+    <div id="mobileMenu" class="hidden md:hidden flex-col gap-3 pb-5">
+
+
+      <a href="/" class="py-2">
+        Home
+      </a>
+
+      <a href="#" class="py-2">
+        About Us
+      </a>
+
+      <a href="#" class="py-2">
+        Boat Trip
+      </a>
+
+      <a href="#" class="py-2">
+        Contact Us
+      </a>
+
+      <a href="#" class="py-2">
+        FAQ
+      </a>
+
+      <a href="#" class="py-2">
+        Membership
+      </a>
+
+
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+<script>
+
+  document
+    .getElementById('menuBtn')
+    ?.addEventListener('click', () => {
+
+      document
+        .getElementById('mobileMenu')
+        .classList
+        .toggle('hidden');
+
+    });
+
+</script>
