@@ -25,7 +25,7 @@
                     <div class="
                         px-3 py-1 rounded-full
                         {{ $index == 3 
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-[#86C5FF] text-white'
                             : ($index < 3 
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-gray-100 text-gray-500')
@@ -97,7 +97,7 @@
 
                     <div class="bg-blue-50 rounded-xl p-4">
 
-                        <p class="font-semibold text-blue-700">
+                        <p class="font-semibold text-[#86C5FF]">
                             Account Information
                         </p>
 
@@ -208,9 +208,10 @@
 
                 <button
                     class="
-                    bg-blue-600
-                    hover:bg-blue-700
+                    bg-[#86C5FF]
+                    hover:bg-[#3893E6]
                     text-white
+                    
                     px-8
                     py-3
                     rounded-xl
@@ -322,7 +323,7 @@
                     </span>
 
 
-                    <span class="text-blue-600">
+                    <span class="text-green-700">
 
                         ${{ count($seats) * $schedule->price }}
 

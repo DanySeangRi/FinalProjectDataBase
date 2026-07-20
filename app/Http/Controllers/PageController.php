@@ -132,9 +132,56 @@ public function passenger(Request $request)
 
 }
 
+public function payment(Request $request)
+{
+
+    $schedule = RouteSchedule::with([
+        'route',
+        'vehicle'
+    ])
+    ->findOrFail($request->schedule);
+
+
+    $seats = explode(',', $request->seats);
+
+
+    return view('pages.booking.payment',[
+
+        'schedule'=>$schedule,
+
+        'seats'=>$seats
+
+    ]);
+
+}
+
+public function processPayment(Request $request)
+{
+
+    $validated = $request->validate([
+
+        'schedule'=>'required',
+
+        'seats'=>'required',
+
+        'payment_method'=>'required',
+
+    ]);
 
 
 
+    // Normally here:
+    // connect payment gateway
+    // ABA
+    // KHQR
+    // Stripe
+    // etc.
+
+
+    return redirect()
+        ->route('booking.success');
+
+}
   public function bookTrip(Request $request)
   {
 

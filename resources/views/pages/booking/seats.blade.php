@@ -23,7 +23,7 @@
           <div class="flex items-center gap-2 whitespace-nowrap">
             <div
               class="flex items-center gap-1 px-3 py-1 rounded-full
-                                            {{ $index == 2 ? 'bg-blue-600 text-white' : ($index < 2 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500') }}">
+                                            {{ $index == 2 ? 'bg-[#86C5FF] text-white' : ($index < 2 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500') }}">
               <span class="font-semibold">{{ $index + 1 }}.</span>
               {{ $step }}
             </div>
@@ -47,6 +47,9 @@
           <h2 class="text-xl font-bold mb-5">
             Select Your Seat(s)
           </h2>
+           <div class="mb-6 bg-none border-[#86C5FF] border rounded-xl p-4 text-black text-sm">
+            You can select up to 4 seats.
+          </div>
 
           <!-- Legend -->
           <div class="flex gap-6 mb-6">
@@ -57,7 +60,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded border bg-blue-600"></div>
+              <div class="w-6 h-6 rounded border bg-[#86C5FF]"></div>
               <span class="text-sm">Selected</span>
             </div>
 
@@ -99,9 +102,7 @@
 
           <div id="seatContainer" class="flex flex-col items-center gap-2"></div>
 
-          <div class="mt-6 bg-blue-50 rounded-xl p-4 text-blue-700 text-sm">
-            You can select up to 4 seats.
-          </div>
+         
 
         </div>
 
@@ -155,7 +156,7 @@
 
                 <span>Total</span>
 
-                <span class="font-bold text-blue-600" id="totalPrice">
+                <span class="font-bold text-green-600" id="totalPrice">
                   $0
                 </span>
 
@@ -171,7 +172,7 @@
 
 
               <button id="continueBtn" disabled
-                class="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl disabled:bg-gray-300">
+                class="w-full mt-6 bg-[#86C5FF] text-white py-3 rounded-xl disabled:bg-gray-300">
 
                 Continue
 

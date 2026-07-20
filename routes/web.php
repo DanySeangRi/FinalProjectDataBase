@@ -69,6 +69,15 @@ Route::get('/booking/passenger', [PageController::class, 'passenger'])
 Route::post('/booking/passenger', [PageController::class, 'storePassenger'])
     ->name('passenger.store');
 
+// Payment page
+Route::get('/booking/payment', [PageController::class, 'payment'])
+    ->name('payment');
+
+
+// Process payment
+Route::post('/booking/payment', [PageController::class, 'processPayment'])
+    ->name('payment.process');
+
 // =========================
 // Admin Authentication
 // =========================

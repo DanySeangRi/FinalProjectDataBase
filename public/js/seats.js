@@ -19,7 +19,7 @@ function seatClass(status) {
             return "bg-gray-200 border-gray-200 text-gray-400 cursor-not-allowed";
 
         case "selected":
-            return "bg-blue-600 border-blue-600 text-white";
+            return "bg-[#86C5FF] border-[#86C5FF] text-white";
 
         default:
             return "bg-gray-100 border-gray-300 hover:bg-blue-50 cursor-pointer";

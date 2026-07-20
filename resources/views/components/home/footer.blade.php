@@ -16,11 +16,11 @@
 
                     <span class="font-bold text-xl">
 
-                        <span class="text-amber-400">
-                            Angor
+                        <span class="text-[#86C5FF]">
+                            Angkor
                         </span>
 
-                        <span class="text-gray-700">
+                        <span class="text-amber-400">
                             Travels
                         </span>
 

@@ -14,11 +14,11 @@
 
         <span class="text-xl font-bold">
 
-          <span class="text-amber-400">
+          <span class="text-[#86C5FF]">
             Angor
           </span>
 
-          <span class="text-gray-700">
+          <span class="text-amber-400">
             Travels
           </span>
 
@@ -78,8 +78,8 @@
 
             @csrf
 
-            <button type="submit" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">
-              Logout
+            <button type="submit" class="px-4 py-2 text-white bg-[#86C5FF] hover:bg-gray-100 rounded-full transition">
+              Log out
             </button>
 
           </form>
@@ -93,13 +93,6 @@
 
 
         @endauth
-
-
-
-        <button class="px-6 py-2 bg-amber-400 text-white rounded-full hover:bg-amber-500">
-          Join Now
-        </button>
-
 
       </div>
 
