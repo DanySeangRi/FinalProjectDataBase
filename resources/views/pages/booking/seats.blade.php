@@ -23,7 +23,7 @@
           <div class="flex items-center gap-2 whitespace-nowrap">
             <div
               class="flex items-center gap-1 px-3 py-1 rounded-full
-                                        {{ $index == 2 ? 'bg-blue-600 text-white' : ($index < 2 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500') }}">
+                                            {{ $index == 2 ? 'bg-blue-600 text-white' : ($index < 2 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500') }}">
               <span class="font-semibold">{{ $index + 1 }}.</span>
               {{ $step }}
             </div>
@@ -163,12 +163,21 @@
 
             </div>
 
-            <button id="continueBtn" disabled
-              class="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl disabled:bg-gray-300">
+            <form method="GET" action="{{ route('passenger') }}" id="seatForm">
 
-              Continue
+              <input type="hidden" name="schedule" value="{{ $schedule->id }}">
 
-            </button>
+              <input type="hidden" id="selectedSeatInput" name="seats">
+
+
+              <button id="continueBtn" disabled
+                class="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl disabled:bg-gray-300">
+
+                Continue
+
+              </button>
+
+            </form>
 
           </div>
 

@@ -1,8 +1,3 @@
-
-
-
-
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -10,34 +5,58 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
 
             $table->id();
 
-            $table->foreignId('user_id')
-                ->constrained()
-                ->cascadeOnDelete();
 
+            // Logged user (optional)
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+
+
+            // Trip information
             $table->foreignId('route_schedule_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('booking_code')->unique();
+
+
+            // Passenger information
+            $table->string('first_name');
+
+            $table->string('last_name');
+
+            $table->string('email');
+
+            $table->string('phone');
+
+
+
+            // Booking information
+            $table->string('booking_code')
+                ->unique();
+
 
             $table->string('seat_number');
 
+
             $table->decimal('total_price', 10, 2);
+
+
 
             $table->enum('status', [
                 'pending',
                 'confirmed',
                 'cancelled'
-            ])->default('pending');
+            ])
+            ->default('pending');
 
 
             $table->timestamps();
@@ -45,9 +64,7 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('bookings');

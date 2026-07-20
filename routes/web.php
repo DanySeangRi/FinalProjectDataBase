@@ -63,6 +63,12 @@ Route::get('/faq', [PageController::class, 'faq'])
 Route::get('/booking/seats', [PageController::class, 'seats'])
     ->name('seats');
 
+Route::get('/booking/passenger', [PageController::class, 'passenger'])
+    ->name('passenger');
+
+Route::post('/booking/passenger', [PageController::class, 'storePassenger'])
+    ->name('passenger.store');
+
 // =========================
 // Admin Authentication
 // =========================

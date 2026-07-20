@@ -75,6 +75,62 @@ class PageController extends Controller
     ]);
   }
 
+public function storePassenger(Request $request)
+{
+
+    if(auth()->check()){
+
+        $data = [
+            'first_name'=>auth()->user()->first_name,
+            'last_name'=>auth()->user()->last_name,
+            'email'=>auth()->user()->email,
+            'phone'=>auth()->user()->phone_number,
+        ];
+
+    }
+    else{
+
+        $data = $request->validate([
+
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+
+        ]);
+
+    }
+
+
+    return redirect()
+        ->route('payment',[
+            'schedule'=>$request->schedule,
+            'seats'=>$request->seats
+        ]);
+
+}
+public function passenger(Request $request)
+{
+
+    $schedule = RouteSchedule::with([
+        'route',
+        'vehicle'
+    ])
+    ->findOrFail($request->schedule);
+
+
+    $seats = explode(',', $request->seats);
+
+
+    return view('pages.booking.passenger', [
+
+        'schedule' => $schedule,
+
+        'seats' => $seats
+
+    ]);
+
+}
 
 
 
