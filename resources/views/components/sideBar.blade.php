@@ -1,4 +1,8 @@
-@props(['active' => 'dashboard'])
+@props(['active' => null])
+
+@php
+    $active = $active ?? request()->route()->getName();
+@endphp
 
 @php
     // Inline SVG icons (stroke-based, 18x18) so the component has zero JS dependencies.
@@ -17,7 +21,7 @@
     ];
 
     $overview = [
-        ['key' => 'dashboard', 'label' => 'Dashboard', 'route' => 'admin.dashboard'],
+        ['key' => 'dashboard', 'label' => 'Dashboard', 'route' => 'admin.dashboard.index'],
     ];
 
     $management = [
@@ -29,25 +33,28 @@
     ];
 
     $account = [
-        ['key' => 'settings', 'label' => 'Settings', 'route' => 'admin.settings'],
+        ['key' => 'settings', 'label' => 'settings', 'route' => 'admin.settings'],
     ];
 
     // Helper closure to render one nav link.
-    $navLink = function ($item) use ($icons, $active) {
-        $isActive = $active === $item['key'];
-        $href = \Illuminate\Support\Facades\Route::has($item['route'])
-            ? route($item['route'])
-            : '#';
+  $navLink = function ($item) use ($icons, $active) {
 
-        $classes = $isActive
-            ? 'bg-[#86C5FF] text-black shadow-sm'
-            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900';
+    $isActive = request()->routeIs($item['route']);
 
-        return '<a href="' . $href . '" class="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ' . $classes . '">'
-            . $icons[$item['icon'] ?? $item['key']]
-            . '<span>' . $item['label'] . '</span>'
-            . '</a>';
-    };
+    $href = \Illuminate\Support\Facades\Route::has($item['route'])
+        ? route($item['route'])
+        : '#';
+
+    $classes = $isActive
+        ? 'bg-[#86C5FF] text-black shadow-sm'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900';
+
+    return '<a href="' . $href . '" 
+        class="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ' . $classes . '">'
+        . $icons[$item['key']]
+        . '<span>' . $item['label'] . '</span>'
+        . '</a>';
+};
 @endphp
 
 <aside class="w-64 h-full bg-white border-r border-slate-200 flex flex-col shrink-0">

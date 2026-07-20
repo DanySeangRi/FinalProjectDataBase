@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Kimseang',
             'last_name' => 'Dany',
             'email' => 'kimseang@gmail.com',
-            'password' =>  bcrypt('12345678'),
-             'phone_number' => '0714543678',
+            'password' => bcrypt('12345678'),
+            'phone_number' => '0714543678',
             'role' => 'user',
         ]);
 
@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $bus3=Vehicle::create([
+        $bus3 = Vehicle::create([
             'vehicle_number' => 'PP-003',
             'brand' => 'Mercedes',
             'plate_number' => '2C-9999',
@@ -90,19 +90,19 @@ class DatabaseSeeder extends Seeder
 
         // Routes
 
-       $siemReap = Route::create([
+        $siemReap = Route::create([
 
-    'origin' => 'Phnom Penh',
+            'origin' => 'Phnom Penh',
 
-    'destination' => 'Siem Reap',
+            'destination' => 'Siem Reap',
 
-    'distance' => 320,
+            'distance' => 320,
 
-    'duration_minutes' => 360,
+            'duration_minutes' => 360,
 
-    'status' => 'active',
+            'status' => 'active',
 
-]);
+        ]);
 
 
 

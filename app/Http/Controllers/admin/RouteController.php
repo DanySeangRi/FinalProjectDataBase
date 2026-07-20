@@ -18,10 +18,10 @@ class RouteController extends Controller
 
         $routes = Route::query()
 
-            ->when($search, function($query) use ($search){
+            ->when($search, function ($query) use ($search) {
 
-                $query->where('origin','like',"%{$search}%")
-                      ->orWhere('destination','like',"%{$search}%");
+                $query->where('origin', 'like', "%{$search}%")
+                    ->orWhere('destination', 'like', "%{$search}%");
 
             })
 
@@ -34,7 +34,7 @@ class RouteController extends Controller
 
         return view(
             'admin.routes.index',
-            compact('routes','search')
+            compact('routes', 'search')
         );
 
     }
@@ -42,40 +42,40 @@ class RouteController extends Controller
 
 
 
-  public function store(Request $request)
-{
-    $request->validate([
+    public function store(Request $request)
+    {
+        $request->validate([
 
-        'origin' => 'required',
-        'destination' => 'required',
-        'distance' => 'nullable|integer',
+            'origin' => 'required',
+            'destination' => 'required',
+            'distance' => 'nullable|integer',
 
-        'duration_hours' => 'nullable|integer|min:0',
-        'duration_minutes' => 'nullable|integer|min:0|max:59',
+            'duration_hours' => 'nullable|integer|min:0',
+            'duration_minutes' => 'nullable|integer|min:0|max:59',
 
-    ]);
-
-
-    Route::create([
-
-        'origin' => $request->origin,
-
-        'destination' => $request->destination,
-
-        'distance' => $request->distance,
+        ]);
 
 
-        'duration_minutes' =>
-            ($request->duration_hours * 60)
-            + $request->duration_minutes,
+        Route::create([
 
-    ]);
+            'origin' => $request->origin,
+
+            'destination' => $request->destination,
+
+            'distance' => $request->distance,
 
 
-    return response()->json([
-        'message' => 'Route created'
-    ]);
-}
+            'duration_minutes' =>
+                ($request->duration_hours * 60)
+                + $request->duration_minutes,
+
+        ]);
+
+
+        return response()->json([
+            'message' => 'Route created'
+        ]);
+    }
 
 
 
@@ -83,27 +83,28 @@ class RouteController extends Controller
 
     public function update(Request $request, Route $route)
     {
-
-
         $request->validate([
+            'origin' => 'required',
+            'destination' => 'required',
+            'distance' => 'nullable|integer',
 
-            'origin'=>'required',
-            'destination'=>'required',
-            'distance'=>'nullable|integer',
-            'duration'=>'nullable|string'
-
+            'duration_hours' => 'nullable|integer|min:0',
+            'duration_minutes' => 'nullable|integer|min:0|max:59',
         ]);
 
+        $route->update([
+            'origin' => $request->origin,
+            'destination' => $request->destination,
+            'distance' => $request->distance,
 
-
-        $route->update($request->all());
-
-
+            'duration_minutes' =>
+                ($request->duration_hours * 60)
+                + $request->duration_minutes,
+        ]);
 
         return response()->json([
-            'message'=>'Route updated'
+            'message' => 'Route updated'
         ]);
-
     }
 
 
@@ -118,7 +119,7 @@ class RouteController extends Controller
 
 
         return response()->json([
-            'message'=>'Route deleted'
+            'message' => 'Route deleted'
         ]);
 
     }

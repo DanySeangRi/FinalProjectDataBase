@@ -57,4 +57,7 @@ class Booking extends Model
         return $this->belongsTo(RouteSchedule::class);
     }
 
+
+    
+
 }

@@ -63,7 +63,7 @@
           </label>
 
 
-          <input type="text" name="vehicle_number" placeholder="BUS-001" class="w-full rounded-xl border border-slate-300 px-4 py-3
+          <input type="text" name="vehicle_number" placeholder="PP-001" class="w-full rounded-xl border border-slate-300 px-4 py-3
                         text-sm focus:ring-4 focus:ring-blue-100
                         focus:border-blue-500 outline-none transition">
 

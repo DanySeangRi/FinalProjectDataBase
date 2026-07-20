@@ -14,7 +14,7 @@
 
     <div class="flex items-start justify-between mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-slate-900">Dashboard</h1>
+            <h1 class="text-2xl font-bold text-[#F59E0B]">Dashboard</h1>
             <p class="text-sm text-slate-400 mt-1">Welcome back, Admin. Here's what's happening today.</p>
         </div>
         <span class="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
@@ -23,8 +23,27 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      
 
+    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <p class="text-sm text-slate-500">Users</p>
+        <h2 class="text-3xl font-bold mt-2">{{ $totalUsers }}</h2>
     </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <p class="text-sm text-slate-500">Routes</p>
+        <h2 class="text-3xl font-bold mt-2">{{ $totalRoutes }}</h2>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <p class="text-sm text-slate-500">Vehicles</p>
+        <h2 class="text-3xl font-bold mt-2">{{ $totalVehicles }}</h2>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <p class="text-sm text-slate-500">Schedules</p>
+        <h2 class="text-3xl font-bold mt-2">{{ $totalSchedules }}</h2>
+    </div>
+
+</div>
 
 @endsection

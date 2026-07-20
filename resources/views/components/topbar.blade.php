@@ -90,7 +90,7 @@
         <!-- Footer -->
         <div class="border-t p-4">
 
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('admin.logout') }}">
                 @csrf
 
                 <button
