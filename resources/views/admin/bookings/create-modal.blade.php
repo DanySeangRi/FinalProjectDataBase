@@ -122,7 +122,7 @@
                         <input
                             type="text"
                             name="seat_number"
-                            placeholder="A1"
+                            placeholder="1A"
                             class="w-full rounded-xl border px-4 py-3">
 
                     </div>

@@ -66,7 +66,13 @@ class PageController extends Controller
         'pending',
         'confirmed'
       ])
-      ->pluck('seat_number');
+      ->pluck('seat_number')
+      ->flatMap(function ($seats) {
+
+        return explode(',', $seats);
+
+      })
+      ->toArray();
 
 
     return view('pages.booking.seats', [
@@ -75,48 +81,47 @@ class PageController extends Controller
     ]);
   }
 
-public function storePassenger(Request $request)
-{
+  public function storePassenger(Request $request)
+  {
 
-    if(auth()->check()){
+    if (auth()->check()) {
 
-        $data = [
-            'first_name'=>auth()->user()->first_name,
-            'last_name'=>auth()->user()->last_name,
-            'email'=>auth()->user()->email,
-            'phone'=>auth()->user()->phone_number,
-        ];
+      $data = [
+        'first_name' => auth()->user()->first_name,
+        'last_name' => auth()->user()->last_name,
+        'email' => auth()->user()->email,
+        'phone' => auth()->user()->phone_number,
+      ];
 
-    }
-    else{
+    } else {
 
-        $data = $request->validate([
+      $data = $request->validate([
 
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email',
+        'phone' => 'required',
 
-        ]);
+      ]);
 
     }
 
 
     return redirect()
-        ->route('payment',[
-            'schedule'=>$request->schedule,
-            'seats'=>$request->seats
-        ]);
+      ->route('payment', [
+        'schedule' => $request->schedule,
+        'seats' => $request->seats
+      ]);
 
-}
-public function passenger(Request $request)
-{
+  }
+  public function passenger(Request $request)
+  {
 
     $schedule = RouteSchedule::with([
-        'route',
-        'vehicle'
+      'route',
+      'vehicle'
     ])
-    ->findOrFail($request->schedule);
+      ->findOrFail($request->schedule);
 
 
     $seats = explode(',', $request->seats);
@@ -124,64 +129,109 @@ public function passenger(Request $request)
 
     return view('pages.booking.passenger', [
 
-        'schedule' => $schedule,
+      'schedule' => $schedule,
 
-        'seats' => $seats
+      'seats' => $seats
 
     ]);
 
-}
+  }
 
-public function payment(Request $request)
-{
+  public function payment(Request $request)
+  {
 
     $schedule = RouteSchedule::with([
-        'route',
-        'vehicle'
+      'route',
+      'vehicle'
     ])
-    ->findOrFail($request->schedule);
+      ->findOrFail($request->schedule);
 
 
     $seats = explode(',', $request->seats);
 
 
-    return view('pages.booking.payment',[
+    return view('pages.booking.payment', [
 
-        'schedule'=>$schedule,
+      'schedule' => $schedule,
 
-        'seats'=>$seats
+      'seats' => $seats
 
     ]);
 
-}
+  }
 
-public function processPayment(Request $request)
-{
+  public function processPayment(Request $request)
+  {
 
     $validated = $request->validate([
 
-        'schedule'=>'required',
-
-        'seats'=>'required',
-
-        'payment_method'=>'required',
+      'schedule' => 'required',
+      'seats' => 'required',
+      'payment_method' => 'required',
 
     ]);
 
 
 
-    // Normally here:
-    // connect payment gateway
-    // ABA
-    // KHQR
-    // Stripe
-    // etc.
+    $schedule = RouteSchedule::findOrFail(
+      $request->schedule
+    );
+
+
+    $seats = explode(',', $request->seats);
+
+
+
+    $user = auth()->user();
+
+
+
+    $booking = Booking::create([
+
+      'user_id' => $user->id,
+
+      'first_name' => $user->first_name,
+
+      'last_name' => $user->last_name,
+
+      'email' => $user->email,
+
+      'phone' => $user->phone_number,
+
+
+      'route_schedule_id' => $schedule->id,
+
+      'seat_number' => implode(',', $seats),
+
+      'total_price' => count($seats) * $schedule->price,
+
+      'status' => 'confirmed',
+
+      'booking_code' => 'MN' . str_pad(
+        Booking::count() + 1,
+        6,
+        '0',
+        STR_PAD_LEFT
+      ),
+
+    ]);
+
 
 
     return redirect()
-        ->route('booking.success');
+      ->route('booking.success', $booking->id);
 
-}
+  }
+  public function success($id)
+  {
+    $booking = Booking::with([
+      'routeSchedule.route',
+      'routeSchedule.vehicle'
+    ])->findOrFail($id);
+
+
+    return view('pages.booking.success', compact('booking'));
+  }
   public function bookTrip(Request $request)
   {
 

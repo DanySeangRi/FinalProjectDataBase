@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Sokha',
             'last_name' => 'Chenda',
             'email' => 'customer@angkortravel.com',
-            'password' => bcrypt('Customer@123'),
+            'password' => Hash::make('Customer@123'),
             'phone_number' => '012345678',
             'role' => 'user',
         ]);
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'Manager',
             'email' => 'admin@angkortravel.com',
-            'password' => bcrypt('admin@angkortravel.com'),
+            'password' => Hash::make('Admin@123'),
             'phone_number' => '010999888',
             'role' => 'admin',
         ]);

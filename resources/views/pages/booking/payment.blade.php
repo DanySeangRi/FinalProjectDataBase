@@ -11,19 +11,19 @@
 
 
     {{-- ================= STEP INDICATOR ================= --}}
-        <div class="flex items-center gap-2 text-sm mb-8 overflow-x-auto">
+    <div class="flex items-center gap-2 text-sm mb-8 overflow-x-auto">
 
-            @foreach([
-                'Search',
-                'Select Trip',
-                'Select Seats',
-                'Passenger Info',
-                'Payment'
-            ] as $index => $step)
+      @foreach([
+      'Search',
+      'Select Trip',
+      'Select Seats',
+      'Passenger Info',
+      'Payment'
+      ] as $index => $step)
 
-                <div class="flex items-center gap-2 whitespace-nowrap">
+      <div class="flex items-center gap-2 whitespace-nowrap">
 
-                    <div class="
+        <div class="
                         px-3 py-1 rounded-full
                         {{ $index == 4 
                             ? 'bg-[#86C5FF] text-white'
@@ -33,20 +33,20 @@
                         }}
                     ">
 
-                        {{ $index + 1 }}. {{ $step }}
-
-                    </div>
-
-
-                    @if(!$loop->last)
-                        <div class="w-5 h-px bg-gray-300"></div>
-                    @endif
-
-                </div>
-
-            @endforeach
+          {{ $index + 1 }}. {{ $step }}
 
         </div>
+
+
+        @if(!$loop->last)
+        <div class="w-5 h-px bg-gray-300"></div>
+        @endif
+
+      </div>
+
+      @endforeach
+
+    </div>
 
 
 
@@ -104,42 +104,49 @@
 
 
 
+
+            @php
+
+            $paymentMethods = [
+
+            'card'=>[
+            'image'=>null,
+            'icon'=>'💳',
+            'name'=>'Credit / Debit Card'
+            ],
+
+            'aba'=>[
+            'image'=>'payments/aba.png',
+            'name'=>'ABA Pay'
+            ],
+
+            'acleda'=>[
+            'image'=>'payments/acleda.png',
+            'name'=>'ACLEDA Pay'
+            ],
+
+            'khqr'=>[
+            'image'=>'payments/khqr.png',
+            'name'=>'KHQR'
+            ],
+
+            'wing'=>[
+            'image'=>'payments/wing.png',
+            'name'=>'Wing'
+            ],
+
+            'paypal'=>[
+            'image'=>'payments/paypal.png',
+            'name'=>'PayPal'
+            ]
+
+            ];
+
+            @endphp
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
 
 
-              @foreach([
-              'card'=>[
-              'icon'=>'💳',
-              'name'=>'Credit Card'
-              ],
-
-              'aba'=>[
-              'icon'=>'🏦',
-              'name'=>'ABA Pay'
-              ],
-
-              'acleda'=>[
-              'icon'=>'🏛️',
-              'name'=>'ACLEDA Pay'
-              ],
-
-              'khqr'=>[
-              'icon'=>'📱',
-              'name'=>'KHQR'
-              ],
-
-              'wing'=>[
-              'icon'=>'🦅',
-              'name'=>'Wing'
-              ],
-
-              'paypal'=>[
-              'icon'=>'🅿️',
-              'name'=>'PayPal'
-              ]
-
-              ] as $key=>$payment)
-
+              @foreach($paymentMethods as $key=>$payment)
 
 
               <button
@@ -148,31 +155,52 @@
                 @click="method='{{ $key }}'"
 
                 :class="
-                        method=='{{ $key }}'
-                        ? 'border-blue-600 bg-blue-50'
-                        : 'border-gray-200'
-                        "
+                  method=='{{ $key }}'
+                  ? 'border-blue-600 bg-blue-50'
+                  : 'border-gray-200'
+              "
 
                 class="
-                        border-2
-                        rounded-xl
-                        p-4
-                        flex
-                        flex-col
-                        items-center
-                        gap-2
-                        transition
-                        ">
+                  border-2
+                  rounded-xl
+                  p-4
+                  flex
+                  flex-col
+                  items-center
+                  justify-center
+                  gap-3
+                  transition
+                  hover:border-blue-400
+              ">
 
 
-                <span class="text-2xl">
+                @if($payment['image'])
+
+                <img
+                  src="{{ asset($payment['image']) }}"
+                  class="
+                        w-14
+                        h-14
+                        object-contain
+                    "
+                  alt="{{ $payment['name'] }}">
+
+                @else
+
+                <span class="text-4xl">
                   {{ $payment['icon'] }}
                 </span>
 
+                @endif
 
-                <span class="text-sm font-medium">
+
+
+                <span class="text-sm font-medium text-gray-700">
+
                   {{ $payment['name'] }}
+
                 </span>
+
 
 
               </button>
@@ -462,7 +490,7 @@
               </span>
 
 
-              <span class="text-blue-600">
+              <span class="text-green-700">
 
                 ${{ count($seats) * $schedule->price }}
 
@@ -479,8 +507,8 @@
               class="
                     w-full
                     mt-6
-                    bg-blue-600
-                    hover:bg-blue-700
+                    bg-[#86C5FF]
+                    hover:bg-[#0083FC]
                     text-white
                     py-3
                     rounded-xl
@@ -489,7 +517,7 @@
                     ">
 
 
-              🔒 Pay Now
+               Pay Now
 
 
             </button>

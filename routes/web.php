@@ -78,6 +78,10 @@ Route::get('/booking/payment', [PageController::class, 'payment'])
 Route::post('/booking/payment', [PageController::class, 'processPayment'])
     ->name('payment.process');
 
+Route::get('/booking/success/{id}', 
+    [PageController::class,'success']
+)->name('booking.success');
+
 // =========================
 // Admin Authentication
 // =========================

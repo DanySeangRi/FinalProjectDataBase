@@ -60,11 +60,13 @@ class Booking extends Model
 
 
 
-    public function routeSchedule()
-    {
-        return $this->belongsTo(RouteSchedule::class);
-    }
-
+ public function routeSchedule()
+{
+    return $this->belongsTo(
+        RouteSchedule::class,
+        'route_schedule_id'
+    );
+}
 
     
 
