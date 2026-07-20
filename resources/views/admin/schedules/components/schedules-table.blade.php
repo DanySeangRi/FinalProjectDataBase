@@ -342,3 +342,11 @@
 
 
 </div>
+<div class="mt-6 ">
+
+
+    <div>
+        {{ $routeSchedules->onEachSide(1)->links() }}
+    </div>
+
+</div>

@@ -10,7 +10,9 @@
 
                 <div class="flex items-center gap-2 mb-4">
 
-                    <div class="w-6 h-6 bg-amber-400 rounded-full"></div>
+                    <div class="w-12 h-12">
+                        <img src="{{ asset('image/image.png') }}" class="logo mb-3">
+                    </div>
 
                     <span class="font-bold text-xl">
 
@@ -64,7 +66,7 @@
 
                     <li>
                         <a href="#" class="hover:text-amber-400 transition">
-                            Boat Trip
+                            Book Trip
                         </a>
                     </li>
 
@@ -137,7 +139,7 @@
 
 
                     <li>
-                        ✉ angortravels@gmail.com
+                        ✉ angkortravels@gmail.com
                     </li>
 
 
@@ -160,7 +162,7 @@
         <div class="border-t border-gray-200 mt-8 pt-8 text-center text-sm text-gray-600">
 
             <p>
-                © {{ date('Y') }} AngorTravels. All rights reserved.
+                © {{ date('Y') }} AngkorTravels. All rights reserved.
             </p>
 
         </div>

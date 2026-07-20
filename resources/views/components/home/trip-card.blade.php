@@ -181,26 +181,60 @@
     {{-- Button --}}
 
 
-    <button
+    
+           <a href="{{ route('seats', ['schedule' => $schedule->id]) }}"
+                class="
+                    group
+                    w-full
+                    mt-4
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    bg-none
+                    hover:bg-amber-500
+                    text-amber-500
+                    hover:text-white
+                    font-semibold
+                    text-sm
+                    py-2.5
+                    rounded-[10px]
+                    hover:-translate-y-0.5
+                    transition-all
+                    duration-300
+                    border-amber-300
+                    border
+                "
+            >
+
+    <span>
+        Book Now
+    </span>
+
+    <svg
         class="
-            w-full
-            mt-3
-            bg-white
-            hover:bg-amber-500
-            text-amber-500
-            hover:text-white
-            py-2
-            border
-            border-amber-500
-            rounded-[10px]
+            w-4
+            h-4
+            group-hover:translate-x-1
             transition
         "
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
     >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+        />
+    </svg>
 
-        Book Now
+</a>
+                
 
 
-    </button>
+   
 
 
 
