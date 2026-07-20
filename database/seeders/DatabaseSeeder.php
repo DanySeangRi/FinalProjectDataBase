@@ -1,204 +1,270 @@
 <?php
+
 namespace Database\Seeders;
 
-
-
 use Illuminate\Database\Seeder;
-
 use App\Models\User;
-
 use App\Models\Vehicle;
-
 use App\Models\Route;
-
 use App\Models\RouteSchedule;
-
 use App\Models\Booking;
-
 use Illuminate\Support\Facades\Hash;
-
-
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
-
     public function run(): void
     {
 
-        // Users
+        /*
+        |--------------------------------------------------------------------------
+        | USERS
+        |--------------------------------------------------------------------------
+        */
+
         $customer = User::create([
-            'first_name' => 'Kimseang',
-            'last_name' => 'Dany',
-            'email' => 'kimseang@gmail.com',
-            'password' => bcrypt('12345678'),
-            'phone_number' => '0714543678',
+            'first_name' => 'Sokha',
+            'last_name' => 'Chenda',
+            'email' => 'customer@angkortravel.com',
+            'password' => bcrypt('Customer@123'),
+            'phone_number' => '012345678',
             'role' => 'user',
         ]);
 
+
         $admin = User::create([
-            'first_name' => 'John',
-
-            'last_name' => 'Doe',
-
-            'email' => 'johndoe@example.com',
-
-            'password' => bcrypt('12345678'),
-
-            'phone_number' => '08889574678',
-
+            'first_name' => 'Admin',
+            'last_name' => 'Manager',
+            'email' => 'admin@angkortravel.com',
+            'password' => bcrypt('Admin@123'),
+            'phone_number' => '010999888',
             'role' => 'admin',
         ]);
 
 
 
-
-        // Vehicles
-
-        $bus1 = Vehicle::create([
-            'vehicle_number' => 'PP-001',
-            'brand' => 'Hyundai',
-            'plate_number' => '2A-1234',
-            'type' => 'Standard Bus',
-            'year' => 2022,
-            'capacity' => 45,
-            'status' => 'active',
-        ]);
-
-        $bus2 = Vehicle::create([
-            'vehicle_number' => 'PP-002',
-            'brand' => 'Toyota',
-            'plate_number' => '2B-5678',
-            'type' => 'Express Bus',
-            'year' => 2023,
-            'capacity' => 25,
-            'status' => 'active',
-        ]);
-
-        $bus3 = Vehicle::create([
-            'vehicle_number' => 'PP-003',
-            'brand' => 'Mercedes',
-            'plate_number' => '2C-9999',
-            'type' => 'VIP Sleeper',
-            'year' => 2021,
-            'capacity' => 50,
-            'status' => 'inactive',
-        ]);
+        /*
+        |--------------------------------------------------------------------------
+        | VEHICLES
+        |--------------------------------------------------------------------------
+        */
 
 
+        $vehicles = [
+
+            [
+                'vehicle_number'=>'AT-001',
+                'brand'=>'Hyundai',
+                'plate_number'=>'PP-8888',
+                'type'=>'VIP Sleeper',
+                'year'=>2024,
+                'capacity'=>30,
+                'status'=>'active'
+            ],
+
+            [
+                'vehicle_number'=>'AT-002',
+                'brand'=>'Toyota',
+                'plate_number'=>'PP-7777',
+                'type'=>'Express Bus',
+                'year'=>2023,
+                'capacity'=>40,
+                'status'=>'active'
+            ],
+
+            [
+                'vehicle_number'=>'AT-003',
+                'brand'=>'Mercedes',
+                'plate_number'=>'PP-6666',
+                'type'=>'Standard Bus',
+                'year'=>2022,
+                'capacity'=>45,
+                'status'=>'active'
+            ],
+
+            [
+                'vehicle_number'=>'AT-004',
+                'brand'=>'Ford',
+                'plate_number'=>'PP-5555',
+                'type'=>'Express Bus',
+                'year'=>2024,
+                'capacity'=>35,
+                'status'=>'active'
+            ],
 
 
-
-        // Routes
-
-        $siemReap = Route::create([
-
-            'origin' => 'Phnom Penh',
-
-            'destination' => 'Siem Reap',
-
-            'distance' => 320,
-
-            'duration_minutes' => 360,
-
-            'status' => 'active',
-
-        ]);
+        ];
 
 
+        foreach($vehicles as $vehicle){
+            Vehicle::create($vehicle);
+        }
 
-        $battambang = Route::create([
 
-            'origin' => 'Phnom Penh',
-
-            'destination' => 'Battambang',
-
-            'distance' => 290,
-
-            'duration_minutes' => 300,
-            'status' => 'active',
-
-        ]);
+        $bus1 = Vehicle::find(1);
+        $bus2 = Vehicle::find(2);
+        $bus3 = Vehicle::find(3);
+        $bus4 = Vehicle::find(4);
 
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | ROUTES (25 CAMBODIAN PROVINCES)
+        |--------------------------------------------------------------------------
+        */
 
 
-        // Route schedules
+        $routes = [
 
-        $schedule1 = RouteSchedule::create([
+            ['Phnom Penh','Siem Reap',320,360],
+            ['Phnom Penh','Battambang',290,330],
+            ['Phnom Penh','Kampot',150,180],
+            ['Phnom Penh','Sihanoukville',230,270],
+            ['Phnom Penh','Kep',170,210],
+            ['Phnom Penh','Kandal',40,60],
+            ['Phnom Penh','Kampong Cham',125,150],
+            ['Phnom Penh','Kampong Thom',165,200],
+            ['Phnom Penh','Pursat',190,230],
+            ['Phnom Penh','Takeo',85,100],
+            ['Phnom Penh','Svay Rieng',125,150],
+            ['Phnom Penh','Prey Veng',90,120],
+            ['Phnom Penh','Kratie',250,300],
+            ['Phnom Penh','Mondulkiri',380,450],
+            ['Phnom Penh','Ratanakiri',600,720],
+            ['Siem Reap','Battambang',170,200],
+            ['Siem Reap','Kampong Thom',150,180],
+            ['Battambang','Pailin',80,100],
+            ['Kampot','Sihanoukville',110,140],
+            ['Kep','Kampot',30,45],
+            ['Pursat','Battambang',105,130],
+            ['Kratie','Stung Treng',150,180],
+            ['Kampong Cham','Kratie',150,180],
+            ['Takeo','Kep',100,120],
+            ['Siem Reap','Preah Vihear',220,280],
 
-            'route_id' => $siemReap->id,
-
-            'vehicle_id' => $bus1->id,
-
-            'travel_date' => '2026-07-20',
-
-            'departure_time' => '08:00:00',
-
-            'arrival_time' => '14:00:00',
-
-            'price' => 15.00,
-
-            'available_seats' => 40,
-
-        ]);
-
-
-
-        $schedule2 = RouteSchedule::create([
-
-            'route_id' => $battambang->id,
-
-            'vehicle_id' => $bus2->id,
-
-            'travel_date' => '2026-07-20',
-
-            'departure_time' => '09:00:00',
-
-            'arrival_time' => '14:00:00',
-
-            'price' => 12.00,
-
-            'available_seats' => 25,
-
-        ]);
+        ];
 
 
 
+        $createdRoutes=[];
 
 
-        // Bookings
+        foreach($routes as $route){
+
+            $createdRoutes[] = Route::create([
+
+                'origin'=>$route[0],
+                'destination'=>$route[1],
+                'distance'=>$route[2],
+                'duration_minutes'=>$route[3],
+                'status'=>'active'
+
+            ]);
+
+        }
+
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SCHEDULES
+        |--------------------------------------------------------------------------
+        */
+
+
+        foreach($createdRoutes as $index=>$route){
+
+
+            RouteSchedule::create([
+
+                'route_id'=>$route->id,
+
+                'vehicle_id'=>[
+                    $bus1->id,
+                    $bus2->id,
+                    $bus3->id,
+                    $bus4->id
+                ][$index % 4],
+
+
+                'travel_date'=>Carbon::now()
+                    ->addDays($index % 7)
+                    ->format('Y-m-d'),
+
+
+                'departure_time'=>[
+                    '06:00:00',
+                    '08:30:00',
+                    '13:00:00',
+                    '18:00:00'
+                ][$index % 4],
+
+
+                'arrival_time'=>[
+                    '10:00:00',
+                    '12:30:00',
+                    '17:00:00',
+                    '22:00:00'
+                ][$index % 4],
+
+
+                'price'=>[
+                    10,
+                    15,
+                    18,
+                    25
+                ][$index % 4],
+
+
+                'available_seats'=>40,
+
+            ]);
+
+
+        }
+
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | BOOKINGS
+        |--------------------------------------------------------------------------
+        */
+
 
         Booking::create([
 
-            'user_id' => $customer->id,
+            'user_id'=>$customer->id,
 
-            'route_schedule_id' => $schedule1->id,
+            'route_schedule_id'=>1,
 
-            'seat_number' => 'A12',
+            'seat_number'=>'A01',
 
-            'total_price' => 15.00,
+            'total_price'=>15,
 
-            'status' => 'confirmed',
+            'status'=>'confirmed'
 
         ]);
-
 
 
         Booking::create([
 
-            'user_id' => $customer->id,
+            'user_id'=>$customer->id,
 
-            'route_schedule_id' => $schedule2->id,
+            'route_schedule_id'=>2,
 
-            'seat_number' => 'B05',
+            'seat_number'=>'B05',
 
-            'total_price' => 12.00,
+            'total_price'=>12,
 
-            'status' => 'pending',
+            'status'=>'pending'
 
         ]);
+
+
 
     }
-
 }

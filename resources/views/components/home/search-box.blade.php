@@ -2,7 +2,7 @@
 
 
     <form
-        action="{{ route('search.trip') }}"
+        action="{{ route('bookTrip') }}"
         method="GET"
         class="
             max-w-5xl

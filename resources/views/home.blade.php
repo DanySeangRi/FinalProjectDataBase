@@ -39,11 +39,13 @@
             <div class="mt-8 flex gap-4">
 
 
-                <button class="bg-amber-400 text-white px-6 py-3 rounded-full">
 
-                    Book A Trip
 
-                </button>
+                <a href="{{ route('bookTrip') }}" class="bg-amber-400 text-white px-6 py-3 rounded-full">
+                    Book Trip
+                </a>
+
+
 
 
 

@@ -19,7 +19,7 @@
 
     {{-- Header --}}
 
-    <div class="flex items-center">
+    <div class="flex items-center ">
 
 
         <div>
@@ -38,7 +38,7 @@
 
             <h3
                 class="
-                    text-center
+                    
                     text-[14px]
                     font-bold
                     text-gray-800
