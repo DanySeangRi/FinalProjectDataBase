@@ -15,7 +15,7 @@
         <span class="text-xl font-bold">
 
           <span class="text-[#86C5FF]">
-            Angor
+            Angkor
           </span>
 
           <span class="text-amber-400">

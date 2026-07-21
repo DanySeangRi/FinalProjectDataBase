@@ -101,7 +101,7 @@ Route::post('/admin/login', [AdminController::class, 'login'])
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth'])
+  ->middleware(['auth', 'admin'])
     ->group(function () {
 
         // Dashboard
