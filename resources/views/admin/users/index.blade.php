@@ -48,11 +48,11 @@
 
 @include('admin.users.components.user-table')
 
-@include('admin.users.create-modal')
+@include('admin.users.modal.create-modal')
 
-@include('admin.users.edit-modal')
+@include('admin.users.modal.edit-modal')
 
-@include('admin.users.delete-modal')
+@include('admin.users.modal.delete-modal')
 
 @endsection
 

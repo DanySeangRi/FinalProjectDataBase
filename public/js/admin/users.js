@@ -13,7 +13,7 @@ if (searchInput) {
 
         timer = setTimeout(() => {
             searchForm.submit();
-        }, 500);
+        }, 700);
     });
 }
 

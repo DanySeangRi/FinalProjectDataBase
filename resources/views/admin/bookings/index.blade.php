@@ -42,9 +42,9 @@
     </div>
     @include('admin.bookings.components.search')
     @include('admin.bookings.components.bookings-table')
-    @include('admin.bookings.create-modal')
-    @include('admin.bookings.edit-modal')
-    @include('admin.bookings.delete-modal')
+    @include('admin.bookings.modal.create-modal')
+    @include('admin.bookings.modal.edit-modal')
+    @include('admin.bookings.modal.delete-modal')
 
 @endsection
 

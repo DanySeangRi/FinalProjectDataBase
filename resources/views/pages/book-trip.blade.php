@@ -249,10 +249,11 @@
                 <h2 class="text-2xl font-bold text-gray-800 mb-8">
                     Available Trips
                 </h2>
+                
 
 
 
-                <div class="grid md:grid-cols-3 gap-6">
+                <div class="grid md:grid-cols-2 gap-6">
 
 
                     @foreach($schedules as $schedule)

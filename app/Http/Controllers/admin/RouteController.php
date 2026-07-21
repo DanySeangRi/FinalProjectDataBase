@@ -20,8 +20,8 @@ class RouteController extends Controller
 
             ->when($search, function ($query) use ($search) {
 
-                $query->where('origin', 'like', "%{$search}%")
-                    ->orWhere('destination', 'like', "%{$search}%");
+                $query->where('origin', 'ilike', "%{$search}%")
+                    ->orWhere('destination', 'ilike', "%{$search}%");
 
             })
 

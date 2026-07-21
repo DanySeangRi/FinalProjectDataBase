@@ -121,6 +121,9 @@ Route::prefix('admin')
         Route::get('/users', [UserController::class, 'index'])
             ->name('users');
 
+        Route::get('/users/{id}/booking', [UserController::class, 'bookingHistory'])
+            ->name('users.booking');
+
         Route::post('/users', [UserController::class, 'store'])
             ->name('users.store');
 

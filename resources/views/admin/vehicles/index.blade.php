@@ -36,11 +36,11 @@
 
 @include('admin.vehicles.components.vehicles-table')
 
-@include('admin.vehicles.create-modal')
+@include('admin.vehicles.modal.create-modal')
 
-@include('admin.vehicles.edit-modal')
+@include('admin.vehicles.modal.edit-modal')
 
-@include('admin.vehicles.delete-modal')
+@include('admin.vehicles.modal.delete-modal')
 
 
 @endsection

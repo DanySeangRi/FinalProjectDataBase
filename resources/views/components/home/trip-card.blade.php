@@ -1,33 +1,32 @@
 @props([
-    'schedule'
+'schedule'
 ])
 
 
 <div
     class="
         bg-white
-        rounded-[5px]
+        rounded-[15px]
         shadow-lg
         border
         border-gray-100
-        p-3
+        p-5
         hover:-translate-y-2
         transition
-    "
->
+    ">
 
 
     {{-- Header --}}
+    
 
-    <div class="flex items-center ">
+    <div class="flex items-center justify-center ">
 
 
         <div>
 
             <img
                 src="{{ asset('image/image.png') }}"
-                class="w-16 h-16 object-contain"
-            >
+                class="w-20 h-20 object-contain">
 
         </div>
 
@@ -39,11 +38,10 @@
             <h3
                 class="
                     
-                    text-[14px]
+                    text-[20px]
                     font-bold
                     text-gray-800
-                "
-            >
+                ">
 
                 {{ $schedule->route->origin }}
 
@@ -70,11 +68,10 @@
     <div
         class="
             mt-2
-            text-[12px]
+            text-[16px]
             space-y-1
             text-gray-600
-        "
-    >
+        ">
 
 
         <div class="flex justify-between">
@@ -102,7 +99,7 @@
 
 
             <span>
-                Arrival
+                Arrived
             </span>
 
 
@@ -132,6 +129,36 @@
                 {{ $schedule->vehicle->type ?? 'Bus' }}
 
             </span>
+
+
+        </div>
+
+        <div class="flex justify-between items-center">
+
+
+            <span class="flex items-center gap-2">
+
+
+
+                <i data-lucide="calendar-check" class="w-4 h-4"></i>
+
+
+                Travel Date
+
+
+            </span>
+
+
+
+
+            <span class="text-black font-bold">
+
+
+              {{ \Carbon\Carbon::parse($schedule->travel_date)->format('d M Y') }}
+
+
+            </span>
+
 
 
         </div>
@@ -181,9 +208,9 @@
     {{-- Button --}}
 
 
-    
-           <a href="{{ route('seats', ['schedule' => $schedule->id]) }}"
-                class="
+
+    <a href="{{ route('seats', ['schedule' => $schedule->id]) }}"
+        class="
                     group
                     w-full
                     mt-4
@@ -204,37 +231,34 @@
                     duration-300
                     border-amber-300
                     border
-                "
-            >
+                ">
 
-    <span>
-        Book Now
-    </span>
+        <span>
+            Book Now
+        </span>
 
-    <svg
-        class="
+        <svg
+            class="
             w-4
             h-4
             group-hover:translate-x-1
             transition
         "
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-    >
-        <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M13 7l5 5m0 0l-5 5m5-5H6"
-        />
-    </svg>
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24">
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
 
-</a>
-                
+    </a>
 
 
-   
+
+
 
 
 

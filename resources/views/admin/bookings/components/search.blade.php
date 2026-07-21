@@ -14,7 +14,7 @@
 
 
     <input type="text" name="search" id="searchInput" value="{{ $search ?? '' }}"
-      placeholder="Search origin or destination..." class="
+      placeholder="Search booking code" class="
                                                           w-full
                                                           rounded-xl
                                                           border

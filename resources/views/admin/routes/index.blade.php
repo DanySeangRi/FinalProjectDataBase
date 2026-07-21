@@ -51,13 +51,13 @@
 
     @include('admin.routes.components.routes-table')
 
-    @include('admin.routes.create-modal')
+    @include('admin.routes.modal.create-modal')
 
 
-    @include('admin.routes.edit-modal')
+    @include('admin.routes.modal.edit-modal')
 
 
-    @include('admin.routes.delete-modal')
+    @include('admin.routes.modal.delete-modal')
 
 
 

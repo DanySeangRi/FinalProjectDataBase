@@ -33,9 +33,9 @@
 
     @include('admin.schedules.components.search')
     @include('admin.schedules.components.schedules-table')
-    @include('admin.schedules.create-modal')
-    @include('admin.schedules.edit-modal')
-    @include('admin.schedules.delete-modal')
+    @include('admin.schedules.modal.create-modal')
+    @include('admin.schedules.modal.edit-modal')
+    @include('admin.schedules.modal.delete-modal')
     @push('scripts')
 
         <script src="{{ asset('js/admin/scheduleRoutes.js') }}"></script>

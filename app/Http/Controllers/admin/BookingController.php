@@ -19,6 +19,7 @@ class BookingController extends Controller
     $search = $request->search;
 
     $bookings = Booking::with([
+      
       'user',
       'routeSchedule.route',
       'routeSchedule.vehicle',

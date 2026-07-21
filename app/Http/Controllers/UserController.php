@@ -200,6 +200,17 @@ class UserController extends Controller
             'message' => 'User deleted successfully.'
         ]);
     }
+    public function bookingHistory($id)
+    {
+
+        $user = User::findOrFail($id);
+        $bookings = $user->bookings()->with(['routeSchedule.route'])->latest()->paginate(10);
+
+        return view(
+            'admin.users.booking-history',
+            compact('user', 'bookings')
+        );
+    }
 
 
 

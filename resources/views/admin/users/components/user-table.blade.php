@@ -47,7 +47,7 @@
 
                 <!-- Avatar -->
                 <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 
-                        flex items-center justify-center font-semibold">
+                            flex items-center justify-center font-semibold">
 
                   {{ strtoupper(substr($user->first_name, 0, 1)) }}
                   {{ strtoupper(substr($user->last_name, 0, 1)) }}
@@ -139,6 +139,28 @@
 
 
                 </button>
+              <a href="{{ route('admin.users.booking', $user->id) }}"
+                  class="
+                          inline-flex items-center gap-2 px-3 py-2 
+                          rounded-lg
+                          bg-blue-50
+                          text-gray-600
+                          text-sm
+                          font-medium
+                          hover:bg-blue-100
+                          transition">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-eye-icon lucide-eye">
+                    <path
+                      d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+
+                 
+
+                </a>
 
               </div>
 
