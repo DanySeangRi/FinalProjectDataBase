@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\RouteSchedule;
 use App\Models\Route;
 use App\Models\Vehicle;
+use App\Models\Seat;
 
 class RouteScheduleController extends Controller
 {
@@ -71,40 +72,72 @@ class RouteScheduleController extends Controller
 
         $validated = $request->validate([
 
-
             'route_id' =>
                 'required|exists:routes,id',
-
 
             'vehicle_id' =>
                 'required|exists:vehicles,id',
 
-
             'travel_date' =>
                 'required|date',
-
 
             'departure_time' =>
                 'required',
 
-
             'arrival_time' =>
                 'required',
 
-
             'price' =>
                 'required|numeric',
-
-
-            'available_seats' =>
-                'required|integer|min:1',
-
 
         ]);
 
 
 
-        RouteSchedule::create($validated);
+        $schedule = RouteSchedule::create($validated);
+
+
+        // Generate seats
+        $vehicle = Vehicle::findOrFail(
+            $validated['vehicle_id']
+        );
+
+
+        $capacity = $vehicle->capacity;
+
+
+        $letters = ['A', 'B', 'C', 'D'];
+
+        $count = 0;
+
+
+        for ($row = 1; $count < $capacity; $row++) {
+
+
+            foreach ($letters as $letter) {
+
+
+                if ($count >= $capacity) {
+                    break;
+                }
+
+
+                Seat::create([
+
+                    'schedule_id' => $schedule->id,
+
+                    'seat_number' => $row . $letter,
+
+                    'status' => 'available'
+
+                ]);
+
+
+                $count++;
+
+            }
+
+        }
 
 
 
@@ -139,9 +172,6 @@ class RouteScheduleController extends Controller
 
             'price' =>
                 'required|numeric',
-
-            'available_seats' =>
-                'required|integer|min:1',
 
         ]);
 

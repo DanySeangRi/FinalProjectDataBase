@@ -10,6 +10,7 @@ use App\Models\RouteSchedule;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use App\Models\Seat;
 
 class DatabaseSeeder extends Seeder
 {
@@ -168,16 +169,17 @@ class DatabaseSeeder extends Seeder
 
 
         /*
-        |--------------------------------------------------------------------------
-        | SCHEDULES
-        |--------------------------------------------------------------------------
-        */
+      |--------------------------------------------------------------------------
+      | SCHEDULES + SEATS
+      |--------------------------------------------------------------------------
+      */
 
+        $createdSchedules = [];
 
         foreach ($createdRoutes as $index => $route) {
 
 
-            RouteSchedule::create([
+            $schedule = RouteSchedule::create([
 
                 'route_id' => $route->id,
 
@@ -218,16 +220,62 @@ class DatabaseSeeder extends Seeder
                 ][$index % 4],
 
 
-                'available_seats' => 40,
+                'status' => 'active',
 
             ]);
 
+
+            $createdSchedules[] = $schedule;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate Seats
+            |--------------------------------------------------------------------------
+            */
+
+            $vehicle = $schedule->vehicle;
+
+            $capacity = $vehicle->capacity;
+
+
+            $letters = ['A', 'B', 'C', 'D'];
+
+            $seatCount = 0;
+
+
+            for ($row = 1; $seatCount < $capacity; $row++) {
+
+
+                foreach ($letters as $letter) {
+
+
+                    if ($seatCount >= $capacity) {
+                        break;
+                    }
+
+
+                    Seat::create([
+
+                        'schedule_id' => $schedule->id,
+
+                        'seat_number' => $row . $letter,
+
+                        'status' => 'available'
+
+                    ]);
+
+
+                    $seatCount++;
+
+                }
+
+            }
 
         }
 
 
 
-
         /*
         |--------------------------------------------------------------------------
         | BOOKINGS
@@ -235,17 +283,12 @@ class DatabaseSeeder extends Seeder
         */
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | BOOKINGS
-        |--------------------------------------------------------------------------
-        */
-
-        Booking::create([
+        $booking1 = Booking::create([
 
             'user_id' => $customer->id,
 
-            'route_schedule_id' => 1,
+            'route_schedule_id' => $createdSchedules[0]->id,
+
 
             'first_name' => $customer->first_name,
 
@@ -255,22 +298,55 @@ class DatabaseSeeder extends Seeder
 
             'phone' => $customer->phone_number,
 
+
             'booking_code' => 'AT000001',
 
-            'seat_number' => '1A',
-
-            'total_price' => 15,
+            'total_price' => 20,
 
             'status' => 'confirmed'
 
         ]);
 
 
-        Booking::create([
+
+        $seat1 = Seat::where('schedule_id', $createdSchedules[0]->id)
+            ->where('seat_number', '1A')
+            ->first();
+
+
+        $seat2 = Seat::where('schedule_id', $createdSchedules[0]->id)
+            ->where('seat_number', '1B')
+            ->first();
+
+
+
+        $booking1->seats()->attach([
+
+            $seat1->id,
+
+            $seat2->id
+
+        ]);
+
+
+
+        $seat1->update([
+            'status' => 'booked'
+        ]);
+
+
+        $seat2->update([
+            'status' => 'booked'
+        ]);
+
+
+
+        $booking2 = Booking::create([
 
             'user_id' => $customer->id,
 
-            'route_schedule_id' => 2,
+            'route_schedule_id' => $createdSchedules[1]->id,
+
 
             'first_name' => $customer->first_name,
 
@@ -280,14 +356,28 @@ class DatabaseSeeder extends Seeder
 
             'phone' => $customer->phone_number,
 
+
             'booking_code' => 'AT000002',
 
-            'seat_number' => '5B',
-
-            'total_price' => 12,
+            'total_price' => 15,
 
             'status' => 'pending'
 
+        ]);
+
+
+
+        $seat3 = Seat::where('schedule_id', $createdSchedules[1]->id)
+            ->where('seat_number', '5B')
+            ->first();
+
+
+
+        $booking2->seats()->attach($seat3->id);
+
+
+        $seat3->update([
+            'status' => 'booked'
         ]);
 
 

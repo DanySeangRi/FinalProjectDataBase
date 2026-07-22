@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\RouteSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Seat;
 
 class BookingController extends Controller
 {
@@ -19,10 +20,10 @@ class BookingController extends Controller
     $search = $request->search;
 
     $bookings = Booking::with([
-      
       'user',
       'routeSchedule.route',
       'routeSchedule.vehicle',
+      'seats'
     ])
 
       ->when($search, function ($query) use ($search) {
@@ -31,7 +32,15 @@ class BookingController extends Controller
 
           $q->where('booking_code', 'ILIKE', "%{$search}%")
 
-            ->orWhere('seat_number', 'ILIKE', "%{$search}%")
+            ->orWhereHas('seats', function ($seat) use ($search) {
+
+              $seat->where(
+                'seat_number',
+                'ILIKE',
+                "%{$search}%"
+              );
+
+            })
 
             ->orWhereHas('user', function ($user) use ($search) {
 
@@ -78,33 +87,48 @@ class BookingController extends Controller
 
   public function store(Request $request)
   {
+
     $validated = $request->validate([
 
       'user_id' => 'required|exists:users,id',
 
       'route_schedule_id' => 'required|exists:route_schedules,id',
 
-      'seat_number' => 'required|string|max:10',
+      'seats' => 'required|array',
+
+      'seats.*' => 'exists:seats,id',
 
     ]);
+
 
     $schedule = RouteSchedule::findOrFail(
       $validated['route_schedule_id']
     );
 
-    $validated['total_price'] = $schedule->price;
 
-    $validated['booking_code'] =
-      'MN' . str_pad(
-        Booking::count() + 1,
-        6,
-        '0',
-        STR_PAD_LEFT
-      );
+    $booking = Booking::create([
 
-    $validated['status'] = 'pending';
+      'user_id' => $validated['user_id'],
 
-    Booking::create($validated);
+      'route_schedule_id' => $validated['route_schedule_id'],
+
+      'total_price' => count($validated['seats']) * $schedule->price,
+
+      'status' => 'pending',
+
+    ]);
+
+
+    $booking->seats()->attach(
+      $validated['seats']
+    );
+
+
+    Seat::whereIn('id', $validated['seats'])
+      ->update([
+        'status' => 'booked'
+      ]);
+
 
     return response()->json([
       'success' => true
@@ -113,29 +137,49 @@ class BookingController extends Controller
 
   public function update(Request $request, Booking $booking)
   {
+
     $validated = $request->validate([
 
       'user_id' => 'required|exists:users,id',
 
       'route_schedule_id' => 'required|exists:route_schedules,id',
 
-      'seat_number' => 'required|string|max:10',
+      'seats' => 'required|array',
+
+      'seats.*' => 'exists:seats,id',
 
       'status' => 'required|in:pending,confirmed,cancelled',
 
     ]);
 
+
     $schedule = RouteSchedule::findOrFail(
       $validated['route_schedule_id']
     );
 
-    $validated['total_price'] = $schedule->price;
 
-    $booking->update($validated);
+    $booking->update([
+
+      'user_id' => $validated['user_id'],
+
+      'route_schedule_id' => $validated['route_schedule_id'],
+
+      'total_price' => count($validated['seats']) * $schedule->price,
+
+      'status' => $validated['status']
+
+    ]);
+
+
+    $booking->seats()->sync(
+      $validated['seats']
+    );
+
 
     return response()->json([
       'success' => true
     ]);
+
   }
 
   public function destroy(Booking $booking)

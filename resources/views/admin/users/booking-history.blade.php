@@ -171,7 +171,23 @@
                   </p>
 
                   <p class="text-sm text-slate-400 mt-1">
-                    Seat {{ $booking->seat_number }}
+
+                    Seats:
+
+                    @forelse($booking->seats as $seat)
+
+                      {{ $seat->seat_number }}
+
+                      @if(!$loop->last)
+                        ,
+                      @endif
+
+                    @empty
+
+                      No seat selected
+
+                    @endforelse
+
                   </p>
 
                 </div>

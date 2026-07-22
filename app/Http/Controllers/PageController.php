@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Route;
 use App\Models\RouteSchedule;
 use App\Models\Booking;
-
+use App\Models\Seat;
 class PageController extends Controller
 {
 
@@ -45,36 +45,23 @@ class PageController extends Controller
 
 
 
-  
+
   public function seats(Request $request)
   {
     $schedule = RouteSchedule::with([
       'route',
-      'vehicle'
+      'vehicle',
+      'seats'
     ])
       ->findOrFail($request->schedule);
 
 
-    $reservedSeats = Booking::where(
-      'route_schedule_id',
-      $schedule->id
-    )
-      ->whereIn('status', [
-        'pending',
-        'confirmed'
-      ])
-      ->pluck('seat_number')
-      ->flatMap(function ($seats) {
-
-        return explode(',', $seats);
-
-      })
-      ->toArray();
-
-
     return view('pages.booking.seats', [
+
       'schedule' => $schedule,
-      'reservedSeats' => $reservedSeats
+
+      'seats' => $schedule->seats
+
     ]);
   }
 
@@ -163,11 +150,12 @@ class PageController extends Controller
     $validated = $request->validate([
 
       'schedule' => 'required',
+
       'seats' => 'required',
+
       'payment_method' => 'required',
 
     ]);
-
 
 
     $schedule = RouteSchedule::findOrFail(
@@ -175,8 +163,7 @@ class PageController extends Controller
     );
 
 
-    $seats = explode(',', $request->seats);
-
+    $seatIds = explode(',', $request->seats);
 
 
     $user = auth()->user();
@@ -185,7 +172,9 @@ class PageController extends Controller
 
     $booking = Booking::create([
 
+
       'user_id' => $user->id,
+
 
       'first_name' => $user->first_name,
 
@@ -198,33 +187,49 @@ class PageController extends Controller
 
       'route_schedule_id' => $schedule->id,
 
-      'seat_number' => implode(',', $seats),
 
-      'total_price' => count($seats) * $schedule->price,
+      'total_price' =>
+        count($seatIds) * $schedule->price,
+
 
       'status' => 'confirmed',
-
-      'booking_code' => 'MN' . str_pad(
-        Booking::count() + 1,
-        6,
-        '0',
-        STR_PAD_LEFT
-      ),
 
     ]);
 
 
 
+    // save selected seats
+    $booking->seats()->attach($seatIds);
+
+
+
+    // update seats status
+    Seat::whereIn('id', $seatIds)
+      ->update([
+        'status' => 'booked'
+      ]);
+
+
+
     return redirect()
-      ->route('booking.success', $booking->id);
+      ->route(
+        'booking.success',
+        $booking->id
+      );
 
   }
   public function success($id)
   {
     $booking = Booking::with([
+
       'routeSchedule.route',
-      'routeSchedule.vehicle'
-    ])->findOrFail($id);
+
+      'routeSchedule.vehicle',
+
+      'seats'
+
+    ])
+      ->findOrFail($id);
 
 
     return view('pages.booking.success', compact('booking'));

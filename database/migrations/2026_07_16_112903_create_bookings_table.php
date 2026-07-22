@@ -13,19 +13,17 @@ return new class extends Migration {
             $table->id();
 
 
-            // Logged user (optional)
+            // User
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
 
 
-
-            // Trip information
+            // Trip
             $table->foreignId('route_schedule_id')
                 ->constrained()
                 ->cascadeOnDelete();
-
 
 
             // Passenger information
@@ -38,17 +36,12 @@ return new class extends Migration {
             $table->string('phone');
 
 
-
             // Booking information
             $table->string('booking_code')
                 ->unique();
 
 
-            $table->string('seat_number');
-
-
             $table->decimal('total_price', 10, 2);
-
 
 
             $table->enum('status', [

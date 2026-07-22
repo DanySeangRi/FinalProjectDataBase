@@ -7,23 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
 
-  protected $fillable = [
+    protected $fillable = [
 
-    'user_id',
-    'route_schedule_id',
+        'user_id',
+        'route_schedule_id',
 
-    'first_name',
-    'last_name',
-    'email',
-    'phone',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
 
-    'booking_code',
-    'seat_number',
-    'total_price',
-    'status',
+        'booking_code',
+        'total_price',
+        'status',
 
-];
-
+    ];
 
 
     protected static function boot()
@@ -33,7 +31,6 @@ class Booking extends Model
 
         static::creating(function ($booking) {
 
-
             $lastBooking = Booking::latest('id')->first();
 
 
@@ -42,10 +39,13 @@ class Booking extends Model
                 : 1;
 
 
-
             $booking->booking_code =
-                'MN' . str_pad($number, 6, '0', STR_PAD_LEFT);
-
+                'MN' . str_pad(
+                    $number,
+                    6,
+                    '0',
+                    STR_PAD_LEFT
+                );
 
         });
 
@@ -60,14 +60,31 @@ class Booking extends Model
 
 
 
- public function routeSchedule()
-{
-    return $this->belongsTo(
-        RouteSchedule::class,
-        'route_schedule_id'
-    );
-}
+    public function routeSchedule()
+    {
+        return $this->belongsTo(
+            RouteSchedule::class,
+            'route_schedule_id'
+        );
+    }
 
-    
+
+
+    public function seats()
+    {
+        return $this->belongsToMany(
+            Seat::class,
+            'booking_seats'
+        );
+    }
+
+
+
+    public function bookingSeats()
+    {
+        return $this->hasMany(
+            BookingSeat::class
+        );
+    }
 
 }

@@ -158,7 +158,15 @@
           </td>
           <td class="p-4 text-slate-500">
 
-            {{ $booking->routeSchedule->vehicle->vehicle_number }}
+            @if($booking->routeSchedule && $booking->routeSchedule->vehicle)
+
+              {{ $booking->routeSchedule->vehicle->vehicle_number }}
+
+            @else
+
+              -
+
+            @endif
 
           </td>
 
@@ -172,7 +180,15 @@
 
           <td class="p-4 text-slate-500">
 
-            {{ $booking->seat_number }}
+            @foreach($booking->seats as $seat)
+
+              <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs">
+
+                {{ $seat->seat_number }}
+
+              </span>
+
+            @endforeach
 
           </td>
 
@@ -186,7 +202,7 @@
 
           <td class="p-4 text-slate-500">
 
-            ${{ number_format($booking->routeSchedule->price, 2) }}
+            ${{ number_format($booking->total_price, 2) }}
 
           </td>
 
