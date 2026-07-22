@@ -46,10 +46,8 @@ class BookTripController extends Controller
            ->orderBy('departTime', 'asc')
            ->get();
 
-           return view('booktrip', compact('departPlace', 'arrivePlace', 'scheds', 'from', 'to', 'date'));
-
-
     }
+      return view('booktrip', compact('departPlace', 'arrivePlace', 'scheds', 'from', 'to', 'date'));
     }
 
     public function selectSched($scheduleID)
