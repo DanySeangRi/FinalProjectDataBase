@@ -52,9 +52,7 @@
         </a>
 
 
-        <a href="{{ route('faq') }}" class="text-gray-700 hover:text-amber-500 transition">
-          FAQ
-        </a>
+        
 
       </nav>
 

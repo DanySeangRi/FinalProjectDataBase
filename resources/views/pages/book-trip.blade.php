@@ -5,14 +5,15 @@
 
 
 @section('content')
-
+<div class="h-[60vh]">
     <section class="py-20">
+   
 
 
 
-        <div class=" left-0 right-0  px-4">
+        <div class=" left-0 right-0   px-4">
 
-
+                 
             <form action="{{ route('bookTrip') }}" method="GET" class="
                     max-w-5xl
                     mx-auto
@@ -300,6 +301,10 @@
 
 
     @endif
+
+</div>
+
+    
 
 
 @endsection

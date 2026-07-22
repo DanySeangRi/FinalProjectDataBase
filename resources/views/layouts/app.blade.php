@@ -82,7 +82,9 @@
 
    @if(!isset($hideFooter) || !$hideFooter)
 
-    <x-home.footer />
+  
+     <x-home.footer />
+
 
 @endif
 

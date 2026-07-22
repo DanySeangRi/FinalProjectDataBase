@@ -56,8 +56,7 @@ Route::get('/book-trip', [PageController::class, 'bookTrip'])
     ->name('bookTrip');
 
 
-Route::get('/faq', [PageController::class, 'faq'])
-    ->name('faq');
+
 
 //seats
 Route::get('/booking/seats', [PageController::class, 'seats'])

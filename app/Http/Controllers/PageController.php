@@ -38,17 +38,14 @@ class PageController extends Controller
 
   public function contact()
   {
-    return view('pages.contact');
+    return view('pages.contact-us');
   }
 
 
 
 
 
-  public function faq()
-  {
-    return view('pages.faq');
-  }
+  
   public function seats(Request $request)
   {
     $schedule = RouteSchedule::with([
