@@ -31,26 +31,26 @@
 
 </form>
 
-@if(isset($trips))
+@if(isset($scheds))
     <div class="results-banner">
         <h2>{{ $from }} → {{ $to }}</h2>
         <p>
             {{ \Carbon\Carbon::parse($date)->format('l, F j, Y') }} 
-            · {{ count($trips) }} buses found
+            · {{ count($scheds) }} buses found
         </p>
     </div>
 
     <div class="results-list">
-        @forelse ($trips as $trip)
+        @forelse ($scheds as $sched)
             <div class="trip-card">
-                <h3>{{ $trip->vehicleName }}</h3>
-                <p>{{ $trip->departTime }} — {{ $trip->departPlace }}</p>
-                <p>{{ $trip->arrivalTime }} — {{ $trip->arrivePlace }}</p>
-                <p>Duration: {{ $trip->duration }}</p>
-                <p>Amenities: {{ $trip->ammenities }}</p>
-                <p>Price: ${{ $trip->price }} per person</p>
-                <p>{{ $trip->availableSeat }} seats left</p>
-                <a href="/booktrip/select/{{$trip->scheduleID}}" class="select-btn">Select</a>
+                <h3>{{ $sched->vehicleName }}</h3>
+                <p>{{ $sched->departTime }} — {{ $sched->departPlace }}</p>
+                <p>{{ $sched->arrivalTime }} — {{ $sched->arrivePlace }}</p>
+                <p>Duration: {{ $sched->duration }}</p>
+                <p>Amenities: {{ $sched->ammenities }}</p>
+                <p>Price: ${{ $sched->price }} per person</p>
+                <p>{{ $sched->availableSeat }} seats left</p>
+                <a href="/booktrip/select/{{$sched->scheduleID}}" class="select-btn">Select</a>
             
             </div>
         @empty

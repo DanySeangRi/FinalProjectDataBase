@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Routes;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookTripController extends Controller
 {
-    public function findTrip(Request $request)
+
+    public function findSched(Request $request)
     {
+    
+      //fetch locations for the dropdown option
       $departPlace = Routes::where('status', 'active')
                       ->distinct()
                       ->pluck('departPlace'); 
@@ -18,49 +22,60 @@ class BookTripController extends Controller
                       ->distinct()
                       ->pluck('arrivePlace');
 
+      //get input parameters
       $from = $request->input('from');
       $to = $request->input('to');
       $date = $request->input('date');
 
-       $trips = null;
+       $scheds = null;
 
+       //query the schedule
        if ($from && $to && $date){
-        $trips = DB::table('tbl_schedule as s')
-            ->join('tbl_routes as r', 's.routeID', '=', 'r.routeID')
-            ->join('tbl_vehicles as v', 's.vehicleID', '=', 'v.vehicleID')
-            ->select(
-                's.scheduleID',
-                'v.vehicleName',
-                'v.ammenities',
-                'r.departPlace', 
-                'r.arrivePlace',
-                'r.boardStation',
-                's.departTime',
-                's.arrivalTime',
-                's.duration',
-                's.price',
-                's.availableSeat'
-            )
-            ->where('r.departPlace', $from)
-            ->where('r.arrivePlace', $to)
-            ->where('s.departDate', $date)
-            ->where('r.status', 'active')
-            ->where('s.status','active')
-            ->where('v.status','active')
-            ->orderBy('s.departTime','asc')
-            ->get(); 
-       }
+        $scheds = Schedule::with(['route','vehicle'])
+           ->where('departDate', $date)
+           ->where('status', 'active')
+           ->whereHas('route', function($query) use ($from, $to) {
+                $query->where('departPlace', $from)
+                      ->where('arrivePlace', $to)
+                      ->where('status','active'); 
+           })
 
-       return view('booktrip', compact('departPlace','arrivePlace','trips','from','to','date'));
+           ->whereHas('vehicle', function($query){
+                $query->where('status','active');
+           })
+           ->orderBy('departTime', 'asc')
+           ->get();
+
+           return view('booktrip', compact('departPlace', 'arrivePlace', 'scheds', 'from', 'to', 'date'));
+
 
     }
+    }
 
-    public function selectTrip($scheduleID)
+    public function selectSched($scheduleID)
     {
-    
-    $trip = DB::table('tbl_schedule')->where('scheduleID', $scheduleID)->first();
+    $sched=Schedule::with(['route','vehicle'])->findOrFail($scheduleID);
 
-    return view('booktrip-confirm', compact('trip'));
+    return view('booktrip-view', compact('sched'));
    }
+
+     public function selectSeat($scheduleID)
+    {
+    $sched=Schedule::with(['route','vehicle'])->findOrFail($scheduleID);
+
+    return view('booktrip-selectseat', compact('sched'));
+   }
+
+    public function fillInfo($scheduleID)
+    {
+    $sched=Schedule::with(['route','vehicle'])->findOrFail($scheduleID);
+
+    return view('booktrip-fillInfo', compact('sched'));
+   }
+
+   
+
+
    
 }
+
