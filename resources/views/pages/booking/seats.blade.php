@@ -4,10 +4,34 @@
 
 @section('content')
 
+
   <section class="py-10 bg-gray-50 min-h-screen">
+
 
     <!-- Steps -->
     <div class="max-w-4xl mx-auto px-5 mb-6">
+       {{-- Header --}}
+    <div class="mb-10">
+       <a href="{{ route('home') }}"
+        class="inline-flex items-center gap-2 text-gray-600 hover:text-[#3893E6] transition mb-5">
+
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+
+        <span class="font-medium">
+            Back to Home
+        </span>
+
+    </a>
+
+        <h1 class="text-3xl font-bold text-gray-900">
+            Please Your Seats
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Complete your booking by selecting your seats.
+        </p>
+
+    </div>
 
       <div class="flex items-center gap-2 text-sm overflow-x-auto">
 
@@ -27,7 +51,7 @@
             <div class="flex items-center gap-2 whitespace-nowrap">
 
               <div class="flex items-center gap-1 px-3 py-1 rounded-full
-                          {{ $index == 2
+                                {{ $index == 2
           ? 'bg-[#86C5FF] text-white'
           : ($index < 2
             ? 'bg-green-100 text-green-700'
@@ -58,7 +82,7 @@
 
 
 
-    <div class="max-w-4xl mx-auto px-5">
+    <div class="max-w-5xl mx-auto px-5">
 
 
       <div class="grid md:grid-cols-3 gap-6">
@@ -131,9 +155,10 @@
 
           <div class="flex justify-center mb-5">
 
-            <div class="bg-gray-100 rounded-xl px-8 py-2 text-sm">
+            <div class="bg-gray-100 gap-2 flex items-center rounded-xl px-8 py-2 text-sm">
 
-              🚌 Front of Bus
+          <i data-lucide="bus-front"class="w-6 h-6"></i>  
+           <p>Front of Bus</p>
 
             </div>
 
@@ -150,19 +175,19 @@
             @foreach($seats as $seat)
 
                     <button type="button" class="
-                  seat-btn
-                  w-10
-                  h-10
-                  rounded-lg
-                  border-2
-                  text-xs
-                  font-semibold
+                            seat-btn
+                            w-10
+                            h-10
+                            rounded-lg
+                            border-2
+                            text-xs
+                            font-semibold
 
-                  {{ $seat->status == 'booked'
+                            {{ $seat->status == 'booked'
               ? 'bg-gray-300 border-gray-300 text-gray-400 cursor-not-allowed'
               : 'bg-gray-100 border-gray-300 hover:bg-blue-50 hover:text-black cursor-pointer'
-                  }}
-              " data-id="{{ $seat->id }}" data-seat="{{ $seat->seat_number }}" data-status="{{ $seat->status }}">
+                            }}
+                        " data-id="{{ $seat->id }}" data-seat="{{ $seat->seat_number }}" data-status="{{ $seat->status }}">
 
                       {{ $seat->seat_number }}
 
@@ -183,174 +208,256 @@
 
         <!-- Summary -->
 
+        <!-- Booking Summary -->
+        <div class="sticky top-24">
 
-        <div>
+          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
 
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-[#86C5FF] to-[#5BAEF8] text-white p-5">
 
-          <div class="bg-white rounded-2xl shadow p-5 sticky top-24">
+              <h3 class="text-xl font-bold">
+                Booking Summary
+              </h3>
 
+              <p class="text-sm text-blue-100 mt-1">
+                Review your trip before continuing.
+              </p>
 
-            <h3 class="font-semibold mb-5">
+            </div>
 
-              Booking Summary
+            <div class="p-6">
 
-            </h3>
+              <!-- Route -->
+              <div class="flex items-start gap-3 mb-6">
 
+                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-xl">
+                  <i data-lucide="bus" class="w-6 h-6 text-blue-700"></i>
+                </div>
 
+                <div>
 
+                  <h4 class="font-semibold text-lg">
 
-            <div class="space-y-3 text-sm">
+                    {{ $schedule->vehicle->brand }}
 
+                  </h4>
 
-              <div class="flex justify-between">
+                  <p class="text-sm text-gray-500">
 
-                <span>
+                    {{ $schedule->route->origin }}
 
-                  {{ $schedule->route->origin }}
+                    →
 
-                  →
+                    {{ $schedule->route->destination }}
 
-                  {{ $schedule->route->destination }}
+                  </p>
 
-                </span>
-
-
-              </div>
-
-
-
-
-              <div class="flex justify-between">
-
-
-                <span>
-                  Vehicle
-                </span>
-
-
-                <span>
-
-                  {{ $schedule->vehicle->brand }}
-
-                </span>
-
+                </div>
 
               </div>
 
+              <!-- Trip Info -->
+              <div class="space-y-4 text-sm">
 
+                <div class="flex justify-between">
 
+                  <span class="text-gray-500">
+                    Travel Date
+                  </span>
 
+                  <span class="font-medium">
 
-              <div class="flex justify-between">
+                    {{ \Carbon\Carbon::parse($schedule->travel_date)->format('d M Y') }}
 
-                <span>
-                  Departure
-                </span>
+                  </span>
 
+                </div>
 
-                <span>
+                <div class="flex justify-between">
 
-                  {{ $schedule->departure_time }}
+                  <span class="text-gray-500">
+                    Departure
+                  </span>
 
-                </span>
+                  <span class="font-medium">
 
+                    {{ \Carbon\Carbon::parse($schedule->departure_time)->format('h:i A') }}
+
+                  </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                  <span class="text-gray-500">
+                    Arrival
+                  </span>
+
+                  <span class="font-medium">
+
+                    {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('h:i A') }}
+
+                  </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                  <span class="text-gray-500">
+                    Price / Seat
+                  </span>
+
+                  <span>
+
+                    ${{ number_format($schedule->price, 2) }}
+
+                  </span>
+
+                </div>
 
               </div>
 
+              <hr class="my-6">
 
+              <!-- Seats -->
+              <div>
 
+                <p class="text-gray-500 text-sm mb-3">
 
-
-              <div class="flex justify-between">
-
-
-                <span>
                   Selected Seats
-                </span>
 
+                </p>
 
-                <span id="selectedSeats">
+                <div id="selectedSeats" class="flex flex-wrap gap-2">
 
-                  None
+                  <span class="text-gray-400 text-sm">
 
-                </span>
+                    No seats selected
 
+                  </span>
 
-              </div>
-
-
-            </div>
-
-
-
-
-
-            <div class="border-t mt-5 pt-5">
-
-
-              <div class="flex justify-between">
-
-
-                <span>
-                  Total
-                </span>
-
-
-                <span class="font-bold text-green-600" id="totalPrice">
-
-                  $0
-
-                </span>
-
+                </div>
 
               </div>
 
+              <hr class="my-6">
+
+              <!-- Price -->
+              <div class="space-y-3">
+
+                <div class="flex justify-between text-sm">
+
+                  <span>
+
+                    Ticket Price
+
+                  </span>
+
+                  <span id="ticketSubtotal">
+
+                    $0.00
+
+                  </span>
+
+                </div>
+
+                <div class="flex justify-between text-sm">
+
+                  <span>
+
+                    Booking Fee
+
+                  </span>
+
+                  <span class="text-green-600">
+
+                    FREE
+
+                  </span>
+
+                </div>
+
+              </div>
+
+              <hr class="my-6">
+
+              <div class="flex justify-between items-center">
+
+                <div>
+
+                  <p class="text-sm text-gray-500">
+
+                    Total
+
+                  </p>
+
+                  <p class="text-xs text-gray-400">
+
+                    Including all fees
+
+                  </p>
+
+                </div>
+
+                <div id="totalPrice" class="text-3xl font-bold text-[#3893E6]">
+
+                  $0.00
+
+                </div>
+
+              </div>
+
+              <!-- Security -->
+              <div class="mt-6 rounded-2xl bg-green-50 border border-green-200 p-4">
+
+                <div class="flex gap-3">
+
+                  <div class="text-xl">
+
+                   <i data-lucide="lock" class="w-6 h-6 text-green-600"></i>  
+
+                  </div>
+
+                  <div>
+
+                    <p class="font-semibold text-green-700">
+
+                      Secure Booking
+
+                    </p>
+
+                    <p class="text-sm text-green-600">
+
+                      Your seats will be reserved after payment confirmation.
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- Continue -->
+              <form method="GET" action="{{ route('passenger') }}" class="mt-6">
+
+                <input type="hidden" name="schedule" value="{{ $schedule->id }}">
+
+                <input type="hidden" id="selectedSeatInput" name="seats">
+
+                <button id="continueBtn" disabled
+                  class="w-full py-4 rounded-xl bg-[#86C5FF] hover:bg-[#3893E6] text-white font-semibold transition disabled:bg-gray-300 disabled:cursor-not-allowed">
+
+                  Continue to Passenger →
+
+                </button>
+
+              </form>
 
             </div>
-
-
-
-
-
-            <form method="GET" action="{{ route('passenger') }}">
-
-
-              <input type="hidden" name="schedule" value="{{ $schedule->id }}">
-
-
-
-              <input type="hidden" id="selectedSeatInput" name="seats">
-
-
-
-
-
-              <button id="continueBtn" disabled class="
-                              w-full
-                              mt-6
-                              bg-[#86C5FF]
-                              text-white
-                              py-3
-                              rounded-xl
-
-                              disabled:bg-gray-300
-
-                              ">
-
-
-                Continue
-
-
-              </button>
-
-
-
-            </form>
-
-
 
           </div>
-
 
         </div>
 

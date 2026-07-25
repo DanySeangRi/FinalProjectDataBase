@@ -8,6 +8,31 @@
 <section class="py-10 bg-gray-50 min-h-screen">
 
   <div class="max-w-5xl mx-auto px-5">
+    <a href="{{ route('passenger', [
+              'schedule' => $schedule->id,
+             
+          ]) }}"
+      class="inline-flex items-center gap-2 text-gray-600 hover:text-[#3893E6] transition mb-5">
+
+      <i data-lucide="arrow-left" class="w-5 h-5"></i>
+
+      <span class="font-medium">
+        Back to Passenger Details
+      </span>
+
+    </a>
+    <!-- Header -->
+    <div class=" text-black p-5">
+
+      <h3 class="text-xl font-bold">
+        Please Choose the payment method
+      </h3>
+
+      <p class="text-sm text-black mt-1">
+        Review your trip before continuing.
+      </p>
+
+    </div>
 
 
     {{-- ================= STEP INDICATOR ================= --}}
@@ -65,9 +90,10 @@
         value="{{ $schedule->id }}">
 
 
-      <input type="hidden"
-        name="seats"
-        value="{{ implode(',',$seats) }}">
+     <input
+    type="hidden"
+    name="seats"
+    value="{{ $seats->pluck('id')->implode(',') }}">
 
 
 
@@ -434,18 +460,22 @@
 
 
               <div class="flex justify-between">
-
-                <span class="text-gray-500">
+                <p class="text-gray-500 mb-2">
                   Seats
-                </span>
+                </p>
 
+                <div class="flex flex-wrap gap-2">
 
-                <span>
+             @foreach($seats as $seat)
 
-                  {{ implode(', ', $seats) }}
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
 
-                </span>
+                {{ $seat->seat_number }}
 
+            </span>
+
+            @endforeach
+                </div>
 
               </div>
 
@@ -517,7 +547,7 @@
                     ">
 
 
-               Pay Now
+              Pay Now
 
 
             </button>
@@ -537,10 +567,13 @@
     </form>
 
 
+
+
   </div>
 
 
 </section>
+
 
 
 @endsection

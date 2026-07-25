@@ -5,8 +5,27 @@
 
 
 @section('content')
+
 <div class="h-[60vh]">
-    <section class="py-20">
+    <div class="relative h-[500px]">
+    <img
+        src="{{ asset('image/temple.png') }}"
+        class="absolute inset-0 w-full h-full object-cover"
+    >
+
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center text-white px-5">
+        <h1 class="text-5xl font-bold">
+            Travel Across Cambodia
+        </h1>
+
+        <p class="mt-3 text-lg text-gray-200">
+            Safe • Comfortable • Affordable
+        </p>
+    </div>
+</div>
+    <section class="py-10">
    
 
 

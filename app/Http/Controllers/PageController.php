@@ -46,24 +46,29 @@ class PageController extends Controller
 
 
 
-  public function seats(Request $request)
-  {
+ public function seats(Request $request)
+{
     $schedule = RouteSchedule::with([
-      'route',
-      'vehicle',
-      'seats'
+        'route',
+        'vehicle',
+        'seats'
     ])
-      ->findOrFail($request->schedule);
+    ->findOrFail($request->schedule);
+
+
+    $selectedSeats = [];
+
+    if($request->filled('seats')){
+        $selectedSeats = explode(',', $request->seats);
+    }
 
 
     return view('pages.booking.seats', [
-
-      'schedule' => $schedule,
-
-      'seats' => $schedule->seats
-
+        'schedule' => $schedule,
+        'seats' => $schedule->seats,
+        'selectedSeats' => $selectedSeats
     ]);
-  }
+}
 
   public function storePassenger(Request $request)
   {
@@ -98,51 +103,66 @@ class PageController extends Controller
       ]);
 
   }
+  // public function passenger(Request $request)
+  // {
+
+  //   $schedule = RouteSchedule::with([
+  //     'route',
+  //     'vehicle'
+  //   ])
+  //     ->findOrFail($request->schedule);
+  //     $seatIds = explode(',', $request->seats);
+
+
+  //   $seats = Seat::whereIn('id', $seatIds)->get();
+
+
+  //   return view('pages.booking.passenger', [
+
+  //     'schedule' => $schedule,
+
+  //     'seats' => $seats
+
+  //   ]);
+
+  // }
   public function passenger(Request $request)
-  {
-
+{
     $schedule = RouteSchedule::with([
-      'route',
-      'vehicle'
+        'route',
+        'vehicle'
     ])
-      ->findOrFail($request->schedule);
+    ->findOrFail($request->schedule);
 
 
-    $seats = explode(',', $request->seats);
+    $seatIds = explode(',', $request->seats);
+    $seats = Seat::whereIn('id', $seatIds)->get();
 
 
     return view('pages.booking.passenger', [
-
-      'schedule' => $schedule,
-
-      'seats' => $seats
-
+        'schedule' => $schedule,
+        'seats' => $seats
     ]);
+}
 
-  }
-
-  public function payment(Request $request)
-  {
-
+public function payment(Request $request)
+{
     $schedule = RouteSchedule::with([
-      'route',
-      'vehicle'
-    ])
-      ->findOrFail($request->schedule);
+        'route',
+        'vehicle'
+    ])->findOrFail($request->schedule);
 
 
-    $seats = explode(',', $request->seats);
+    $seatIds = explode(',', $request->seats);
+
+    $seats = Seat::whereIn('id', $seatIds)->get();
 
 
     return view('pages.booking.payment', [
-
-      'schedule' => $schedule,
-
-      'seats' => $seats
-
+        'schedule' => $schedule,
+        'seats' => $seats,
     ]);
-
-  }
+}
 
   public function processPayment(Request $request)
   {
