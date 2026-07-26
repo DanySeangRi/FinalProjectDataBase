@@ -10,7 +10,7 @@
   <div class="max-w-5xl mx-auto px-5">
     <a href="{{ route('passenger', [
               'schedule' => $schedule->id,
-             
+              'seats' => $seats->pluck('id')->implode(','),
           ]) }}"
       class="inline-flex items-center gap-2 text-gray-600 hover:text-[#3893E6] transition mb-5">
 

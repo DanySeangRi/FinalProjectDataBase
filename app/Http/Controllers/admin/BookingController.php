@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\BookingDetail;
 use App\Models\User;
 use App\Models\RouteSchedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Models\Seat;
+use App\Models\BookingSeat;
 
 class BookingController extends Controller
 {
@@ -94,9 +95,11 @@ class BookingController extends Controller
 
       'route_schedule_id' => 'required|exists:route_schedules,id',
 
-      'seats' => 'required|array',
+      'seats' => 'nullable|array',
 
       'seats.*' => 'exists:seats,id',
+
+      'seat_number' => 'nullable|string',
 
     ]);
 
@@ -105,29 +108,53 @@ class BookingController extends Controller
       $validated['route_schedule_id']
     );
 
+    $seatIds = [];
+
+    if (!empty($validated['seats'])) {
+      $seatIds = $validated['seats'];
+    } elseif (!empty($validated['seat_number'])) {
+      $seat = Seat::where('vehicle_id', $schedule->vehicle_id)
+          ->where('seat_number', $validated['seat_number'])
+          ->first();
+
+      if ($seat) {
+        $seatIds = [$seat->id];
+      }
+    }
+
+    if (empty($seatIds)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Please select at least one seat.',
+      ], 422);
+    }
+
+
+    $bookingUser = User::find($validated['user_id']);
 
     $booking = Booking::create([
-
       'user_id' => $validated['user_id'],
-
       'route_schedule_id' => $validated['route_schedule_id'],
-
-      'total_price' => count($validated['seats']) * $schedule->price,
-
+      'total_price' => count($seatIds) * $schedule->price,
       'status' => 'pending',
-
     ]);
 
+    BookingDetail::create([
+      'booking_id' => $booking->id,
+      'first_name' => $bookingUser->first_name ?? 'Guest',
+      'last_name' => $bookingUser->last_name ?? 'Guest',
+      'email' => $bookingUser->email ?? 'guest@example.com',
+      'phone' => $bookingUser->phone_number ?? '000000000',
+      'price' => $booking->total_price,
+    ]);
 
-    $booking->seats()->attach(
-      $validated['seats']
-    );
-
-
-    Seat::whereIn('id', $validated['seats'])
-      ->update([
-        'status' => 'booked'
+    foreach ($seatIds as $seatId) {
+      $booking->bookingSeats()->create([
+        'seat_id' => $seatId,
+        'route_schedule_id' => $validated['route_schedule_id'],
+        'status' => 'confirmed',
       ]);
+    }
 
 
     return response()->json([
@@ -144,9 +171,11 @@ class BookingController extends Controller
 
       'route_schedule_id' => 'required|exists:route_schedules,id',
 
-      'seats' => 'required|array',
+      'seats' => 'nullable|array',
 
       'seats.*' => 'exists:seats,id',
+
+      'seat_number' => 'nullable|string',
 
       'status' => 'required|in:pending,confirmed,cancelled',
 
@@ -157,6 +186,28 @@ class BookingController extends Controller
       $validated['route_schedule_id']
     );
 
+    $seatIds = [];
+
+    if (!empty($validated['seats'])) {
+      $seatIds = $validated['seats'];
+    } elseif (!empty($validated['seat_number'])) {
+      $seat = Seat::where('vehicle_id', $schedule->vehicle_id)
+          ->where('seat_number', $validated['seat_number'])
+          ->first();
+
+      if ($seat) {
+        $seatIds = [$seat->id];
+      }
+    }
+
+    if (empty($seatIds)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Please select at least one seat.',
+      ], 422);
+    }
+
+    $bookingUser = User::find($validated['user_id']);
 
     $booking->update([
 
@@ -164,16 +215,22 @@ class BookingController extends Controller
 
       'route_schedule_id' => $validated['route_schedule_id'],
 
-      'total_price' => count($validated['seats']) * $schedule->price,
+      'total_price' => count($seatIds) * $schedule->price,
 
       'status' => $validated['status']
 
     ]);
 
 
-    $booking->seats()->sync(
-      $validated['seats']
-    );
+    $booking->bookingSeats()->delete();
+
+    foreach ($seatIds as $seatId) {
+      $booking->bookingSeats()->create([
+        'seat_id' => $seatId,
+        'route_schedule_id' => $validated['route_schedule_id'],
+        'status' => 'confirmed',
+      ]);
+    }
 
 
     return response()->json([

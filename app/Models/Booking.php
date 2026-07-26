@@ -6,21 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-
     protected $fillable = [
-
         'user_id',
         'route_schedule_id',
-
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-
         'booking_code',
         'total_price',
         'status',
-
+        'cancel_reason',
+        'cancelled_at',
     ];
 
 
@@ -82,9 +75,16 @@ class Booking extends Model
 
     public function bookingSeats()
     {
-        return $this->hasMany(
-            BookingSeat::class
-        );
+        return $this->hasMany(BookingSeat::class);
     }
 
+    public function bookingDetails()
+    {
+        return $this->hasMany(BookingDetail::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

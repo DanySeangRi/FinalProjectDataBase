@@ -96,47 +96,24 @@ class RouteScheduleController extends Controller
 
         $schedule = RouteSchedule::create($validated);
 
-
-        // Generate seats
-        $vehicle = Vehicle::findOrFail(
-            $validated['vehicle_id']
-        );
-
-
+        $vehicle = Vehicle::findOrFail($validated['vehicle_id']);
         $capacity = $vehicle->capacity;
-
-
         $letters = ['A', 'B', 'C', 'D'];
-
         $count = 0;
 
-
         for ($row = 1; $count < $capacity; $row++) {
-
-
             foreach ($letters as $letter) {
-
-
                 if ($count >= $capacity) {
                     break;
                 }
 
-
-                Seat::create([
-
-                    'schedule_id' => $schedule->id,
-
+                Seat::firstOrCreate([
+                    'vehicle_id' => $vehicle->id,
                     'seat_number' => $row . $letter,
-
-                    'status' => 'available'
-
                 ]);
 
-
                 $count++;
-
             }
-
         }
 
 

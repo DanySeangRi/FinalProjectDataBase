@@ -89,7 +89,7 @@ document.querySelectorAll(".editBookingBtn").forEach((button) => {
         document.getElementById("edit_schedule").value =
             button.dataset.schedule;
 
-        document.getElementById("edit_seat").value = button.dataset.seat;
+        document.getElementById("edit_seat").value = button.dataset.seats;
 
         document.getElementById("edit_status").value = button.dataset.status;
     });

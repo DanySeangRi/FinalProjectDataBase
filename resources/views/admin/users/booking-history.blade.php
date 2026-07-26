@@ -166,7 +166,7 @@
 
                     •
 
-                    {{ \Carbon\Carbon::parse($booking->routeSchedule->date)->format('M d, Y') }}
+                    {{ \Carbon\Carbon::parse($booking->routeSchedule->travel_date)->format('M d, Y') }}
 
                   </p>
 

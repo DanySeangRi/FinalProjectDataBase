@@ -38,23 +38,27 @@
 
             <div class="mt-8 flex gap-4">
 
-
-
-
-                <a href="{{ route('bookTrip') }}" class="bg-amber-400 text-white px-6 py-3 rounded-full">
+                <a href="{{ route('bookTrip') }}"
+                    class="bg-amber-400 text-white px-6 py-3 rounded-full hover:bg-amber-500 transition">
                     Book Trip
                 </a>
 
 
+                @auth
 
+                    <a href="{{ route('user.dashboard') }}"
+                        class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
+                        Dashboard
+                    </a>
 
+                @else
 
-                <button class="border-2 border-white text-white px-6 py-3 rounded-full">
+                    <a href="{{ route('login') }}"
+                        class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
+                        Login
+                    </a>
 
-                    → Our Story
-
-                </button>
-
+                @endauth
 
 
             </div>

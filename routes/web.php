@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\DashboardController;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\RouteController;
@@ -10,6 +10,27 @@ use App\Http\Controllers\Admin\RouteScheduleController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\Admin\DashboardController ;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\BookingController as UserBookingController;
+
+ 
+Route::prefix('user')
+    ->name('user.')
+    ->middleware('auth')
+    ->group(function () {
+
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/profile', function () {
+            return view('user.profile');
+        })->name('profile');
+
+      Route::get('/bookings', [UserBookingController::class, 'index'])
+    ->name('bookings');
+
+});
 
 // Home
 Route::get('/', [HomeController::class, 'index'])

@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('booking_seats', function (Blueprint $table) {
-
             $table->id();
 
             $table->foreignId('booking_id')
@@ -23,12 +22,16 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('route_schedule_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])
+                ->default('confirmed');
+
             $table->timestamps();
 
-            $table->unique([
-                'booking_id',
-                'seat_id'
-            ]);
+            $table->unique(['route_schedule_id', 'seat_id']);
         });
     }
 

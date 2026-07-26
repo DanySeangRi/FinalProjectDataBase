@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Route;
 use App\Models\RouteSchedule;
 use App\Models\Booking;
+use App\Models\BookingSeat;
 use App\Models\Seat;
 class PageController extends Controller
 {
@@ -50,11 +51,17 @@ class PageController extends Controller
 {
     $schedule = RouteSchedule::with([
         'route',
-        'vehicle',
-        'seats'
-    ])
-    ->findOrFail($request->schedule);
+        'vehicle'
+    ])->findOrFail($request->schedule);
 
+    $availableSeats = Seat::where('vehicle_id', $schedule->vehicle_id)
+        ->orderBy('seat_number')
+        ->get();
+
+    $bookedSeatIds = BookingSeat::where('route_schedule_id', $schedule->id)
+        ->where('status', 'confirmed')
+        ->pluck('seat_id')
+        ->all();
 
     $selectedSeats = [];
 
@@ -65,36 +72,32 @@ class PageController extends Controller
 
     return view('pages.booking.seats', [
         'schedule' => $schedule,
-        'seats' => $schedule->seats,
-        'selectedSeats' => $selectedSeats
+        'seats' => $availableSeats->map(function ($seat) use ($bookedSeatIds) {
+            $seat->status = in_array($seat->id, $bookedSeatIds, true) ? 'booked' : 'available';
+
+            return $seat;
+        }),
+        'selectedSeats' => $selectedSeats,
     ]);
 }
 
   public function storePassenger(Request $request)
   {
+    $data = auth()->check()
+        ? [
+            'first_name' => auth()->user()->first_name,
+            'last_name' => auth()->user()->last_name,
+            'email' => auth()->user()->email,
+            'phone' => auth()->user()->phone_number,
+        ]
+        : $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+        ]);
 
-    if (auth()->check()) {
-
-      $data = [
-        'first_name' => auth()->user()->first_name,
-        'last_name' => auth()->user()->last_name,
-        'email' => auth()->user()->email,
-        'phone' => auth()->user()->phone_number,
-      ];
-
-    } else {
-
-      $data = $request->validate([
-
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'email' => 'required|email',
-        'phone' => 'required',
-
-      ]);
-
-    }
-
+    $request->session()->put('booking.customer', $data);
 
     return redirect()
       ->route('payment', [
@@ -166,77 +169,7 @@ public function payment(Request $request)
 
   public function processPayment(Request $request)
   {
-
-    $validated = $request->validate([
-
-      'schedule' => 'required',
-
-      'seats' => 'required',
-
-      'payment_method' => 'required',
-
-    ]);
-
-
-    $schedule = RouteSchedule::findOrFail(
-      $request->schedule
-    );
-
-
-    $seatIds = explode(',', $request->seats);
-
-
-    $user = auth()->user();
-
-
-
-    $booking = Booking::create([
-
-
-      'user_id' => $user->id,
-
-
-      'first_name' => $user->first_name,
-
-      'last_name' => $user->last_name,
-
-      'email' => $user->email,
-
-      'phone' => $user->phone_number,
-
-
-      'route_schedule_id' => $schedule->id,
-
-
-      'total_price' =>
-        count($seatIds) * $schedule->price,
-
-
-      'status' => 'confirmed',
-
-    ]);
-
-
-
-    // save selected seats
-    $booking->seats()->attach($seatIds);
-
-
-
-    // update seats status
-    Seat::whereIn('id', $seatIds)
-      ->update([
-        'status' => 'booked'
-      ]);
-
-
-
-    return redirect()
-      ->route(
-        'booking.success',
-        $booking->id
-      );
-
+    return app(BookingController::class)->store($request);
   }
   public function success($id)
   {
@@ -246,7 +179,8 @@ public function payment(Request $request)
 
       'routeSchedule.vehicle',
 
-      'seats'
+      'seats',
+      'payment'
 
     ])
       ->findOrFail($id);

@@ -12,46 +12,28 @@ return new class extends Migration {
 
             $table->id();
 
-
-            // User
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
 
-
-            // Trip
             $table->foreignId('route_schedule_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-
-            // Passenger information
             $table->string('first_name');
-
             $table->string('last_name');
-
             $table->string('email');
-
             $table->string('phone');
-
-
-            // Booking information
-            $table->string('booking_code')
-                ->unique();
-
-
+            $table->string('booking_code')->unique();
             $table->decimal('total_price', 10, 2);
-
-
             $table->enum('status', [
                 'pending',
                 'confirmed',
                 'cancelled'
-            ])
-            ->default('pending');
-
-
+            ])->default('pending');
+            $table->string('cancel_reason')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
 
         });

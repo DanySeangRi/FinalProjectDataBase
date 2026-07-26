@@ -116,6 +116,8 @@
                         name="seat_number"
                         class="w-full rounded-xl border px-4 py-3">
 
+                    <input type="hidden" name="seats[]" value="">
+
                 </div>
 
                 <!-- Status -->

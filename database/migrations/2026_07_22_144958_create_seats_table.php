@@ -13,20 +13,14 @@ return new class extends Migration {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('schedule_id')
-                ->constrained('route_schedules')
+            $table->foreignId('vehicle_id')
+                ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('seat_number'); // A1, A2, B1...
-
-            $table->enum('status', [
-                'available',
-                'booked'
-            ])->default('available');
-
+            $table->string('seat_number');
             $table->timestamps();
 
-            $table->unique(['schedule_id', 'seat_number']);
+            $table->unique(['vehicle_id', 'seat_number']);
         });
     }
 

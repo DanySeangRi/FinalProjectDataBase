@@ -8,6 +8,8 @@ use App\Models\Vehicle;
 use App\Models\Route;
 use App\Models\RouteSchedule;
 use App\Models\Booking;
+use App\Models\BookingDetail;
+use App\Models\BookingSeat;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\Seat;
@@ -255,14 +257,9 @@ class DatabaseSeeder extends Seeder
                     }
 
 
-                    Seat::create([
-
-                        'schedule_id' => $schedule->id,
-
+                    Seat::firstOrCreate([
+                        'vehicle_id' => $vehicle->id,
                         'seat_number' => $row . $letter,
-
-                        'status' => 'available'
-
                     ]);
 
 
@@ -284,100 +281,70 @@ class DatabaseSeeder extends Seeder
 
 
         $booking1 = Booking::create([
-
             'user_id' => $customer->id,
-
             'route_schedule_id' => $createdSchedules[0]->id,
-
-
-            'first_name' => $customer->first_name,
-
-            'last_name' => $customer->last_name,
-
-            'email' => $customer->email,
-
-            'phone' => $customer->phone_number,
-
-
             'booking_code' => 'AT000001',
-
             'total_price' => 20,
-
             'status' => 'confirmed'
-
         ]);
 
+        BookingDetail::create([
+            'booking_id' => $booking1->id,
+            'first_name' => $customer->first_name,
+            'last_name' => $customer->last_name,
+            'email' => $customer->email,
+            'phone' => $customer->phone_number,
+            'price' => 20,
+        ]);
 
-
-        $seat1 = Seat::where('schedule_id', $createdSchedules[0]->id)
+        $seat1 = Seat::where('vehicle_id', $createdSchedules[0]->vehicle_id)
             ->where('seat_number', '1A')
             ->first();
 
-
-        $seat2 = Seat::where('schedule_id', $createdSchedules[0]->id)
+        $seat2 = Seat::where('vehicle_id', $createdSchedules[0]->vehicle_id)
             ->where('seat_number', '1B')
             ->first();
 
-
-
-        $booking1->seats()->attach([
-
-            $seat1->id,
-
-            $seat2->id
-
+        BookingSeat::create([
+            'booking_id' => $booking1->id,
+            'seat_id' => $seat1->id,
+            'route_schedule_id' => $createdSchedules[0]->id,
+            'status' => 'confirmed',
         ]);
 
-
-
-        $seat1->update([
-            'status' => 'booked'
+        BookingSeat::create([
+            'booking_id' => $booking1->id,
+            'seat_id' => $seat2->id,
+            'route_schedule_id' => $createdSchedules[0]->id,
+            'status' => 'confirmed',
         ]);
-
-
-        $seat2->update([
-            'status' => 'booked'
-        ]);
-
-
 
         $booking2 = Booking::create([
-
             'user_id' => $customer->id,
-
             'route_schedule_id' => $createdSchedules[1]->id,
-
-
-            'first_name' => $customer->first_name,
-
-            'last_name' => $customer->last_name,
-
-            'email' => $customer->email,
-
-            'phone' => $customer->phone_number,
-
-
             'booking_code' => 'AT000002',
-
             'total_price' => 15,
-
             'status' => 'pending'
-
         ]);
 
+        BookingDetail::create([
+            'booking_id' => $booking2->id,
+            'first_name' => $customer->first_name,
+            'last_name' => $customer->last_name,
+            'email' => $customer->email,
+            'phone' => $customer->phone_number,
+            'price' => 15,
+        ]);
 
-
-        $seat3 = Seat::where('schedule_id', $createdSchedules[1]->id)
+        $seat3 = Seat::where('vehicle_id', $createdSchedules[1]->vehicle_id)
             ->where('seat_number', '5B')
             ->first();
 
-
-
-        $booking2->seats()->attach($seat3->id);
-
-
-        $seat3->update([
-            'status' => 'booked'
+        BookingSeat::create([
+            'booking_id' => $booking2->id,
+            'seat_id' => $seat3->id,
+            'route_schedule_id' => $createdSchedules[1]->id,
+            'status' => 'confirmed',
         ]);
 
 

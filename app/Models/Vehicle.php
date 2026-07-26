@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    //
     protected $fillable = [
         'vehicle_number',
         'brand',
@@ -16,8 +15,14 @@ class Vehicle extends Model
         'capacity',
         'status',
     ];
+
     public function schedules()
     {
         return $this->hasMany(RouteSchedule::class);
+    }
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
     }
 }

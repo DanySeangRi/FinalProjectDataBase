@@ -4,24 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BookingSeat extends Model
+class Payment extends Model
 {
     protected $fillable = [
         'booking_id',
-        'seat_id',
-        'route_schedule_id',
-        'status',
+        'amount_paid',
+        'payment_method',
+        'payment_status',
+        'transaction_id',
+        'paid_at',
     ];
 
+    protected $casts = [
+        'paid_at' => 'datetime',
+    ];
 
     public function booking()
     {
         return $this->belongsTo(Booking::class);
-    }
-
-
-    public function seat()
-    {
-        return $this->belongsTo(Seat::class);
     }
 }

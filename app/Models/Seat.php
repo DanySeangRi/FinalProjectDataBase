@@ -7,20 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Seat extends Model
 {
     protected $fillable = [
-        'schedule_id',
+        'vehicle_id',
         'seat_number',
-        'status',
     ];
 
-
-    public function schedule()
+    public function vehicle()
     {
-        return $this->belongsTo(
-            RouteSchedule::class,
-            'schedule_id'
-        );
+        return $this->belongsTo(Vehicle::class);
     }
-
 
     public function bookings()
     {
@@ -30,11 +24,8 @@ class Seat extends Model
         );
     }
 
-
     public function bookingSeats()
     {
-        return $this->hasMany(
-            BookingSeat::class
-        );
+        return $this->hasMany(BookingSeat::class);
     }
 }

@@ -169,7 +169,7 @@
 
               <span class="font-medium">
 
-                {{ $booking->routeSchedule->departure_time }}
+                {{ \Carbon\Carbon::parse($booking->routeSchedule->travel_date)->format('d M Y') }}
 
               </span>
 
@@ -191,15 +191,12 @@
 
               <span class="font-medium">
 
-                 {{ $booking->routeSchedule->departure_time }}
+                 {{ \Carbon\Carbon::parse($booking->routeSchedule->departure_time)->format('h:i A') }}
 
               </span>
 
 
-            </div
-
-
-
+            </div>
 
             <div class="flex justify-between">
 

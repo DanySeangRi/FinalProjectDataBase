@@ -273,7 +273,8 @@
               <button type="button"
                 class="editBookingBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
                 data-id="{{ $booking->id }}" data-user="{{ $booking->user_id }}"
-                data-schedule="{{ $booking->route_schedule_id }}" data-seat="{{ $booking->seat_number }}"
+                data-schedule="{{ $booking->route_schedule_id }}"
+                data-seats="{{ $booking->bookingSeats->pluck('seat_id')->implode(',') }}"
                 data-status="{{ $booking->status }}">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"

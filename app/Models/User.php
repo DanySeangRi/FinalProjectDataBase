@@ -28,6 +28,14 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'phone_number',
+        'email',
+        'password',
+        'role',
+    ];
 
     protected function casts(): array
     {
@@ -36,16 +44,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function getInitialsAttribute()
+
+    public function getInitialsAttribute(): string
     {
         return strtoupper(
             substr($this->first_name, 0, 1) .
             substr($this->last_name, 0, 1)
         );
     }
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);
     }
-
 }
