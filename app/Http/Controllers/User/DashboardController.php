@@ -11,49 +11,50 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Statistics
-        $totalBookings = Booking::where('user_id', $user->id)->count();
+        $bookingsQuery = $user->bookings()->with([
+            'routeSchedule.route',
+            'routeSchedule.vehicle',
+            'details.seat',
+            'seats',
+        ]);
 
-        $upcomingTrips = Booking::where('user_id', $user->id)
-            ->whereHas('routeSchedule', function ($query) {
-                $query->whereDate('travel_date', '>=', today());
-            })
+        $totalBookings = (clone $bookingsQuery)->count();
+
+        $upcomingTrips = (clone $bookingsQuery)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->whereHas('routeSchedule', fn ($query) => $query->whereDate('travel_date', '>=', today()))
             ->count();
 
-        $completedTrips = Booking::where('user_id', $user->id)
-            ->where('status', 'Completed')
+        $completedTrips = (clone $bookingsQuery)
+            ->where('status', 'completed')
             ->count();
 
-        $cancelledBookings = Booking::where('user_id', $user->id)
-            ->where('status', 'Cancelled')
+        $cancelledBookings = (clone $bookingsQuery)
+            ->where('status', 'cancelled')
             ->count();
 
-        $totalSpent = Booking::where('user_id', $user->id)
-            ->where('status', 'Completed')
+        $totalSpent = (clone $bookingsQuery)
+            ->whereIn('status', ['confirmed', 'completed'])
             ->sum('total_price');
 
-        // Recent bookings
-        $recentBookings = Booking::with([
-                'routeSchedule.route',
-                'routeSchedule.vehicle',
-            ])
-            ->where('user_id', $user->id)
+        $recentBookings = (clone $bookingsQuery)
             ->latest()
             ->take(5)
             ->get();
 
-        // Upcoming trips
-        $nextTrips = Booking::with([
+        $nextTrips = (clone $bookingsQuery)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->whereHas('routeSchedule', fn ($query) => $query->whereDate('travel_date', '>=', today()))
+            ->with([
                 'routeSchedule.route',
                 'routeSchedule.vehicle',
+                'details.seat',
+                'seats',
             ])
-            ->where('user_id', $user->id)
-            ->whereHas('routeSchedule', function ($query) {
-                $query->whereDate('travel_date', '>=', today());
-            })
-            ->orderBy('created_at')
-            ->take(5)
-            ->get();
+            ->get()
+            ->sortBy(fn (Booking $booking) => $booking->routeSchedule?->travel_date)
+            ->take(3)
+            ->values();
 
         return view('user.dashboard.index', compact(
             'totalBookings',
@@ -62,7 +63,7 @@ class DashboardController extends Controller
             'cancelledBookings',
             'totalSpent',
             'recentBookings',
-            'nextTrips'
+            'nextTrips',
         ));
     }
 }

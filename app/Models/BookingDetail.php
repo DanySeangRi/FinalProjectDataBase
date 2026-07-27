@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BookingDetail extends Model
 {
@@ -20,18 +21,31 @@ class BookingDetail extends Model
         'price',
     ];
 
-    protected $casts = [
-        'dob' => 'date',
-        'price' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'dob' => 'date',
+            'price' => 'decimal:2',
+        ];
+    }
 
-    public function booking()
+    public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
     }
 
-    public function seat()
+    public function seat(): BelongsTo
     {
         return $this->belongsTo(Seat::class);
+    }
+
+    public function getPassengerNameAttribute(): string
+    {
+        return trim("{$this->first_name} {$this->last_name}");
+    }
+
+    public function getSeatNumberAttribute(): ?string
+    {
+        return $this->seat?->seat_number;
     }
 }

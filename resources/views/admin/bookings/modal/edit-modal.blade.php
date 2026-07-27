@@ -145,6 +145,10 @@
                             Cancelled
                         </option>
 
+                        <option value="completed">
+                            Completed
+                        </option>
+
                     </select>
 
                 </div>

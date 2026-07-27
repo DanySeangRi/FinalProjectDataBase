@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Dashboard') · Angkor Travel Admin</title>
+    <title>@yield('title', 'Dashboard') · Angkor Travel</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- Using the Tailwind CDN build for a quick drop-in. --}}
     {{-- In a real app, swap this for your Vite-compiled resources/css/app.css --}}

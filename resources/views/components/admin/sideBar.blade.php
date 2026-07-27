@@ -33,7 +33,7 @@
     ];
 
     $account = [
-        ['key' => 'settings', 'label' => 'settings', 'route' => 'admin.settings'],
+        ['key' => 'settings', 'label' => 'Profile & Settings', 'route' => 'admin.profile'],
     ];
 
     // Helper closure to render one nav link.

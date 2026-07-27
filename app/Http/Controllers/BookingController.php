@@ -24,6 +24,10 @@ class BookingController extends Controller
             'last_name' => ['nullable', 'string'],
             'email' => ['nullable', 'email'],
             'phone' => ['nullable', 'string'],
+            'passenger_name' => ['nullable', 'string'],
+            'gender' => ['nullable', 'string'],
+            'identity_number' => ['nullable', 'string'],
+            'seat_number' => ['nullable', 'string'],
         ]);
 
         $schedule = RouteSchedule::with('vehicle')->findOrFail($validated['schedule']);
@@ -48,22 +52,22 @@ class BookingController extends Controller
             ->all();
 
         $duplicateSeats = array_intersect($seatIds, $bookedSeatIds);
-        if (!empty($duplicateSeats)) {
+        if (! empty($duplicateSeats)) {
             return back()->withErrors(['seats' => 'One or more seats are already booked.']);
         }
 
         $sessionCustomer = $request->session()->get('booking.customer', []);
         $user = auth()->user();
-        $customer = !empty($sessionCustomer)
-            ? $sessionCustomer
-            : ($user
-                ? [
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'email' => $user->email,
-                    'phone' => $user->phone_number,
-                ]
-                : []);
+        $customer = array_filter([
+            'first_name' => $request->input('first_name', $sessionCustomer['first_name'] ?? $user?->first_name),
+            'last_name' => $request->input('last_name', $sessionCustomer['last_name'] ?? $user?->last_name),
+            'email' => $request->input('email', $sessionCustomer['email'] ?? $user?->email),
+            'phone' => $request->input('phone', $sessionCustomer['phone'] ?? $user?->phone_number),
+            'passenger_name' => $request->input('passenger_name', $sessionCustomer['passenger_name'] ?? null),
+            'gender' => $request->input('gender', $sessionCustomer['gender'] ?? null),
+            'identity_number' => $request->input('identity_number', $sessionCustomer['identity_number'] ?? null),
+            'seat_number' => $request->input('seat_number', $sessionCustomer['seat_number'] ?? null),
+        ], fn ($value) => $value !== null && $value !== '');
 
         if (empty($customer['first_name']) || empty($customer['last_name']) || empty($customer['email']) || empty($customer['phone'])) {
             return back()->withErrors(['customer' => 'Passenger details are missing.']);
@@ -73,9 +77,9 @@ class BookingController extends Controller
             $booking = Booking::create([
                 'user_id' => auth()->id(),
                 'route_schedule_id' => $schedule->id,
-                'booking_code' => 'AT-' . Str::upper(Str::random(6)),
+                'booking_code' => 'AT-'.Str::upper(Str::random(6)),
                 'total_price' => count($seatIds) * $schedule->price,
-                'status' => 'confirmed',
+                'status' => 'pending',
             ]);
 
             BookingDetail::create([
@@ -84,6 +88,10 @@ class BookingController extends Controller
                 'last_name' => $customer['last_name'],
                 'phone' => $customer['phone'],
                 'email' => $customer['email'],
+                'passenger_name' => $customer['passenger_name'] ?? trim(($customer['first_name'] ?? '').' '.($customer['last_name'] ?? '')),
+                'gender' => $customer['gender'] ?? null,
+                'identity_number' => $customer['identity_number'] ?? null,
+                'seat_number' => $customer['seat_number'] ?? null,
                 'price' => $booking->total_price,
             ]);
 

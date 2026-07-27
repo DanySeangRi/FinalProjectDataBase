@@ -104,8 +104,12 @@
     {{-- User --}}
     <div class="border-t p-4 flex items-center gap-3">
 
-        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-semibold text-blue-600">
-            {{ auth()->user()->initials ?? 'U' }}
+        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-semibold text-blue-600 overflow-hidden shrink-0">
+            @if(auth()->user()->profile_image_url)
+                <img src="{{ auth()->user()->profile_image_url }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+            @else
+                {{ auth()->user()->initials ?? 'U' }}
+            @endif
         </div>
 
         <div class="flex-1 min-w-0">
