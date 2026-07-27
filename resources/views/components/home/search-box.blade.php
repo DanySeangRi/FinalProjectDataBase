@@ -9,7 +9,7 @@
             mx-auto
             bg-white
             shadow-xl
-            rounded-[5px]
+            rounded-3xl
             p-4
             md:p-6
             grid

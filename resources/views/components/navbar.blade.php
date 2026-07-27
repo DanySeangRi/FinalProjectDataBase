@@ -52,7 +52,7 @@
         </a>
 
 
-        
+
 
       </nav>
 
@@ -66,29 +66,21 @@
 
 
         @auth
-
           <span class="text-gray-700 font-medium">
             Welcome, {{ auth()->user()->first_name }}
           </span>
 
-
-          <form action="{{ route('logout') }}" method="POST">
-
-            @csrf
-
-            <button type="submit" class="px-4 py-2 text-white bg-[#86C5FF] hover:bg-gray-100 rounded-full transition">
-              Log out
-            </button>
-
-          </form>
-
+          <a href="{{ route('user.dashboard') }}"
+            class="bg-[#86C5FF] text-white px-6 py-3 rounded-2xl hover:bg-[#107ce1] transition">
+            Dashboard
+          </a>
 
         @else
 
-          <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-full transition">
-            Sign In
+          <a href="{{ route('login') }}"
+            class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
+            Login
           </a>
-
 
         @endauth
 

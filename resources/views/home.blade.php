@@ -44,21 +44,7 @@
                 </a>
 
 
-                @auth
-
-                    <a href="{{ route('user.dashboard') }}"
-                        class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
-                        Dashboard
-                    </a>
-
-                @else
-
-                    <a href="{{ route('login') }}"
-                        class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
-                        Login
-                    </a>
-
-                @endauth
+               
 
 
             </div>
@@ -88,7 +74,7 @@
         <div class="max-w-7xl mx-auto px-5">
 
 
-            <p class="text-center text-blue-300 italic">
+            <p class="text-center text-blue-300 italic mt-20">
 
                 Choose Your Journey
 
