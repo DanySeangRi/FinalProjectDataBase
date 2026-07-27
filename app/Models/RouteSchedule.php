@@ -9,16 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class RouteSchedule extends Model
 {
-    protected $fillable = [
-        'route_id',
-        'vehicle_id',
-        'travel_date',
-        'departure_time',
-        'arrival_time',
-        'price',
-        'status',
-    ];
-
+   protected $fillable = [
+    'route_id',
+    'vehicle_id',
+    'travel_date',
+    'departure_time',
+    'arrival_time',
+    'duration_minutes',
+    'price',
+    'status',
+];
     protected function casts(): array
     {
         return [

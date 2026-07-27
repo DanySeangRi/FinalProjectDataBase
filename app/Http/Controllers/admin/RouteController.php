@@ -46,12 +46,11 @@ class RouteController extends Controller
     {
         $request->validate([
 
-            'origin' => 'required',
-            'destination' => 'required',
-            'distance' => 'nullable|integer',
+            'origin' => 'required|string|max:255',
 
-            'duration_hours' => 'nullable|integer|min:0',
-            'duration_minutes' => 'nullable|integer|min:0|max:59',
+            'destination' => 'required|string|max:255',
+
+            'distance' => 'nullable|integer',
 
         ]);
 
@@ -63,11 +62,6 @@ class RouteController extends Controller
             'destination' => $request->destination,
 
             'distance' => $request->distance,
-
-
-            'duration_minutes' =>
-                ($request->duration_hours * 60)
-                + $request->duration_minutes,
 
         ]);
 
@@ -84,23 +78,26 @@ class RouteController extends Controller
     public function update(Request $request, Route $route)
     {
         $request->validate([
-            'origin' => 'required',
-            'destination' => 'required',
+
+            'origin' => 'required|string|max:255',
+
+            'destination' => 'required|string|max:255',
+
             'distance' => 'nullable|integer',
 
-            'duration_hours' => 'nullable|integer|min:0',
-            'duration_minutes' => 'nullable|integer|min:0|max:59',
         ]);
+
 
         $route->update([
+
             'origin' => $request->origin,
+
             'destination' => $request->destination,
+
             'distance' => $request->distance,
 
-            'duration_minutes' =>
-                ($request->duration_hours * 60)
-                + $request->duration_minutes,
         ]);
+
 
         return response()->json([
             'message' => 'Route updated'
@@ -114,7 +111,6 @@ class RouteController extends Controller
     public function destroy(Route $route)
     {
 
-
         $route->delete();
 
 
@@ -123,6 +119,5 @@ class RouteController extends Controller
         ]);
 
     }
-
 
 }

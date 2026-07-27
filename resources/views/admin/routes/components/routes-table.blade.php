@@ -28,9 +28,6 @@
         </th>
 
 
-        <th class="p-4 text-left">
-          DURATION
-        </th>
 
 
         <th class="p-4 text-left">
@@ -118,21 +115,7 @@
           </td>
 
 
-          <td class="p-4 text-slate-500">
-
-            @if($route->duration_minutes)
-
-              {{ intdiv($route->duration_minutes, 60) }} hours
-
-              @if($route->duration_minutes % 60)
-                {{ $route->duration_minutes % 60 }} min
-              @endif
-
-            @else
-              -
-            @endif
-
-          </td>
+        
 
 
 

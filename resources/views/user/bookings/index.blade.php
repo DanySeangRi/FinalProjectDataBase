@@ -24,7 +24,7 @@
             <p class="text-slate-500 mt-1">View and manage all your travel reservations.</p>
         </div>
         <a href="{{ route('bookTrip') }}"
-            class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
+            class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#86C5FF] text-white font-medium hover:bg-blue-700 transition">
             Book New Trip
         </a>
     </div>

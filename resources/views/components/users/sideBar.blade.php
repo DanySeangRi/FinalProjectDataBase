@@ -56,8 +56,8 @@
         $active = request()->routeIs($item['route']);
 
         $class = $active
-            ? 'bg-blue-500 text-white shadow'
-            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900';
+        ? 'bg-[#86C5FF] text-black shadow-sm'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900';
 
         return '<a href="'.route($item['route']).'"
             class="flex items-center gap-3 rounded-xl px-3 py-3 transition '.$class.'">

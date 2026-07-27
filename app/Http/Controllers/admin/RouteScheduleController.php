@@ -8,6 +8,7 @@ use App\Models\RouteSchedule;
 use App\Models\Route;
 use App\Models\Vehicle;
 use App\Models\Seat;
+use Carbon\Carbon;
 
 class RouteScheduleController extends Controller
 {
@@ -66,107 +67,168 @@ class RouteScheduleController extends Controller
         );
 
     }
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    $validated = $request->validate([
+
+        'route_id' => 'required|exists:routes,id',
+
+        'vehicle_id' => 'required|exists:vehicles,id',
+
+        'travel_date' => 'required|date',
+
+        'departure_time' => 'required',
+
+        'arrival_time' => 'required',
+
+        'price' => 'required|numeric',
+
+    ]);
 
 
-        $validated = $request->validate([
+    // Calculate duration
+    $departure = Carbon::parse($validated['departure_time']);
 
-            'route_id' =>
-                'required|exists:routes,id',
+    $arrival = Carbon::parse($validated['arrival_time']);
 
-            'vehicle_id' =>
-                'required|exists:vehicles,id',
 
-            'travel_date' =>
-                'required|date',
+    // Handle next day arrival
+    if ($arrival->lessThan($departure)) {
+        $arrival->addDay();
+    }
 
-            'departure_time' =>
-                'required',
 
-            'arrival_time' =>
-                'required',
-
-            'price' =>
-                'required|numeric',
-
-        ]);
+    $duration = $departure->diffInMinutes($arrival);
 
 
 
-        $schedule = RouteSchedule::create($validated);
+    $schedule = RouteSchedule::create([
 
-        $vehicle = Vehicle::findOrFail($validated['vehicle_id']);
-        $capacity = $vehicle->capacity;
-        $letters = ['A', 'B', 'C', 'D'];
-        $count = 0;
+        'route_id' => $validated['route_id'],
 
-        for ($row = 1; $count < $capacity; $row++) {
-            foreach ($letters as $letter) {
-                if ($count >= $capacity) {
-                    break;
-                }
+        'vehicle_id' => $validated['vehicle_id'],
 
-                Seat::firstOrCreate([
-                    'vehicle_id' => $vehicle->id,
-                    'seat_number' => $row . $letter,
-                ]);
+        'travel_date' => $validated['travel_date'],
 
-                $count++;
+        'departure_time' => $validated['departure_time'],
+
+        'arrival_time' => $validated['arrival_time'],
+
+        'duration_minutes' => $duration,
+
+        'price' => $validated['price'],
+
+    ]);
+
+
+
+    // Generate seats
+
+    $vehicle = Vehicle::findOrFail($validated['vehicle_id']);
+
+    $capacity = $vehicle->capacity;
+
+    $letters = ['A','B','C','D'];
+
+    $count = 0;
+
+
+    for($row = 1; $count < $capacity; $row++){
+
+        foreach($letters as $letter){
+
+            if($count >= $capacity){
+                break;
             }
+
+
+            Seat::firstOrCreate([
+                'vehicle_id'=>$vehicle->id,
+                'seat_number'=>$row.$letter
+            ]);
+
+
+            $count++;
+
         }
 
-
-
-        return response()->json([
-
-            'success' => true,
-
-            'message' => 'Schedule created successfully'
-
-        ]);
-
     }
-    public function update(Request $request, RouteSchedule $routeSchedule)
-    {
-
-        $validated = $request->validate([
-
-            'route_id' =>
-                'required|exists:routes,id',
-
-            'vehicle_id' =>
-                'required|exists:vehicles,id',
-
-            'travel_date' =>
-                'required|date',
-
-            'departure_time' =>
-                'required',
-
-            'arrival_time' =>
-                'required',
-
-            'price' =>
-                'required|numeric',
-
-        ]);
 
 
 
-        $routeSchedule->update($validated);
+    return response()->json([
+
+        'success'=>true,
+
+        'message'=>'Schedule created successfully'
+
+    ]);
+}
+public function update(Request $request, RouteSchedule $routeSchedule)
+{
+
+    $validated = $request->validate([
+
+        'route_id'=>'required|exists:routes,id',
+
+        'vehicle_id'=>'required|exists:vehicles,id',
+
+        'travel_date'=>'required|date',
+
+        'departure_time'=>'required',
+
+        'arrival_time'=>'required',
+
+        'price'=>'required|numeric',
+
+    ]);
 
 
 
-        return response()->json([
+    $departure = Carbon::parse($validated['departure_time']);
 
-            'success' => true,
+    $arrival = Carbon::parse($validated['arrival_time']);
 
-            'message' => 'Schedule updated successfully'
 
-        ]);
 
+    if($arrival->lessThan($departure)){
+        $arrival->addDay();
     }
+
+
+    $duration = $departure->diffInMinutes($arrival);
+
+
+
+    $routeSchedule->update([
+
+        'route_id'=>$validated['route_id'],
+
+        'vehicle_id'=>$validated['vehicle_id'],
+
+        'travel_date'=>$validated['travel_date'],
+
+        'departure_time'=>$validated['departure_time'],
+
+        'arrival_time'=>$validated['arrival_time'],
+
+        'duration_minutes'=>$duration,
+
+        'price'=>$validated['price'],
+
+    ]);
+
+
+
+    return response()->json([
+
+        'success'=>true,
+
+        'message'=>'Schedule updated successfully'
+
+    ]);
+
+}
     public function destroy(RouteSchedule $routeSchedule)
     {
 

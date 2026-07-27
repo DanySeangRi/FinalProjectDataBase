@@ -5,9 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('route_schedules', function (Blueprint $table) {
@@ -28,6 +26,9 @@ return new class extends Migration {
 
             $table->time('arrival_time');
 
+            // Duration of this specific trip
+            $table->integer('duration_minutes')->nullable();
+
             $table->decimal('price', 10, 2);
 
             $table->enum('status', [
@@ -40,9 +41,7 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('route_schedules');

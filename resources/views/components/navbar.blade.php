@@ -65,24 +65,31 @@
       <div class="hidden md:flex gap-3 items-center">
 
 
-        @auth
-          <span class="text-gray-700 font-medium">
+       @auth
+        <p class="text-gray-700 font-medium">
             Welcome, {{ auth()->user()->first_name }}
-          </span>
+        </p>
 
-          <a href="{{ route('user.dashboard') }}"
-            class="bg-[#86C5FF] text-white px-6 py-3 rounded-2xl hover:bg-[#107ce1] transition">
+        <a href="{{ route('user.dashboard') }}"
+            class="bg-[#86C5FF] p-3 text-white text-center py-3 rounded-xl hover:bg-[#107ce1] transition">
             Dashboard
-          </a>
+        </a>
 
-        @else
+        
 
-          <a href="{{ route('login') }}"
-            class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
+    @else
+
+        <a href="{{ route('login') }}"
+            class="bg-[#86C5FF] text-white p-3 text-center py-3 rounded-xl hover:bg-[#107ce1] transition">
             Login
-          </a>
+        </a>
 
-        @endauth
+        <a href="{{ route('register') }}"
+            class="border border-[#86C5FF] p-3 text-[#86C5FF] text-center py-3 rounded-xl hover:bg-[#86C5FF] hover:text-white transition">
+            Register
+        </a>
+
+    @endauth
 
       </div>
 

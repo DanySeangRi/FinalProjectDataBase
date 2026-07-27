@@ -82,10 +82,15 @@
 
                     <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
 
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 6h18M3 12h18M3 18h18" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-road-icon lucide-road">
+                            <path d="M12 17v4" />
+                            <path d="M12 5V3" />
+                            <path d="M12 9v3" />
+                            <path
+                                d="M2.077 18.449A2 2 0 0 0 4 21h16a2 2 0 0 0 1.924-2.55l-4-14A2 2 0 0 0 16 3H8a2 2 0 0 0-1.924 1.45z" />
                         </svg>
-
                     </div>
 
                 </div>
@@ -160,7 +165,15 @@
 
                     <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600">
 
-                        📅
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-calendar-check-icon lucide-calendar-check">
+                            <path d="M8 2v4" />
+                            <path d="M16 2v4" />
+                            <rect width="18" height="18" x="3" y="4" rx="2" />
+                            <path d="M3 10h18" />
+                            <path d="m9 16 2 2 4-4" />
+                        </svg>
 
                     </div>
 
@@ -196,7 +209,12 @@
 
                     <div class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
 
-                        🎫
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-book-icon lucide-book">
+                            <path
+                                d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+                        </svg>
 
                     </div>
 
@@ -241,7 +259,13 @@
 
                     <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
 
-                        💰
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-dollar-sign-icon lucide-circle-dollar-sign">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+                            <path d="M12 18V6" />
+                        </svg>
 
                     </div>
 
@@ -442,63 +466,63 @@
                         @foreach($recentBookings as $booking)
 
 
-                                                <tr class="border-b">
+                            <tr class="border-b">
 
 
-                                                    <td class="py-4 font-medium">
+                                <td class="py-4 font-medium">
 
-                                                        {{ $booking->booking_code }}
+                                    {{ $booking->booking_code }}
 
-                                                    </td>
-
-
-                                                    <td>
-
-                                                        {{ $booking->user?->first_name }}
-
-                                                        {{ $booking->user?->last_name }}
-
-                                                    </td>
+                                </td>
 
 
+                                <td>
 
-                                                    <td>
+                                    {{ $booking->user?->first_name }}
 
-                                                        {{ $booking->routeSchedule->route->origin }}
+                                    {{ $booking->user?->last_name }}
 
-                                                        -
-
-                                                        {{ $booking->routeSchedule->route->destination }}
-
-                                                    </td>
+                                </td>
 
 
 
-                                                    <td>
+                                <td>
 
-                                                        <span class="px-3 py-1 rounded-full text-xs
+                                    {{ $booking->routeSchedule->route->origin }}
 
-                            @if($booking->status == 'confirmed')
-                                bg-green-100 text-green-700
+                                    -
 
-                            @elseif($booking->status == 'pending')
-                                bg-yellow-100 text-yellow-700
+                                    {{ $booking->routeSchedule->route->destination }}
 
-                            @else
-                                bg-red-100 text-red-700
-                            @endif
-
-                            ">
-
-                                                            {{ ucfirst($booking->status) }}
-
-                                                        </span>
+                                </td>
 
 
-                                                    </td>
+
+                                <td>
+
+                                    <span class="px-3 py-1 rounded-full text-xs
+
+                                                            @if($booking->status == 'confirmed')
+                                                                bg-green-100 text-green-700
+
+                                                            @elseif($booking->status == 'pending')
+                                                                bg-yellow-100 text-yellow-700
+
+                                                            @else
+                                                                bg-red-100 text-red-700
+                                                            @endif
+
+                                                            ">
+
+                                        {{ ucfirst($booking->status) }}
+
+                                    </span>
 
 
-                                                </tr>
+                                </td>
+
+
+                            </tr>
 
 
                         @endforeach

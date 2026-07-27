@@ -111,14 +111,10 @@
                             class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">{{ old('address', $user->address) }}</textarea>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-2">Profile Photo</label>
-                        <input type="file" name="profile_image" accept="image/*"
-                            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-blue-50 file:text-blue-600 file:font-medium hover:file:bg-blue-100">
-                    </div>
+                    
 
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition">
+                        class="bg-[#86C5FF] hover:bg-[#5dacf7] text-white px-6 py-3 rounded-xl font-medium transition">
                         Save Changes
                     </button>
                 </form>
@@ -154,7 +150,7 @@
                     </div>
 
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition">
+                        class="bg-[#86C5FF] hover:bg-[#59a4eb] text-white px-6 py-3 rounded-xl font-medium transition">
                         Update Password
                     </button>
                 </form>

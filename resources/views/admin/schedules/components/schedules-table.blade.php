@@ -28,6 +28,9 @@
           Departure Time
         </th>
 
+        <th class="p-4 text-left">
+          Duration
+        </th>
 
         <th class="p-4 text-left">
           Price
@@ -144,172 +147,196 @@
 
           <!-- Time -->
 
-          <td class="p-4 text-slate-500">
-            <div class="flex gap-1 ">
-              <div class="text-blue-600 ">
+          <<td class="p-4 text-slate-500">
+
+            <div class="flex gap-1 items-center">
+
+              <div class="text-blue-600">
+
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="lucide lucide-clock-icon lucide-clock">
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
+
                 </svg>
+
               </div>
 
 
               <div>
 
-                {{ \Carbon\Carbon::parse($schedule->departure_time)->format('H:i') }}
+                <div>
+                  {{ \Carbon\Carbon::parse($schedule->departure_time)->format('H:i') }}
 
-                -
+                  -
 
-                {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('H:i') }}
+                  {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('H:i') }}
+                </div>
+
+
+                <div class="text-xs text-slate-400 mt-1">
+
+                  @php
+                    $hours = floor($schedule->duration_minutes / 60);
+                    $minutes = $schedule->duration_minutes % 60;
+                  @endphp
+
+
+                  Duration:
+
+                  @if($hours > 0)
+                    {{ $hours }}h {{ $minutes }}m
+                  @else
+                    {{ $minutes }}m
+                  @endif
+
+                </div>
 
               </div>
 
             </div>
 
+            </td>
 
 
-          </td>
 
 
 
 
+            <!-- Price -->
 
+            <td class="p-4 font-medium">
 
-          <!-- Price -->
 
-          <td class="p-4 font-medium">
+              ${{ number_format($schedule->price, 2) }}
 
 
-            ${{ number_format($schedule->price, 2) }}
+            </td>
 
 
-          </td>
 
 
 
+            <!-- Seats -->
 
+            <td class="p-4 text-slate-500">
 
-          <!-- Seats -->
 
-          <td class="p-4 text-slate-500">
+              {{ $schedule->available_seats }} seats
 
 
-            {{ $schedule->available_seats }} seats
+            </td>
 
 
-          </td>
 
 
 
 
+            <!-- Status -->
 
+            <td class="p-4">
 
-          <!-- Status -->
 
-          <td class="p-4">
+              @if($schedule->status === 'active')
 
 
-            @if($schedule->status === 'active')
+                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
 
+                  Active
 
-              <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
+                </span>
 
-                Active
 
-              </span>
+              @elseif($schedule->status === 'completed')
 
 
-            @elseif($schedule->status === 'completed')
+                <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
 
+                  Completed
 
-              <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
+                </span>
 
-                Completed
 
-              </span>
+              @else
 
 
-            @else
+                <span class="px-2 py-1 rounded-full text-xs bg-red-100 text-red-700">
 
+                  Cancelled
 
-              <span class="px-2 py-1 rounded-full text-xs bg-red-100 text-red-700">
+                </span>
 
-                Cancelled
 
-              </span>
+              @endif
 
 
-            @endif
+            </td>
 
 
-          </td>
 
 
 
 
 
+            <!-- Actions -->
 
+            <td class="p-4">
 
-          <!-- Actions -->
 
-          <td class="p-4">
+              <div class="flex gap-2">
 
 
-            <div class="flex gap-2">
+                <button type="button"
+                  class="editScheduleBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+                  data-id="{{ $schedule->id }}" data-route="{{ $schedule->route_id }}"
+                  data-vehicle="{{ $schedule->vehicle_id }}" data-date="{{ $schedule->travel_date }}"
+                  data-departure="{{ $schedule->departure_time }}" data-arrival="{{ $schedule->arrival_time }}"
+                  data-price="{{ $schedule->price }}" data-seats="{{ $schedule->available_seats }}"
+                  data-status="{{ $schedule->status }}">
 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                  </svg>
 
-              <button type="button"
-                class="editScheduleBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
-                data-id="{{ $schedule->id }}" data-route="{{ $schedule->route_id }}"
-                data-vehicle="{{ $schedule->vehicle_id }}" data-date="{{ $schedule->travel_date }}"
-                data-departure="{{ $schedule->departure_time }}" data-arrival="{{ $schedule->arrival_time }}"
-                data-price="{{ $schedule->price }}" data-seats="{{ $schedule->available_seats }}"
-                data-status="{{ $schedule->status }}">
+                </button>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 20h9" />
-                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
-                </svg>
 
-              </button>
 
 
 
+                <button type="button"
+                  class="deleteScheduleBtn px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100"
+                  data-id="{{ $schedule->id }}"
+                  data-name="{{ $schedule->route->origin }} → {{ $schedule->route->destination }}">
 
 
-              <button type="button"
-                class="deleteScheduleBtn px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100"
-                data-id="{{ $schedule->id }}"
-                data-name="{{ $schedule->route->origin }} → {{ $schedule->route->destination }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 
+                    <path d="M3 6h18" />
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 6V4h8v2" />
 
-                  <path d="M3 6h18" />
+                    <path d="M19 6l-1 14H6L5 6" />
 
-                  <path d="M8 6V4h8v2" />
+                    <path d="M10 11v6" />
 
-                  <path d="M19 6l-1 14H6L5 6" />
+                    <path d="M14 11v6" />
 
-                  <path d="M10 11v6" />
+                  </svg>
 
-                  <path d="M14 11v6" />
 
-                </svg>
+                </button>
 
 
-              </button>
 
+              </div>
 
 
-            </div>
-
-
-          </td>
+            </td>
 
 
 
@@ -345,8 +372,8 @@
 <div class="mt-6 ">
 
 
-    <div>
-        {{ $routeSchedules->onEachSide(1)->links() }}
-    </div>
+  <div>
+    {{ $routeSchedules->onEachSide(1)->links() }}
+  </div>
 
 </div>

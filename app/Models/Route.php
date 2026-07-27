@@ -12,7 +12,6 @@ class Route extends Model
     'origin',
     'destination',
     'distance',
-    'duration_minutes',
     'status',
 ];
     public function schedules()

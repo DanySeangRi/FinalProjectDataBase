@@ -13,9 +13,9 @@ if (searchInput && searchForm) {
     });
 }
 
-// =====================
+// ==================================================
 // Create Schedule Modal
-// =====================
+// ==================================================
 
 const createScheduleModal = document.getElementById("createScheduleModal");
 
@@ -43,48 +43,81 @@ cancelScheduleBtn?.addEventListener("click", closeScheduleModal);
 
 scheduleBackdrop?.addEventListener("click", closeScheduleModal);
 
-// =====================
+// ==================================================
+// Duration Calculator (CREATE)
+// ==================================================
+
+const departureInput = document.getElementById("departure_time");
+
+const arrivalInput = document.getElementById("arrival_time");
+
+const durationPreview = document.getElementById("durationPreview");
+
+function calculateDuration() {
+    if (!departureInput?.value || !arrivalInput?.value) {
+        return;
+    }
+
+    let start = new Date(`2000-01-01 ${departureInput.value}`);
+
+    let end = new Date(`2000-01-01 ${arrivalInput.value}`);
+
+    if (end < start) {
+        end.setDate(end.getDate() + 1);
+    }
+
+    let minutes = (end - start) / 60000;
+
+    let hours = Math.floor(minutes / 60);
+
+    let mins = minutes % 60;
+
+    if (durationPreview) {
+        durationPreview.innerText = `${hours}h ${mins}m`;
+    }
+}
+
+departureInput?.addEventListener("change", calculateDuration);
+
+arrivalInput?.addEventListener("change", calculateDuration);
+
+// ==================================================
 // Create Schedule Submit
-// =====================
+// ==================================================
 
 const createScheduleForm = document.getElementById("createScheduleForm");
 
-if (createScheduleForm) {
-    createScheduleForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+createScheduleForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        try {
-            const response = await fetch("/admin/schedules", {
-                method: "POST",
+    try {
+        const response = await fetch("/admin/schedules", {
+            method: "POST",
 
-                headers: {
-                    "X-CSRF-TOKEN": document.querySelector(
-                        'meta[name="csrf-token"]',
-                    ).content,
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]',
+                ).content,
 
-                    Accept: "application/json",
-                },
+                Accept: "application/json",
+            },
 
-                body: new FormData(createScheduleForm),
-            });
+            body: new FormData(createScheduleForm),
+        });
 
-            if (response.ok) {
-                window.location.reload();
-            } else if (response.status === 422) {
-                const errors = await response.json();
-
-                console.log(errors);
-            } else {
-                console.log(await response.text());
-            }
-        } catch (error) {
-            console.error(error);
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            console.log(await response.text());
         }
-    });
-}
-// =====================
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// ==================================================
 // Edit Schedule
-// =====================
+// ==================================================
 
 const editScheduleModal = document.getElementById("editScheduleModal");
 
@@ -92,7 +125,7 @@ const editScheduleForm = document.getElementById("editScheduleForm");
 
 document.querySelectorAll(".editScheduleBtn").forEach((button) => {
     button.addEventListener("click", () => {
-        editScheduleModal.classList.remove("hidden");
+        editScheduleModal?.classList.remove("hidden");
 
         editScheduleForm.action = `/admin/schedules/${button.dataset.id}`;
 
@@ -110,13 +143,29 @@ document.querySelectorAll(".editScheduleBtn").forEach((button) => {
         document.getElementById("edit_price").value = button.dataset.price;
 
         document.getElementById("edit_seats").value = button.dataset.seats;
+
+        // Show Duration
+
+        const durationMinutes = Number(button.dataset.duration);
+
+        const hours = Math.floor(durationMinutes / 60);
+
+        const minutes = durationMinutes % 60;
+
+        const editDurationPreview = document.getElementById(
+            "editDurationPreview",
+        );
+
+        if (editDurationPreview) {
+            editDurationPreview.innerText = `${hours}h ${minutes}m`;
+        }
     });
 });
 
-// close
+// close edit
 
 function closeEditSchedule() {
-    editScheduleModal.classList.add("hidden");
+    editScheduleModal?.classList.add("hidden");
 }
 
 document
@@ -127,7 +176,9 @@ document
     .getElementById("editScheduleBackdrop")
     ?.addEventListener("click", closeEditSchedule);
 
-// submit
+// ==================================================
+// Edit Submit
+// ==================================================
 
 editScheduleForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -152,9 +203,9 @@ editScheduleForm?.addEventListener("submit", async (e) => {
     }
 });
 
-// =====================
+// ==================================================
 // Delete Schedule Modal
-// =====================
+// ==================================================
 
 const deleteScheduleModal = document.getElementById("deleteScheduleModal");
 
@@ -164,7 +215,7 @@ const deleteScheduleName = document.getElementById("deleteScheduleName");
 
 document.querySelectorAll(".deleteScheduleBtn").forEach((button) => {
     button.addEventListener("click", () => {
-        deleteScheduleModal.classList.remove("hidden");
+        deleteScheduleModal?.classList.remove("hidden");
 
         deleteScheduleName.innerText = button.dataset.name;
 
@@ -173,7 +224,7 @@ document.querySelectorAll(".deleteScheduleBtn").forEach((button) => {
 });
 
 function closeDeleteSchedule() {
-    deleteScheduleModal.classList.add("hidden");
+    deleteScheduleModal?.classList.add("hidden");
 }
 
 document
@@ -184,9 +235,9 @@ document
     .getElementById("deleteScheduleBackdrop")
     ?.addEventListener("click", closeDeleteSchedule);
 
-// =====================
-// Delete Schedule Submit
-// =====================
+// ==================================================
+// Delete Submit
+// ==================================================
 
 deleteScheduleForm?.addEventListener("submit", async (e) => {
     e.preventDefault();

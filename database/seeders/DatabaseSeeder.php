@@ -120,31 +120,31 @@ class DatabaseSeeder extends Seeder
 
         $routes = [
 
-            ['Phnom Penh', 'Siem Reap', 320, 360],
-            ['Phnom Penh', 'Battambang', 290, 330],
-            ['Phnom Penh', 'Kampot', 150, 180],
-            ['Phnom Penh', 'Sihanoukville', 230, 270],
-            ['Phnom Penh', 'Kep', 170, 210],
-            ['Phnom Penh', 'Kandal', 40, 60],
-            ['Phnom Penh', 'Kampong Cham', 125, 150],
-            ['Phnom Penh', 'Kampong Thom', 165, 200],
-            ['Phnom Penh', 'Pursat', 190, 230],
-            ['Phnom Penh', 'Takeo', 85, 100],
-            ['Phnom Penh', 'Svay Rieng', 125, 150],
-            ['Phnom Penh', 'Prey Veng', 90, 120],
-            ['Phnom Penh', 'Kratie', 250, 300],
-            ['Phnom Penh', 'Mondulkiri', 380, 450],
-            ['Phnom Penh', 'Ratanakiri', 600, 720],
-            ['Siem Reap', 'Battambang', 170, 200],
-            ['Siem Reap', 'Kampong Thom', 150, 180],
-            ['Battambang', 'Pailin', 80, 100],
-            ['Kampot', 'Sihanoukville', 110, 140],
-            ['Kep', 'Kampot', 30, 45],
-            ['Pursat', 'Battambang', 105, 130],
-            ['Kratie', 'Stung Treng', 150, 180],
-            ['Kampong Cham', 'Kratie', 150, 180],
-            ['Takeo', 'Kep', 100, 120],
-            ['Siem Reap', 'Preah Vihear', 220, 280],
+            ['Phnom Penh', 'Siem Reap', 320,],
+            ['Phnom Penh', 'Battambang', 290,],
+            ['Phnom Penh', 'Kampot', 150,],
+            ['Phnom Penh', 'Sihanoukville', 230],
+            ['Phnom Penh', 'Kep', 170,],
+            ['Phnom Penh', 'Kandal', 40,],
+            ['Phnom Penh', 'Kampong Cham', 125,],
+            ['Phnom Penh', 'Kampong Thom', 165,],
+            ['Phnom Penh', 'Pursat', 190,],
+            ['Phnom Penh', 'Takeo', 85,],
+            ['Phnom Penh', 'Svay Rieng', 125,],
+            ['Phnom Penh', 'Prey Veng', 90,],
+            ['Phnom Penh', 'Kratie', 250,],
+            ['Phnom Penh', 'Mondulkiri', 380,],
+            ['Phnom Penh', 'Ratanakiri', 600,],
+            ['Siem Reap', 'Battambang', 170,],
+            ['Siem Reap', 'Kampong Thom', 150,],
+            ['Battambang', 'Pailin', 80],
+            ['Kampot', 'Sihanoukville', 110],
+            ['Kep', 'Kampot', 30],
+            ['Pursat', 'Battambang', 105],
+            ['Kratie', 'Stung Treng', 150],
+            ['Kampong Cham', 'Kratie', 150],
+            ['Takeo', 'Kep', 100],
+            ['Siem Reap', 'Preah Vihear', 220],
 
         ];
 
@@ -158,9 +158,11 @@ class DatabaseSeeder extends Seeder
             $createdRoutes[] = Route::create([
 
                 'origin' => $route[0],
+
                 'destination' => $route[1],
+
                 'distance' => $route[2],
-                'duration_minutes' => $route[3],
+
                 'status' => 'active'
 
             ]);
@@ -177,13 +179,47 @@ class DatabaseSeeder extends Seeder
       */
 
         $createdSchedules = [];
+        $departureTimes = [
+            '06:00:00',
+            '08:30:00',
+            '13:00:00',
+            '18:00:00'
+        ];
+
+
+        $arrivalTimes = [
+            '10:00:00',
+            '12:30:00',
+            '17:00:00',
+            '22:00:00'
+        ];
 
         foreach ($createdRoutes as $index => $route) {
+
+
+            $departure = Carbon::parse(
+                $departureTimes[$index % 4]
+            );
+
+
+            $arrival = Carbon::parse(
+                $arrivalTimes[$index % 4]
+            );
+
+
+            if ($arrival->lessThan($departure)) {
+                $arrival->addDay();
+            }
+
+
+            $duration = $departure->diffInMinutes($arrival);
+
 
 
             $schedule = RouteSchedule::create([
 
                 'route_id' => $route->id,
+
 
                 'vehicle_id' => [
                     $bus1->id,
@@ -198,20 +234,13 @@ class DatabaseSeeder extends Seeder
                     ->format('Y-m-d'),
 
 
-                'departure_time' => [
-                    '06:00:00',
-                    '08:30:00',
-                    '13:00:00',
-                    '18:00:00'
-                ][$index % 4],
+                'departure_time' => $departureTimes[$index % 4],
 
 
-                'arrival_time' => [
-                    '10:00:00',
-                    '12:30:00',
-                    '17:00:00',
-                    '22:00:00'
-                ][$index % 4],
+                'arrival_time' => $arrivalTimes[$index % 4],
+
+
+                'duration_minutes' => $duration,
 
 
                 'price' => [
@@ -225,7 +254,6 @@ class DatabaseSeeder extends Seeder
                 'status' => 'active',
 
             ]);
-
 
             $createdSchedules[] = $schedule;
 

@@ -120,33 +120,7 @@
 
 
 
-          <!-- Duration -->
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">
-              Duration
-            </label>
-
-            <div class="grid grid-cols-2 gap-4">
-
-              <div>
-                <input type="number" name="duration_hours" placeholder="Hours (5)" min="0" class="w-full rounded-xl border border-slate-300 
-                px-4 py-3 text-sm
-                focus:outline-none
-                focus:ring-4 focus:ring-blue-100
-                focus:border-blue-500">
-              </div>
-
-
-              <div>
-                <input type="number" name="duration_minutes" placeholder="Minutes (30)" min="0" max="59" class="w-full rounded-xl border border-slate-300 
-                px-4 py-3 text-sm
-                focus:outline-none
-                focus:ring-4 focus:ring-blue-100
-                focus:border-blue-500">
-              </div>
-
-            </div>
-          </div>
+          
 
 
         </div>
