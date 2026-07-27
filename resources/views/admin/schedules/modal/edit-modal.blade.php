@@ -75,6 +75,7 @@
           <input id="edit_departure" name="departure_time" type="time" class="border rounded-xl p-3">
 
 
+
           <input id="edit_arrival" name="arrival_time" type="time" class="border rounded-xl p-3">
 
 
@@ -87,6 +88,17 @@
 
 
         <input id="edit_seats" name="available_seats" type="number" class="w-full border rounded-xl p-3 mt-4">
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-slate-700 mb-2">
+            Duration
+          </label>
+
+          <div id="editDurationPreview" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3">
+            0h 0m
+          </div>
+
+          <input type="hidden" id="edit_duration_minutes" name="duration_minutes">
+        </div>
 
 
 

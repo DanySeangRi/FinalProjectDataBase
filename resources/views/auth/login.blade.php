@@ -167,17 +167,26 @@
 
                     @csrf
 
+                    {{-- Success Message --}}
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
+                    {{-- Login Error --}}
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
 
                     <!-- Email -->
-
                     <div class="mb-3">
-
 
                         <label class="form-label fw-semibold">
                             Email
                         </label>
-
 
                         <div class="input-group">
 
@@ -185,84 +194,54 @@
                                 <i data-lucide="mail"></i>
                             </span>
 
-
-                            <input type="email" name="email" value="{{ old('email') }}" class="form-control"
-                                placeholder="you@email.com" required>
+                            <input type="email" name="email" value="{{ old('email') }}"
+                                class="form-control @error('email') is-invalid @enderror" placeholder="you@email.com"
+                                required>
 
                         </div>
 
-
                     </div>
 
-
-
-
                     <!-- Password -->
-
                     <div class="mb-3">
-
 
                         <label class="form-label fw-semibold">
                             Password
                         </label>
 
-
                         <div class="input-group">
-
 
                             <span class="input-group-text">
                                 <i data-lucide="lock"></i>
                             </span>
 
-
-                            <input id="password" type="password" name="password" class="form-control"
-                                placeholder="••••••••" required>
-
+                            <input id="password" type="password" name="password"
+                                class="form-control @error('email') is-invalid @enderror" placeholder="••••••••"
+                                required>
 
                             <button class="btn btn-light border" type="button" onclick="togglePassword()">
-
                                 <i data-lucide="eye"></i>
-
                             </button>
-
 
                         </div>
 
-
                     </div>
-
-
-
 
                     <!-- Remember -->
-
-
                     <div class="form-check mb-4">
 
-                        <input class="form-check-input" type="checkbox" name="remember">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
 
-                        <label class="form-check-label">
-
+                        <label class="form-check-label" for="remember">
                             Remember me
-
                         </label>
-
 
                     </div>
 
-
-
-
-                    <!-- User Login -->
-
-
-                    <button class="btn btn-login text-white w-100 py-2 rounded-3 fw-semibold">
-
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-login text-white w-100 py-2 rounded-3 fw-semibold">
                         Sign In
-
                     </button>
-
-
 
                 </form>
 

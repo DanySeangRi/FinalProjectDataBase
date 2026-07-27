@@ -180,7 +180,8 @@
             </label>
 
 
-            <input type="time" name="departure_time" class="w-full rounded-xl border border-slate-300 px-4 py-3">
+            <input id="departure_time" type="time" name="departure_time"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3">
 
 
           </div>
@@ -196,7 +197,8 @@
             </label>
 
 
-            <input type="time" name="arrival_time" class="w-full rounded-xl border border-slate-300 px-4 py-3">
+            <input id="arrival_time" type="time" name="arrival_time"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3">
 
 
           </div>
@@ -230,22 +232,6 @@
 
           </div>
 
-
-
-
-
-          <div>
-
-            <label class="block text-sm font-medium text-slate-700 mb-2">
-              Available Seats
-            </label>
-
-
-            <input type="number" name="available_seats" placeholder="40"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3">
-
-
-          </div>
 
 
         </div>

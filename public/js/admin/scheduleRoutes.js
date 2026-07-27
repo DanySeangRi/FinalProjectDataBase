@@ -75,6 +75,13 @@ function calculateDuration() {
     if (durationPreview) {
         durationPreview.innerText = `${hours}h ${mins}m`;
     }
+
+    // save for database
+    const durationInput = document.getElementById("duration_minutes");
+
+    if (durationInput) {
+        durationInput.value = minutes;
+    }
 }
 
 departureInput?.addEventListener("change", calculateDuration);
@@ -114,6 +121,45 @@ createScheduleForm?.addEventListener("submit", async (e) => {
         console.error(error);
     }
 });
+// ==================================================
+// Duration Calculator (EDIT)
+// ==================================================
+
+const editDepartureInput = document.getElementById("edit_departure");
+const editArrivalInput = document.getElementById("edit_arrival");
+
+function calculateEditDuration() {
+    if (!editDepartureInput?.value || !editArrivalInput?.value) {
+        return;
+    }
+
+    let start = new Date(`2000-01-01 ${editDepartureInput.value}`);
+    let end = new Date(`2000-01-01 ${editArrivalInput.value}`);
+
+    if (end < start) {
+        end.setDate(end.getDate() + 1);
+    }
+
+    const totalMinutes = (end - start) / 60000;
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    const preview = document.getElementById("editDurationPreview");
+
+    if (preview) {
+        preview.innerText = `${hours}h ${minutes}m`;
+    }
+
+    const hidden = document.getElementById("edit_duration_minutes");
+
+    if (hidden) {
+        hidden.value = totalMinutes;
+    }
+}
+
+editDepartureInput?.addEventListener("change", calculateEditDuration);
+editArrivalInput?.addEventListener("change", calculateEditDuration);
 
 // ==================================================
 // Edit Schedule
@@ -144,21 +190,21 @@ document.querySelectorAll(".editScheduleBtn").forEach((button) => {
 
         document.getElementById("edit_seats").value = button.dataset.seats;
 
-        // Show Duration
+        // Set initial duration
 
         const durationMinutes = Number(button.dataset.duration);
 
-        const hours = Math.floor(durationMinutes / 60);
+        document.getElementById("edit_duration_minutes").value =
+            durationMinutes;
 
+        const hours = Math.floor(durationMinutes / 60);
         const minutes = durationMinutes % 60;
 
-        const editDurationPreview = document.getElementById(
-            "editDurationPreview",
-        );
+        document.getElementById("editDurationPreview").innerText =
+            `${hours}h ${minutes}m`;
 
-        if (editDurationPreview) {
-            editDurationPreview.innerText = `${hours}h ${minutes}m`;
-        }
+        // Recalculate if times change
+        calculateEditDuration();
     });
 });
 
