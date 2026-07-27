@@ -7,7 +7,7 @@
 <section class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 py-10">
 
     <div class="max-w-6xl mx-auto px-5">
-       <a href="{{ route('seats', [
+        <a href="{{ route('seats', [
                 'schedule' => $schedule->id,
                 'seats' => $seats->pluck('id')->implode(',')
             ]) }}"
@@ -76,6 +76,7 @@
         <div class="grid lg:grid-cols-3 gap-8">
 
             {{-- Passenger Form --}}
+            {{-- Passenger Form --}}
             <form
                 method="POST"
                 action="{{ route('passenger.store') }}"
@@ -84,12 +85,15 @@
                 @csrf
 
                 <input type="hidden" name="schedule" value="{{ $schedule->id }}">
+
                 <input
                     type="hidden"
                     name="seats"
                     value="{{ $seats->pluck('id')->implode(',') }}">
 
+
                 <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+
 
                     <div class="border-b bg-gray-50 px-6 py-5">
 
@@ -98,53 +102,20 @@
                         </h2>
 
                         <p class="text-gray-500 text-sm mt-1">
-                            Your booking confirmation will be sent using this information.
+                            Please provide accurate passenger information for your ticket.
                         </p>
 
                     </div>
 
+
+
                     <div class="p-6">
 
-                        @auth
-
-                        <div class="rounded-2xl border border-green-200 bg-green-50 p-5">
-
-                            <div class="flex justify-between items-center">
-
-                                <div>
-
-                                    <h3 class="font-semibold text-gray-900">
-                                        {{ auth()->user()->first_name }}
-                                        {{ auth()->user()->last_name }}
-                                    </h3>
-
-                                    <p class="text-gray-600 mt-1">
-                                        {{ auth()->user()->email }}
-                                    </p>
-
-                                    <p class="text-gray-600">
-                                        {{ auth()->user()->phone_number }}
-                                    </p>
-
-                                </div>
-
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                                    ✓ Verified
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <input type="hidden" name="first_name" value="{{ auth()->user()->first_name }}">
-                        <input type="hidden" name="last_name" value="{{ auth()->user()->last_name }}">
-                        <input type="hidden" name="email" value="{{ auth()->user()->email }}">
-                        <input type="hidden" name="phone" value="{{ auth()->user()->phone_number }}">
-
-                        @else
 
                         <div class="grid md:grid-cols-2 gap-5">
 
+
+                            {{-- First Name --}}
                             <div>
 
                                 <label class="block text-sm font-medium mb-2">
@@ -154,11 +125,16 @@
                                 <input
                                     type="text"
                                     name="first_name"
+                                    value="{{ old('first_name', auth()->user()->first_name ?? '') }}"
+                                    {{ auth()->check() ? 'readonly' : '' }}
                                     required
-                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF] focus:border-[#86C5FF]">
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
 
                             </div>
 
+
+
+                            {{-- Last Name --}}
                             <div>
 
                                 <label class="block text-sm font-medium mb-2">
@@ -168,11 +144,94 @@
                                 <input
                                     type="text"
                                     name="last_name"
+                                    value="{{ old('last_name', auth()->user()->last_name ?? '') }}"
+                                    {{ auth()->check() ? 'readonly' : '' }}
                                     required
-                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF] focus:border-[#86C5FF]">
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
 
                             </div>
 
+
+
+
+                            {{-- Date Of Birth --}}
+
+
+
+
+                            {{-- Gender --}}
+                            <div>
+
+                                <label class="block text-sm font-medium mb-2">
+                                    Gender
+                                </label>
+
+                                <select
+                                    name="gender"
+                                    required
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
+
+
+                                    <option value="">
+                                        Select Gender
+                                    </option>
+
+                                    <option value="male">
+                                        Male
+                                    </option>
+
+                                    <option value="female">
+                                        Female
+                                    </option>
+
+
+                                </select>
+
+                            </div>
+
+
+
+
+
+                            {{-- Nationality --}}
+                            <div>
+
+                                <label class="block text-sm font-medium mb-2">
+                                    Nationality
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="nationality"
+                                    value="Cambodian"
+                                    required
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
+
+                            </div>
+
+
+
+
+                            {{-- Passport --}}
+                            <div>
+
+                                <label class="block text-sm font-medium mb-2">
+                                    ID / Passport Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="id_passport"
+                                    
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
+
+                            </div>
+
+
+
+
+
+                            {{-- Email --}}
                             <div>
 
                                 <label class="block text-sm font-medium mb-2">
@@ -182,11 +241,18 @@
                                 <input
                                     type="email"
                                     name="email"
+                                    value="{{ old('email', auth()->user()->email ?? '') }}"
+                                    {{ auth()->check() ? 'readonly' : '' }}
                                     required
-                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF] focus:border-[#86C5FF]">
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
 
                             </div>
 
+
+
+
+
+                            {{-- Phone --}}
                             <div>
 
                                 <label class="block text-sm font-medium mb-2">
@@ -196,34 +262,58 @@
                                 <input
                                     type="text"
                                     name="phone"
+                                    value="{{ old('phone', auth()->user()->phone_number ?? '') }}"
+                                    {{ auth()->check() ? 'readonly' : '' }}
                                     required
-                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF] focus:border-[#86C5FF]">
+                                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#86C5FF]">
 
                             </div>
 
+
+
                         </div>
 
-                        @endauth
 
+
+
+
+                        {{-- Terms --}}
                         <div class="mt-8">
 
                             <label class="flex items-start gap-3">
 
-                                <input type="checkbox" required class="mt-1">
+                                <input
+                                    type="checkbox"
+                                    required
+                                    class="mt-1">
+
 
                                 <span class="text-sm text-gray-600">
 
                                     I agree to the
-                                    <a href="#" class="text-[#3893E6]">Terms & Conditions</a>
+                                    <a href="#" class="text-[#3893E6]">
+                                        Terms & Conditions
+                                    </a>
+
                                     and
-                                    <a href="#" class="text-[#3893E6]">Privacy Policy</a>.
+
+                                    <a href="#" class="text-[#3893E6]">
+                                        Privacy Policy
+                                    </a>
 
                                 </span>
 
+
                             </label>
+
 
                         </div>
 
+
+
+
+
+                        {{-- Button --}}
                         <button
                             class="w-full mt-8 bg-[#86C5FF] hover:bg-[#3893E6] text-white rounded-xl py-4 font-semibold transition">
 
@@ -231,15 +321,22 @@
 
                         </button>
 
+
+
+
                         <p class="text-center text-sm text-gray-500 mt-4">
 
                             🔒 Your information is securely encrypted.
 
                         </p>
 
+
+
                     </div>
 
+
                 </div>
+
 
             </form>
 

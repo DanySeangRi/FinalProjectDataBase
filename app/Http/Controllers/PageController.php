@@ -81,31 +81,64 @@ class PageController extends Controller
     ]);
 }
 
-  public function storePassenger(Request $request)
-  {
-    $data = auth()->check()
-        ? [
-            'first_name' => auth()->user()->first_name,
-            'last_name' => auth()->user()->last_name,
-            'email' => auth()->user()->email,
-            'phone' => auth()->user()->phone_number,
-        ]
-        : $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-        ]);
+ public function storePassenger(Request $request)
+{
+    $data = $request->validate([
 
-    $request->session()->put('booking.customer', $data);
+        'first_name' => 'required|string|max:255',
+
+        'last_name' => 'required|string|max:255',
+        'dob' => 'nullable|date',
+
+        'gender' => 'nullable|string',
+
+        'nationality' => 'nullable|string',
+
+        'id_passport' => 'nullable|string',
+       
+        'email' => 'required|email',
+
+        'phone' => 'required|string',
+
+        'schedule' => 'required|exists:route_schedules,id',
+
+        'seats' => 'required|string',
+
+    ]);
+
+
+    // If user logged in, use account information
+    if(auth()->check()){
+
+    $data['user_id'] = auth()->id();
+
+    $data['first_name'] = auth()->user()->first_name;
+
+    $data['last_name'] = auth()->user()->last_name;
+
+    $data['email'] = auth()->user()->email;
+
+    $data['phone'] = auth()->user()->phone_number;
+
+}
+
+
+    // Save passenger data temporarily
+    session()->put(
+        'booking.passenger',
+        $data
+    );
+
 
     return redirect()
-      ->route('payment', [
-        'schedule' => $request->schedule,
-        'seats' => $request->seats
-      ]);
+        ->route('payment', [
 
-  }
+            'schedule' => $request->schedule,
+
+            'seats' => $request->seats
+
+        ]);
+}
   // public function passenger(Request $request)
   // {
 
@@ -148,6 +181,7 @@ class PageController extends Controller
     ]);
 }
 
+
 public function payment(Request $request)
 {
     $schedule = RouteSchedule::with([
@@ -161,12 +195,15 @@ public function payment(Request $request)
     $seats = Seat::whereIn('id', $seatIds)->get();
 
 
+    $passenger = session('booking.passenger');
+
+
     return view('pages.booking.payment', [
         'schedule' => $schedule,
         'seats' => $seats,
+        'passenger' => $passenger
     ]);
 }
-
   public function processPayment(Request $request)
   {
     return app(BookingController::class)->store($request);
