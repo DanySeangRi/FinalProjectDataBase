@@ -115,36 +115,7 @@
 
 
 
-        <!-- Duration -->
-
-        <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">
-            Travel Duration
-          </label>
-
-          <div class="grid grid-cols-2 gap-4">
-
-            <div>
-              <label class="text-xs text-slate-500 mb-1 block">
-                Hours
-              </label>
-
-              <input id="edit_duration_hours" name="duration_hours" type="number" min="0" placeholder="5" class="w-full rounded-xl border border-slate-300
-                px-4 py-3 focus:ring-4 focus:ring-blue-100">
-            </div>
-
-            <div>
-              <label class="text-xs text-slate-500 mb-1 block">
-                Minutes
-              </label>
-
-              <input id="edit_duration_minutes" name="duration_minutes" type="number" min="0" max="59" placeholder="30"
-                class="w-full rounded-xl border border-slate-300
-                px-4 py-3 focus:ring-4 focus:ring-blue-100">
-            </div>
-
-          </div>
-        </div>
+       
 
 
 

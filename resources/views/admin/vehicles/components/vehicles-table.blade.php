@@ -12,6 +12,7 @@
         <th class="p-4 text-left">
           Brand
         </th>
+
         <th class="p-4 text-left">
           Type
         </th>
@@ -21,14 +22,8 @@
         </th>
 
         <th class="p-4 text-left">
-          Driver
-        </th>
-
-        <th class="p-4 text-left">
           Status
         </th>
-
-
 
         <th class="p-4 text-left">
           Actions
@@ -44,10 +39,9 @@
 
         <tr class="border-b hover:bg-slate-50">
 
-
           <td class="p-4 font-medium">
             <div class="flex">
-              <div class="bg-[#DBEAFE] text-[#2563EB] mr-3 p-1 rounded-2xl ">
+              <div class="bg-[#DBEAFE] text-[#2563EB] mr-3 p-1 rounded-2xl">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -62,17 +56,12 @@
                   <circle cx="16" cy="18" r="2" />
                 </svg>
 
-
               </div>
               <div class="mt-1">
                 {{ $vehicle->vehicle_number }}
               </div>
-
-
-
             </div>
           </td>
-
 
           <td class="p-4 text-slate-500">
             {{ $vehicle->brand }}
@@ -105,40 +94,24 @@
             @endif
           </td>
 
-
           <td class="p-4 text-slate-500">
             {{ $vehicle->capacity }} seats
           </td>
 
-
-          <td class="p-4 text-slate-500">
-            {{ $vehicle->driver_name ?? 'No Driver' }}
-          </td>
-
-
           <td class="p-4">
-
             @if($vehicle->status === 'active')
-
               <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
                 Active
               </span>
-
             @else
-
               <span class="px-2 py-1 rounded-full text-xs bg-red-100 text-red-700">
                 Inactive
               </span>
-
             @endif
-
           </td>
 
-
           <td class="p-4">
-
             <div class="flex gap-2">
-
 
               <button type="button"
                 class="editVehicleBtn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
@@ -155,8 +128,6 @@
 
               </button>
 
-
-
               <button type="button"
                 class="deleteVehicleBtn px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100"
                 data-id="{{ $vehicle->id }}" data-name="{{ $vehicle->vehicle_number }}">
@@ -168,34 +139,21 @@
                   <path d="M10 11v6" />
                   <path d="M14 11v6" />
                 </svg>
-
-
-
               </button>
 
-
             </div>
-
           </td>
-
 
         </tr>
 
-
       @endforeach
-
 
     </tbody>
 
-
   </table>
-
 
 </div>
 
-
 <div class="mt-4">
-
   {{ $vehicles->links() }}
-
 </div>

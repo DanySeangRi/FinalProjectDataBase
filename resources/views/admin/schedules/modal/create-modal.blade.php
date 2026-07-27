@@ -234,18 +234,6 @@
 
 
 
-          <div>
-
-            <label class="block text-sm font-medium text-slate-700 mb-2">
-              Available Seats
-            </label>
-
-
-            <input type="number" name="available_seats" placeholder="40"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3">
-
-
-          </div>
 
 
         </div>

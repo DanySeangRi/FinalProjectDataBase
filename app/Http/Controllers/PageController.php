@@ -255,6 +255,9 @@ class PageController extends Controller
 
 
     // Search only when user submits
+    $from = $request->input('from');
+    $to   = $request->input('to');
+
 
     if ($request->filled(['from', 'to'])) {
 
@@ -263,15 +266,13 @@ class PageController extends Controller
         'route',
         'vehicle'
       ])
-        ->whereHas('route', function ($query) use ($request) {
+        ->whereHas('route', function ($query) use ($from, $to) {
 
+         $query
+         ->where('origin', 'LIKE', "%{$from}%")
+         ->where('destination', 'LIKE', "%{$to}%");
 
-          $query
-            ->where('origin', 'ILIKE', '%' . $request->from . '%')
-            ->where('destination', 'ILIKE', '%' . $request->to . '%');
-
-
-        })
+    })
         ->when($request->date, function ($query) use ($request) {
 
 

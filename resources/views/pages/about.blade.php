@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto px-5">
 
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-900">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900" style="color: #F59E0B;">
                 About Angkor Travels
             </h1>
 
@@ -24,7 +24,7 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
 
             <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-4">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4" style="color: #F59E0B;">
                     Our Mission
                 </h2>
 
@@ -35,7 +35,7 @@
                     seamless journey from booking to arrival.
                 </p>
 
-                <h2 class="text-2xl font-bold text-slate-900 mb-4">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4" style="color: #F59E0B;">
                     Our Vision
                 </h2>
 
@@ -48,7 +48,7 @@
             </div>
 
             <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                <h2 class="text-2xl font-bold mb-6 text-slate-900">
+                <h2 class="text-2xl font-bold mb-6 text-slate-900" style="color: #F59E0B;">
                     Why Choose Angkor Travels?
                 </h2>
 
@@ -57,7 +57,7 @@
                     <div class="flex gap-4">
                         <div class="text-2xl"><i data-lucide="van" class="w-8 h-8"></i>  </div>
                         <div>
-                            <h3 class="font-semibold">Easy Online Booking</h3>
+                            <h3 class="font-semibold" style="color: #38BDF8;">Easy Online Booking</h3>
                             <p class="text-slate-600">
                                 Book your bus tickets quickly with a simple and
                                 user-friendly booking process.
@@ -68,7 +68,7 @@
                     <div class="flex gap-4">
                         <div class="text-2xl"><i data-lucide="sofa" class="w-8 h-8"></i>  </div>
                         <div>
-                            <h3 class="font-semibold">Seat Selection</h3>
+                            <h3 class="font-semibold" style="color: #38BDF8;">Seat Selection</h3>
                             <p class="text-slate-600">
                                 Choose your preferred seat before completing your
                                 booking.
@@ -79,7 +79,7 @@
                     <div class="flex gap-4">
                         <div class="text-2xl"><i data-lucide="road" class="w-8 h-8"></i>  </div>
                         <div>
-                            <h3 class="font-semibold">Nationwide Routes</h3>
+                            <h3 class="font-semibold" style="color: #38BDF8;">Nationwide Routes</h3>
                             <p class="text-slate-600">
                                 Explore popular destinations across Cambodia with
                                 trusted transportation providers.
@@ -90,7 +90,7 @@
                     <div class="flex gap-4">
                         <div class="text-2xl"><i data-lucide="lock" class="w-8 h-8"></i>  </div>
                         <div>
-                            <h3 class="font-semibold">Secure Booking</h3>
+                            <h3 class="font-semibold" style="color: #38BDF8;">Secure Booking</h3>
                             <p class="text-slate-600">
                                 Your booking information is handled securely to
                                 provide a safe and reliable experience.

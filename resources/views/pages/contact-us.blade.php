@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto px-5">
 
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-900">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900"style="color: #F59E0B;">
                 Contact Us
             </h1>
 
@@ -18,12 +18,12 @@
             </p>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-12">
+        <div class=" gap-12">
 
             <!-- Contact Information -->
             <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
 
-                <h2 class="text-2xl font-bold text-slate-900 mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-8" style="color: #38BDF8;">
                     Get in Touch
                 </h2>
 
@@ -63,66 +63,7 @@
 
             </div>
 
-            <!-- Contact Form -->
-            <div>
-
-                <form action="#" method="POST" class="space-y-6">
-
-                    @csrf
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            Full Name
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your full name">
-                    </div>
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            Email Address
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your email">
-                    </div>
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            Subject
-                        </label>
-                        <input
-                            type="text"
-                            name="subject"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter subject">
-                    </div>
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            Message
-                        </label>
-                        <textarea
-                            name="message"
-                            rows="6"
-                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Write your message here..."></textarea>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition">
-                        Send Message
-                    </button>
-
-                </form>
-
-            </div>
+          
 
         </div>
 

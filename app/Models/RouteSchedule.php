@@ -13,6 +13,7 @@ class RouteSchedule extends Model
         'travel_date',
         'departure_time',
         'arrival_time',
+        'duration',
         'price',
         'available_seats',
         'status'
