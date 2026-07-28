@@ -285,7 +285,7 @@
             <div class="flex gap-2">
 
 
-              <button class="editScheduleBtn" data-id="{{ $schedule->id }}" data-route="{{ $schedule->route_id }}"
+              <button class="editScheduleBtn rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 p-3" data-id="{{ $schedule->id }}" data-route="{{ $schedule->route_id }}"
                 data-vehicle="{{ $schedule->vehicle_id }}" data-date="{{ $schedule->travel_date }}"
                 data-departure="{{ $schedule->departure_time }}" data-arrival="{{ $schedule->arrival_time }}"
                 data-duration="{{ $schedule->duration_minutes }}" data-price="{{ $schedule->price }}"

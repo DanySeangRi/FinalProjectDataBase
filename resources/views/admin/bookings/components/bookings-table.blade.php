@@ -119,7 +119,7 @@
                         @endif
 
                         <button type="button"
-                            class="editBookingBtn px-2 py-1.5 rounded-lg bg-slate-50 text-slate-600 hover:bg-slate-100"
+                            class="editBookingBtn rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 p-3"
                             type="button"
                             class="editBookingBtn"
                             data-id="{{ $booking->id }}"
